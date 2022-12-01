@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center row-center">
+            <h1>Busca Pública</h1>
+            <p class="ion-text-center ">Bem-vindo, digite os dados do seu veículo <br> para iniciar a liberação</p>
+           
+        </ion-row>
+        <ion-list >
+            <ion-item class="ion-justify-content-start" >
+                <ion-input placeholder="Digite a placa ou GRV"></ion-input>
+            </ion-item>
+            <ion-item counter="true">
+                <ion-input placeholder="Digite o RENAVAM"></ion-input>
+            </ion-item>
+            <ion-item counter="true" lines="none" class="ion-justify-content-start ion-align-items-center" >
+                <ion-img src="../../../assets/public-search/dashicons_warning.png"></ion-img>
+                <p class="warning">Os dados estão incorretos, verifique novamente</p>
+            </ion-item>
+        </ion-list>
+         <ion-button (click)="goProcessInformation()">Buscar</ion-button>
+    </ion-grid>
+</ion-content>

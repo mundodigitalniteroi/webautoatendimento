@@ -1,0 +1,92 @@
+$font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+ion-content {
+  --background: rgb(240, 240, 240);
+}
+.info{
+    p{
+        padding-bottom: 10px;
+    }
+}
+h2 {
+  color: rgb(22, 127, 247);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: $font-family;
+}
+.position-aligned {
+  width: 98% ;
+  margin-left: 16px;
+  margin-right: 16px;
+  display: flex;
+  justify-content: start;
+  h3 {
+    color: rgb(22, 127, 247);
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+}
+ion-card {
+  width: 98%;
+  b {
+    color: black;
+  }
+}
+.table {
+  display: flex;
+  ion-col {
+    ion-row {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    h4 {
+      font-size: 0.8rem;
+      font-family: $font-family;
+      margin-bottom: 20px;
+    }
+
+    p {
+      height: 25px;
+      font-size: 0.8rem;
+      font-family: $font-family;
+      margin-bottom: 18px;
+    }
+  }
+}
+
+p {
+  font-family: $font-family;
+  font-size: 0.8rem;
+}
+
+ion-card {
+  border-radius: 10px;
+}
+.border{
+    border-top: 1px solid grey;
+    padding-top: 25px;
+    h4{
+        font-size: 1.2rem !important;
+        font-weight: 700;
+    }
+    .result{
+        color:rgb(158, 158, 158);
+    }
+    .price{
+        color:black;
+    }
+}
+ion-button {
+    width: 98%;
+    height: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+    --border-radius: 10px;
+    font-size: 1rem;
+    font-family: $font-family;
+    // --background: rgb(72, 135, 252);
+  }
+// .services {
+//   width: 95%;
+// }

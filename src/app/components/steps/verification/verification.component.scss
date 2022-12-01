@@ -1,0 +1,15 @@
+ion-list{
+    display: flex;
+    justify-content: space-around;
+    ion-item{
+        width: 15%;
+        border-color: black;
+        font-size: 2rem;
+    }
+    ion-item::part(native){
+        border-color: black;
+    }
+    ion-item::part(detail-icon) {
+        font-size: 20px;
+      }
+}

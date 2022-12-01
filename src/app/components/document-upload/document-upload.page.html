@@ -1,0 +1,74 @@
+<ion-content [fullscreen]="true">
+    <ion-grid class=" ion-align-items-center ion-justify-content-center">
+        <h1>Upload de documentos</h1>
+        <p>Envie os documentos abaixo</p>
+        <ion-row class=" ion-justify-content-start ion-align-items-center" (mouseup)="line = true">
+            <!-- <ion-card (click)="takePhoto()"> -->
+                <ion-card (click)="checkCrlv = true"  [ngClass]="{'border': line  }">
+                <ion-card-content class="info ">
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../assets/document-upload/crlv.png"></ion-img>
+                        <h3><b>CRLV</b></h3>
+                    </ion-item>
+                    <div>
+                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkCrlv"></ion-img>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+        <ion-row class="ion-justify-content-center " (mouseup)="line = true">
+            <ion-card (click)="checkIpva = true"  [ngClass]="{'border': line  }">
+                <ion-card-content class="info">
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../assets/document-upload/Vector.jpg"></ion-img>
+                        <h3><b>IPVA</b></h3>
+                    </ion-item>
+                    <div>
+                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkIpva"></ion-img>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+        <ion-row class="ion-justify-content-center " (mouseup)="line = true" >
+            <ion-card (click)="checkMulta = true"  [ngClass]="{'border': line  }"> 
+                <ion-card-content class="info">
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../assets/document-upload/nadaMul.png"></ion-img>
+                        <h3><b>Nada consta multa</b></h3>
+                    </ion-item>
+                    <div>
+                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkMulta"></ion-img>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+        <ion-row class="ion-justify-content-center " (mouseup)="line = true">
+            <ion-card (click)="checkLicen = true"  [ngClass]="{'border': line  }">
+                <ion-card-content class="info">
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../assets/document-upload/nadaLice.png"></ion-img>
+                        <h3><b>Nada consta licenciamento</b></h3>
+                    </ion-item>
+                    <div>
+                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkLicen"></ion-img>
+                    </div>
+
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+        <ion-row class="ion-justify-content-center " (mouseup)="line = true">
+            <ion-card (click)="checkComp = true"  [ngClass]="{'border': line  }">
+                <ion-card-content class="info">
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../assets/document-upload/comp.png"></ion-img>
+                        <h3><b>Comprovante de residência</b></h3>
+                    </ion-item>
+                    <div>
+                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkComp" ></ion-img>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+        <ion-button [routerLink]="['/document-upload']">Enviar</ion-button>
+    </ion-grid>
+</ion-content>
