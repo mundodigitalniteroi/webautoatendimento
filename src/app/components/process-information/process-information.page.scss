@@ -1,0 +1,142 @@
+$font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+ion-content {
+  --background: rgb(240, 240, 240);
+}
+.info{
+    p{
+        padding-bottom: 10px;
+    }
+}
+h2 {
+  color: rgb(22, 127, 247);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: $font-family;
+}
+.position-aligned {
+  width: 98% ;
+  margin-left: 16px;
+  margin-right: 16px;
+  display: flex;
+  justify-content: start;
+  h3 {
+    color: rgb(22, 127, 247);
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+}
+ion-card {
+  width: 98%;
+  b {
+    color: black;
+  }
+}
+.table {
+  display: flex;
+  ion-col {
+    ion-row {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    h4 {
+      font-size: 0.8rem;
+      font-family: $font-family;
+      margin-bottom: 20px;
+    }
+
+    p {
+      height: 25px;
+      font-size: 0.8rem;
+      font-family: $font-family;
+      margin-bottom: 18px;
+    }
+  }
+}
+
+p {
+  font-family: $font-family;
+  font-size: 0.8rem;
+}
+
+ion-card {
+  border-radius: 10px;
+}
+ion-card-content:nth-child(1){
+    padding-bottom: 0%;
+}
+ion-card-content:nth-child(2){
+    padding-bottom: 0%;
+    padding-top: 0%;
+
+}
+ion-card-content:nth-child(3){
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+ion-card-content:nth-child(4){
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+.border{
+    border-top: 1px solid grey;
+    padding-top: 25px;
+    h4{
+        font-size: 1.2rem !important;
+        font-weight: 700;
+    }
+    .result{
+        color:rgb(158, 158, 158);
+    }
+    .price{
+        color:black;
+    }
+}
+.freteCheck{
+    display: flex;
+    flex-direction: row !important;
+    h4{
+        width: 60%;
+    }
+    ion-checkbox {
+        --size: 32px;
+        --background-checked: #1cf340;
+        margin: 0%;
+        display: flex;
+        justify-content: end;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        width: 28px;
+        height: 28px;
+      }
+      ion-item{
+        width: 40%;
+      }
+      
+      ion-checkbox::part(container) {
+        border-radius: 6px;
+        border: 2px solid rgb(172, 172, 172);
+      }
+}
+.adress{
+    
+    u{
+        color:blue;
+        cursor:pointer;
+    }
+}
+ion-button {
+    width: 98%;
+    height: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+    --border-radius: 10px;
+    font-size: 1rem;
+    font-family: $font-family;
+    // --background: rgb(72, 135, 252);
+  }
+
+// .services {
+//   width: 95%;
+// }

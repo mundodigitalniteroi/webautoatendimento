@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/public-search/public-search.module').then(m => m.PublicSearchModule)
   },
   {
-    path: 'process-information',
+    path: 'process-informations',
     loadChildren: () => import('./components/process-informations/process-informations.module').then(m => m.ProcessInformationsModule)
   },
   {
@@ -29,7 +29,19 @@ const routes: Routes = [
   {
     path: 'document-upload',
     loadChildren: () => import('./components/document-upload/document-upload.module').then(m => m.DocumentUploadModule)
-  }
+  },
+  {
+    path: 'process-information',
+    loadChildren: () => import('./components/process-information/process-information.module').then(m => m.ProcessInformationModule)
+  },
+  {
+    path: 'payment',
+    loadChildren: () => import('./components/payment/payment.module').then(m => m.PaymentModule)
+  },
+  {
+    path: 'payment-card',
+    loadChildren: () => import('./components/payment/payment-card/payment-card.module').then(m => m.PaymentCardModule)
+  },
   // {
   //   path: '',
   //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)

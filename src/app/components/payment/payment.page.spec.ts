@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessInformationComponent } from './process-information.component';
+import { PaymentPage } from './payment.page';
 
-describe('ProcessInformationComponent', () => {
-  let component: ProcessInformationComponent;
-  let fixture: ComponentFixture<ProcessInformationComponent>;
+describe('page', () => {
+  let component: PaymentPage;
+  let fixture: ComponentFixture<PaymentPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessInformationComponent ]
+      declarations: [ PaymentPage ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessInformationComponent);
+    fixture = TestBed.createComponent(PaymentPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -14,6 +14,6 @@ export class PublicSearchPage implements OnInit {
   }
 
   goProcessInformation(){
-    this.router.navigate(['/process-information'])
+    this.router.navigate(['/process-informations'])
   }
 }

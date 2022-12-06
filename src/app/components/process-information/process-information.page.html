@@ -1,0 +1,124 @@
+<ion-content fullscreen class="ion-justify-content-center ">
+    <ion-row class="ion-justify-content-center ">
+      <h2>Informações do processo</h2>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ">
+      <ion-card>
+        <ion-card-content class="info">
+          <p><b>Formulário GRV:</b> 914191627</p>
+          <p><b>Placa:</b> NFH4907</p>
+          <p><b>Marca/modelo:</b> HONDA/CG 150 TITAN ESD</p>
+          <p><b>Tipo de veículo:</b> MOTOCICLETA</p>
+          <p><b>Data/hora Guarda:</b> 23/06/2018 - 06:45</p>
+          <p><b>Pátio Destino:</b> GUANAMBI, BA, CEP: 46430-000)</p>
+          <p><b>Telefone:</b> (77) 9962-1801</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ">
+      <div class="position-aligned">
+        <h3>Serviços Prestados</h3>
+      </div>
+  
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-card class="ion-justify-content-center">
+        <ion-card-content class="table">
+          <ion-col size="6">
+            <ion-row>
+              <h4><b>Tipo</b></h4>
+              <p>Acionamento Remoção</p>
+              <p>Acionamento Remoção</p>
+              <p>Acionamento Remoção</p>
+            </ion-row>
+          </ion-col>
+          <ion-col size="2">
+            <ion-row class="ion-text-center ">
+              <h4><b>Total</b></h4>
+              <p>R$87,45</p>
+              <p>R$87,45</p>
+              <p>R$87,45</p>
+            </ion-row>
+          </ion-col>
+          <ion-col size="2">
+            <ion-row class="ion-text-center">
+              <h4><b>Qtd</b></h4>
+              <p>x 1</p>
+              <p>x 1</p>
+              <p>x 20</p>
+            </ion-row>
+          </ion-col>
+          <ion-col size="2">
+            <ion-row class="ion-text-center">
+              <h4><b>Subtotal</b></h4>
+              <p>R$87,45</p>
+              <p>R$87,45</p>
+              <p>R$87,45</p>
+            </ion-row>
+          </ion-col>
+        </ion-card-content>
+  
+        <ion-card-content class="table">
+          <ion-col class="border" size="6">
+            <ion-row class="ion-text-start">
+              <h4 class="result">Frete</h4>
+            </ion-row>
+          </ion-col>
+          <ion-col class="border" size="6">
+            <ion-row class=" freteCheck">
+              <h4 class="price">R$324,15</h4>
+              <ion-item lines="none">
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+            </ion-row>
+          </ion-col>
+        </ion-card-content>
+        <ion-card-content class="table">
+            <ion-col  size="8">
+                <ion-row class="ion-text-start">
+                    <p><b>Endereço:</b>Av Rio Branco 115</p>
+                </ion-row>
+              </ion-col>
+            <ion-col  size="4">
+                <ion-row  class="ion-text-end ">
+                    <p class="adress"><u>Editar endereço</u></p>
+                </ion-row>
+            </ion-col>
+        </ion-card-content>
+        <ion-card-content class="table">
+            <ion-col class="border" size="6">
+              <ion-row class="ion-text-start">
+                <h4 class="result">Retirar no local</h4>
+              </ion-row>
+            </ion-col>
+            <ion-col class="border" size="6">
+              <ion-row class=" freteCheck">
+                <h4 class="price">R$00,00</h4>
+                <ion-item lines="none">
+                  <ion-checkbox slot="start"></ion-checkbox>
+                </ion-item>
+              </ion-row>
+            </ion-col>
+          </ion-card-content>
+          <ion-card-content class="table">
+            <ion-col class="border" size="6">
+              <ion-row class="ion-text-start">
+                <h4 class="result">Total</h4>
+              </ion-row>
+            </ion-col>
+            <ion-col class="border" size="6">
+              <ion-row class="ion-text-end">
+                <h4 class="price">R$324,15</h4>
+              </ion-row>
+            </ion-col>
+          </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row class="ion-justify-content-center" >
+      <ion-button  class="next" [routerLink]="['/payment']">Efetuar Pagamento</ion-button>
+      
+    </ion-row>
+    <ion-row class="ion-justify-content-center" >
+      <ion-button fill="outline" [routerLink]="['/document-upload']">Voltar</ion-button>
+    </ion-row>
+  </ion-content>

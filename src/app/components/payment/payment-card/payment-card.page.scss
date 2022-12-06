@@ -1,0 +1,137 @@
+$font-family: Arial, Helvetica, sans-serif;
+ion-grid {
+  display: flex;
+  flex-direction: column;
+}
+.row-title {
+  width: 98%;
+}
+h1 {
+  margin-top: 15%;
+  color: rgb(22, 127, 247);
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+p {
+  margin-top: 0%;
+  font-size: 1rem;
+}
+ion-item {
+  p {
+    margin-bottom: 0%;
+    color: rgb(22, 127, 247);
+    font-weight: 700;
+    padding-left: 15px;
+  }
+}
+ion-item::part(native) {
+  border: 1px solid blue;
+  border-radius: 7px;
+  height: 70px;
+}
+
+ion-item::part(detail-icon) {
+  color: white;
+  opacity: 1;
+  font-size: 20px;
+}
+.credit-blue, .debito-blue{
+  ion-item {
+    p {
+      margin-bottom: 0%;
+      color: rgb(255, 255, 255);
+      font-weight: 700;
+      padding-left: 15px;
+    }
+  }
+  ion-item::part(native) {
+    border: 1px solid blue;
+    background-color: blue;
+    border-radius: 7px;
+    height: 70px;
+  }
+  
+  ion-item::part(detail-icon) {
+    color: white;
+    opacity: 1;
+    font-size: 20px;
+  }
+}
+
+.input {
+  width: 98%;
+  ion-col {
+    ion-item::part(native) {
+      border: 1px solid blue;
+      border-radius: 7px;
+      height: 60px;
+    }
+    p {
+      margin: 0%;
+      color: gray;
+    }
+  }
+  ion-col:nth-child(1) {
+    margin-top: 15px;
+  }
+}
+.input-name {
+  --placeholder-color: black;
+  --color: black;
+}
+.input-group {
+  width: 98%;
+  ion-col {
+    margin-top: 15px;
+    ion-item::part(native) {
+      border: 1px solid blue;
+      border-radius: 7px;
+      height: 60px;
+    }
+    p {
+      margin: 0%;
+      color: gray;
+    }
+  }
+}
+ion-button {
+  text-decoration: none;
+  width: 98%;
+  height: 60px;
+  margin-top: 30px;
+  --border-radius: 10px;
+  font-size: 1rem;
+  font-family: $font-family;
+
+  // @extend %margin-top;
+}
+.back{
+  margin-top: 10px !important;
+}
+.legend-parcelas{
+  h4{
+    font-size: 0.9rem;
+  }
+  p{
+    font-size: 0.9rem;
+  }
+}
+.parcelas{
+  width: 100%;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  h4{
+    font-size: 1.1rem;
+    margin: 0%;
+    margin-top: 5px;
+  }
+  p{
+    font-size: 0.9rem;
+    margin: 0%;
+    margin-bottom: 5px;
+  }
+}
+.all-width{
+  width: 100%;
+}
