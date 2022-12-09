@@ -97,3 +97,12 @@ ion-card {
   .border{
     border:1px solid rgb(0, 119, 255) !important;
   }
+  @media (min-width:810px){
+    ion-item{
+      ion-img{
+          width: 5vw;
+          margin-right: 4vw;
+      }
+
+    }
+}

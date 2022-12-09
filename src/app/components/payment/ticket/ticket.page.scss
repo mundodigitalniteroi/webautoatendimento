@@ -80,3 +80,15 @@ ion-card {
   ion-item::part(native) {
     padding-left: 0%;
   }
+  @media (min-width:810px){
+    ion-item{
+      ion-img{
+          width: 5vw;
+          margin-right: 4vw;
+      }
+      .download{
+        width: 4vw;
+          margin-right: 4vw;
+      }
+    }
+}

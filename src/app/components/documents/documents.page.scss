@@ -104,3 +104,16 @@ ion-card {
   
     // @extend %margin-top;
   }
+  @media (min-width:810px){
+    .row-options{
+    ion-item{
+      ion-img{
+          width: 5vw;
+          margin-right: 4vw;
+      }
+      .ipva-img{
+        width: 4vw;
+      }
+    }
+  }
+}

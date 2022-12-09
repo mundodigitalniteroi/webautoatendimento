@@ -1,14 +1,21 @@
-<ion-item lines="none">
-  <h1 *ngIf="step == 'indentity' || step == 'address' || step == 'verify'">Complete todos os passos</h1>
-</ion-item>
-<ion-item class="steps ion-justify-content-center ion-align-items-center" lines="none">
-  <ion-img src="../../../assets/Step process signup0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
-  <ion-img src="../../../assets/Step process signup1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
-  <ion-img src="../../../assets/Step process signup2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
-  <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
-</ion-item>
+
 
   <ion-content [fullscreen]="true" >
+    <ion-item lines="none">
+      <h1 *ngIf="step == 'indentity' || step == 'address' || step == 'verify'">Complete todos os passos</h1>
+    </ion-item>
+    <!-- <ion-item class="steps ion-justify-content-center ion-align-items-center" lines="none">
+      <ion-img src="../../../assets/Step process signup0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
+      <ion-img src="../../../assets/Step process signup1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
+      <ion-img src="../../../assets/Step process signup2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
+      <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
+    </ion-item> -->
+      <ion-col size="12" class="steps ion-justify-content-center ion-align-items-center">
+        <ion-img src="../../../assets/Step process signup0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
+        <ion-img src="../../../assets/Step process signup1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
+        <ion-img src="../../../assets/Step process signup2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
+        <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
+      </ion-col>
     <ion-grid class="ion-text-center">
       <div class=" verify" lines="none" *ngIf="step == 'verify'">
         <h1>{{title}}</h1>
@@ -34,9 +41,12 @@
         <br>
         <p><u>Reenviar código</u></p>
       </div>
-      <ion-button *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" (click)="changeStep()">Continuar</ion-button>
+      
     </ion-grid>
+    <ion-col size="12">
+      <ion-button *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" (click)="changeStep()">Continuar</ion-button>
 
+    </ion-col>
   </ion-content>
   
  
