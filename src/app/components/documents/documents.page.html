@@ -1,0 +1,78 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class=" ion-align-items-center">
+    <ion-row class=" row-title ion-text-center ion-justify-content-center ion-align-items-center">
+      <ion-col>
+        <h1>Selecione o documento que <br>
+          deseja enviar.</h1>
+      </ion-col>
+
+    </ion-row>
+    <ion-row class=" row-foto ">
+      <ion-col class=" ion-text-center ">
+        <ion-card>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-options">
+      <ion-col size="12">
+        <ion-card  [ngClass]="{'border': line ==  'rg' }" (click)="line = 'rg'">
+          <ion-card-content class="info">
+              <ion-item lines="none" class="ion-text-start">
+                  <ion-img src="../../../assets/documents/rg.png"></ion-img>
+                  <div>
+                    <h3><b>Meu RG </b></h3>
+                    <p>Carteira de identidade</p>
+                  </div>
+                  
+              </ion-item>
+              <div>
+                  <ion-img *ngIf="line ==  'rg'" src="../../../assets/document-upload/ri_checkbox-circle-fill.png" ></ion-img>
+              </div>
+
+          </ion-card-content>
+      </ion-card>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card  [ngClass]="{'border': line ==  'cnh' }" (click)="line = 'cnh'">
+          <ion-card-content class="info">
+              <ion-item lines="none" class="ion-text-start">
+                  <ion-img src="../../../assets/documents/cnh.png"></ion-img>
+                  <div>
+                    <h3><b>Minha CNH</b></h3>
+                    <p>Carteira Nacional de Habilitação</p>
+                  </div>
+                  
+              </ion-item>
+              <div>
+                  <ion-img *ngIf="line ==  'cnh'" src="../../../assets/document-upload/ri_checkbox-circle-fill.png" ></ion-img>
+              </div>
+
+          </ion-card-content>
+      </ion-card>
+      </ion-col>
+      <ion-col  size="12">
+        <ion-card  [ngClass]="{'border': line ==  'rgu' }" (click)="line = 'rgu'">
+          <ion-card-content class="info">
+              <ion-item lines="none" class="ion-text-start">
+                  <ion-img src="../../../assets/documents/rgUnico.png"></ion-img>
+                  <div>
+                    <h3><b>Meu RG único</b></h3>
+                    <p>Novo documento de identidade </p>
+                  </div>
+              </ion-item>
+              <div>
+                  <ion-img *ngIf="line ==  'rgu'" src="../../../assets/document-upload/ri_checkbox-circle-fill.png" ></ion-img>
+              </div>
+
+          </ion-card-content>
+      </ion-card>
+      </ion-col>
+        
+    </ion-row>
+    <ion-row class="row-options">
+      <ion-col size="12">
+        <ion-button   [routerLink]="['/face-picture']" > Continuar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

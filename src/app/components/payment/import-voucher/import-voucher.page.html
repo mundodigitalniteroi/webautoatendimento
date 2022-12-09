@@ -1,0 +1,32 @@
+<ion-content [fullscreen]="true">
+    <ion-grid class=" ion-align-items-center">
+        <ion-row class=" row-title ion-justify-content-start ion-align-items-center" >
+            <ion-col size="12">
+                <h1 *ngIf="check == false">Importar comprovante</h1>
+                <h1 *ngIf="check == true">Exportar comprovante</h1>
+                <p>Para finalizar o  pagamento no boleto, você precisa enviar
+                    o comprovante de pagamento.</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="row-title  ion-justify-content-center ion-align-items-center " >
+            <ion-card   [ngClass]="{'border': line  }"> 
+                <ion-card-content class="info" >
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../../assets/import-voucher/importvoucher.png"></ion-img>
+                        <h3 *ngIf="check == false"><b>Importar comprovante</b></h3>
+                        <h3 *ngIf="check == true"><b>Exportar comprovante</b></h3>
+                    </ion-item>
+                    <div>
+                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="check"></ion-img>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+    </ion-grid>
+    <ion-row class="row-buttons ion-justify-content-center">
+        <ion-button  [routerLink]="['/import-voucher']" (click)="line = true; check = true" *ngIf="check == false">Enviar comprovante de pagamento</ion-button>
+        <ion-button  [routerLink]="['/payment-confirmed']" *ngIf="check == true">Continuar</ion-button>
+        <ion-button  fill="outline" class="back" [routerLink]="['/ticket']">Voltar</ion-button>
+    </ion-row>
+        
+</ion-content>

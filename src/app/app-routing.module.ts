@@ -42,6 +42,50 @@ const routes: Routes = [
     path: 'payment-card',
     loadChildren: () => import('./components/payment/payment-card/payment-card.module').then(m => m.PaymentCardModule)
   },
+  {
+    path: 'pix',
+    loadChildren: () => import('./components/payment/pix/pix.module').then(m => m.PixModule)
+  },
+  {
+    path: 'ticket',
+    loadChildren: () => import('./components/payment/ticket/ticket.module').then(m => m.TicketModule)
+  },
+  {
+    path: 'import-voucher',
+    loadChildren: () => import('./components/payment/import-voucher/import-voucher.module').then(m => m.ImportVoucherModule)
+  },
+  {
+    path: 'payment-confirmed',
+    loadChildren: () => import('./components/payment/payment-confirmed/payment-confirmed.module').then( m => m.PaymentConfirmedPageModule)
+  },  {
+    path: 'schedule-shipping',
+    loadChildren: () => import('./components/schedule-shipping/schedule-shipping.module').then( m => m.ScheduleShippingPageModule)
+  },
+  {
+    path: 'scheduling-confirmed',
+    loadChildren: () => import('./components/scheduling-confirmed/scheduling-confirmed.module').then( m => m.SchedulingConfirmedPageModule)
+  },
+  {
+    path: 'order-status',
+    loadChildren: () => import('./components/order-status/order-status.module').then( m => m.OrderStatusPageModule)
+  },
+  {
+    path: 'documents',
+    loadChildren: () => import('./components/documents/documents.module').then( m => m.DocumentsPageModule)
+  },
+  {
+    path: 'face-picture',
+    loadChildren: () => import('./components/face-picture/face-picture.module').then( m => m.FacePicturePageModule)
+  },
+  {
+    path: 'loading-picture',
+    loadChildren: () => import('./components/loading-picture/loading-picture.module').then( m => m.LoadingPicturePageModule)
+  },
+  {
+    path: 'try-again',
+    loadChildren: () => import('./components/try-again/try-again.module').then( m => m.TryAgainPageModule)
+  },
+
   // {
   //   path: '',
   //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)

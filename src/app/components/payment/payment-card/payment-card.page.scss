@@ -98,7 +98,7 @@ ion-item::part(detail-icon) {
 ion-button {
   text-decoration: none;
   width: 98%;
-  height: 60px;
+  height: 80px;
   margin-top: 30px;
   --border-radius: 10px;
   font-size: 1rem;
@@ -134,4 +134,14 @@ ion-button {
 }
 .all-width{
   width: 100%;
+}
+.check{
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  ion-img{
+    width: 20px !important;
+  }
 }

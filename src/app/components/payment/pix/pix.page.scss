@@ -1,0 +1,83 @@
+$font-family: Arial, Helvetica, sans-serif;
+ion-content{
+    display: flex;
+    align-items: center;
+}
+ion-grid {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+.row-title {
+  width: 98%;
+}
+.value {
+  font-size: 1.2rem;
+  h2 {
+    margin-top: 0%;
+    font-size: 1.2rem;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+}
+h1 {
+  margin-top: 15%;
+  color: rgb(22, 127, 247);
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+p {
+  margin-top: 0%;
+  font-size: 1rem;
+  font-weight: $font-family;
+}
+.expiration {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-weight: $font-family;
+  margin-top: 8px;
+
+  color: #000000;
+}
+.detalhe {
+  h1 {
+    margin-top: 20px;
+    color: black;
+  }
+  h2 {
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+  p {
+    font-size: 0.9rem;
+    width: 80%;
+  }
+  ion-img {
+    margin-left: 10%;
+  }
+  ion-col:nth-child(2) {
+    display: flex;
+  }
+
+  ion-img {
+    width: 20px;
+  }
+}
+ion-button {
+  text-decoration: none;
+  width: 95%;
+  height: 60px;
+  margin-top: 30px;
+  --border-radius: 10px;
+  font-size: 1rem;
+  font-family: $font-family;
+}
+ion-button:nth-child(2){
+    margin-top: 10px;
+}
+// .row-buttons{
+//     text-align: center;
+// }

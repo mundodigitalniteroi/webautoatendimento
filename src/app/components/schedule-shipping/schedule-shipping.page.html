@@ -1,0 +1,71 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class=" ion-align-items-center">
+      <ion-row class=" row-title ion-justify-content-start ion-align-items-center">
+          <ion-col>
+              <h1 *ngIf="retirada">Agendar retirada</h1>
+              <h1 *ngIf="frete">Agendar frete</h1>
+              <p>Escolha o melhor dia e horário</p>
+          </ion-col>
+          
+      </ion-row>
+      <ion-row class=" row-title days-week ion-justify-content-start ion-align-items-center">
+        <ion-col size="12">
+            <h1>Escolha o dia</h1>
+        </ion-col>
+        <ion-col class="col-days" size="12">
+            <ion-card (click)="day = 'Seg'" [ngClass]="{'day-selected': day == 'Seg'  }">
+                <ion-card-header>
+                  <ion-card-title>Seg</ion-card-title>
+                  <ion-card-title class="margin">25</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+              <ion-card (click)="day = 'Ter'" [ngClass]="{'day-selected': day == 'Ter'  }">
+                <ion-card-header>
+                  <ion-card-title>Ter</ion-card-title>
+                  <ion-card-title class="margin">26</ion-card-title>
+                </ion-card-header>
+              </ion-card >
+              <ion-card (click)="day = 'Qua'" [ngClass]="{'day-selected': day == 'Qua'  }">
+                <ion-card-header>
+                  <ion-card-title>Qua</ion-card-title>
+                  <ion-card-title class="margin">27</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+              <ion-card (click)="day = 'Qui'" [ngClass]="{'day-selected': day == 'Qui'  }">
+                <ion-card-header>
+                  <ion-card-title>Qui</ion-card-title>
+                  <ion-card-title class="margin">28</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+              <ion-card (click)="day = 'Sex'" [ngClass]="{'day-selected': day == 'Sex'  }">
+                <ion-card-header>
+                  <ion-card-title>Sex</ion-card-title>
+                  <ion-card-title class="margin">29</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+        </ion-col>
+    </ion-row>
+    <ion-row class=" row-title hour ion-justify-content-start ion-align-items-center">
+        <ion-col size="12">
+            <h1>Escolha o horário</h1>
+        </ion-col>
+        <ng-template ngFor let-hour [ngForOf]="hours ">
+          <ion-col size="6">
+            <ion-card (click)="hourSelected = hour" [ngClass]="{'day-selected': hourSelected == hour && hour != '11:00',  'hour-off': hour == '11:00'  }">
+              <ion-card-header>
+                <ion-card-title>{{hour}}</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        </ng-template>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button   [routerLink]="['/scheduling-confirmed']" >Confirmar</ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button  fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

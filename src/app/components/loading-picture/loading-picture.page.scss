@@ -1,0 +1,40 @@
+
+$font-family: Arial, Helvetica, sans-serif;
+ion-content{
+    --background:rgba(233, 233, 233, 0.2);
+}
+ion-grid{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+ion-button {
+    text-decoration: none;
+    width: 95%;
+    height: 60px;
+    margin-top: 30px;
+    --border-radius: 10px;
+    font-size: 1rem;
+    font-family: $font-family;
+    --background: rgb(72, 135, 252);
+    // @extend %margin-top;
+  }
+  h1{
+    margin-top: 2%;
+    color: rgb(22, 127, 247);
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  p{
+    margin-top: 0%;
+    font-size: 1.2rem;
+    width: 75%;
+    color: #616161;
+    
+  }
+  ion-img{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }

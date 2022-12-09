@@ -73,13 +73,16 @@
                 </ion-col>
             </ion-row>
             <ion-row  class="all-width" *ngFor="let item of parcelas" >
-                <ion-col class="parcelas" size="12">
+                <ion-col class="parcelas" size="9">
                     <h4><b>{{item.numeroParcelas}} {{item.valor}}</b></h4>
                     <p>Valor total: {{item.valorTotal}}</p>
                 </ion-col>
+                <ion-col class="check ion-justify-content-end ion-align-items-center " size="3">
+                    <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
+                </ion-col>
             </ion-row>
-        <ion-button *ngIf="credit == true"   [routerLink]="['/step']" >Pagar</ion-button>
-        <ion-button *ngIf="credit == true" fill="outline" class="back" [routerLink]="['/process-information']">Voltar</ion-button>
+        <ion-button *ngIf="credit == true"   [routerLink]="['/payment-confirmed']" >Pagar</ion-button>
+        <ion-button *ngIf="credit == true" fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
         </ng-template>
         <ng-template [ngIf]="debito == true">
             <ion-row class="all-width" >
@@ -89,13 +92,16 @@
                 </ion-col>
             </ion-row>
             <ion-row  class="all-width"  >
-                <ion-col class="parcelas" size="12">
+                <ion-col class="parcelas" size="9">
                     <h4><b>{{parcelas[11].numeroParcelas}} {{parcelas[11].valor}}</b></h4>
                     <p>Valor total: {{parcelas[11].valorTotal}}</p>
                 </ion-col>
+                <ion-col class="check ion-justify-content-end ion-align-items-center " size="3">
+                    <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
+                </ion-col>
             </ion-row>
-        <ion-button *ngIf="debito == true"   [routerLink]="['/step']" >Pagar</ion-button>
-        <ion-button *ngIf="debito == true" fill="outline" class="back" [routerLink]="['/process-information']">Voltar</ion-button>
+        <ion-button *ngIf="debito == true"   [routerLink]="['/payment-confirmed']" >Pagar</ion-button>
+        <ion-button *ngIf="debito == true" fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
         </ng-template>
         
         

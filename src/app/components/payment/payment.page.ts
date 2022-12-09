@@ -25,7 +25,9 @@ export class PaymentPage implements OnInit {
     this.checkLicen = true;
     this.checkComp = true;
   }
-  goPaymentCard(){
-    this.router.navigate(['/payment-card'])
+  goPayment(type){
+    if(type == 'card'){this.router.navigate(['/payment-card'])}; 
+    if(type == 'pix'){this.router.navigate(['/pix'])}; 
+    if(type == 'ticket'){this.router.navigate(['/ticket'])}; 
   }
 }

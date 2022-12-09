@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true">
+    <ion-grid class=" ion-align-items-center">
+        <ion-row class=" row-title ion-justify-content-start ion-align-items-center" >
+            <ion-col size="12">
+                <h1>Código do boleto</h1>
+                <p>Utilize o do código de barras para realizar o pagamento</p>
+            </ion-col>
+            <ion-col size="12" class="detalhe">
+                <p><b>23793.38128 60086.894700 09000.063306 1 91660000005000</b></p>
+                <ion-img  src="../../../../assets/pix/copiaecola.png"></ion-img>
+            </ion-col>
+        </ion-row>
+        <ion-row class="row-title  ion-justify-content-center ion-align-items-center ">
+            <ion-card> 
+                <ion-card-content class="info" >
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img src="../../../../assets/payment/boleto.png"></ion-img>
+                        <h3><b>Boleto</b></h3>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+            <ion-card> 
+                <ion-card-content class="info" >
+                    <ion-item lines="none" class="ion-text-start">
+                        <ion-img class="download"src="../../../../assets/ticket/download.png"></ion-img>
+                        <h3><b>Boleto</b></h3>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+
+    </ion-grid>
+    <ion-row class="row-buttons ion-justify-content-center">
+        <ion-button  [routerLink]="['/import-voucher']" >Finalizar pagamento</ion-button>
+        <ion-button  fill="outline" class="back" [routerLink]="['/process-information']">Voltar</ion-button>
+    </ion-row>
+        
+</ion-content>

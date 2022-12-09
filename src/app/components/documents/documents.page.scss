@@ -1,0 +1,106 @@
+$font-family: Arial, Helvetica, sans-serif;
+ion-content {
+  background-color: #f7f7f7;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+ion-grid {
+  background-color: #f7f7f7;
+  height: 100vh;
+}
+h1 {
+  color: rgb(22, 127, 247);
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.row-title {
+  width: 98%;
+  background-color: white;
+  border-radius: 15px 15px 0 0;
+}
+.row-foto {
+  width: 98%;
+  background-color: white;
+  border-radius: 0px;
+  ion-col {
+    display: flex;
+    justify-content: center;
+  }
+}
+ion-card {
+  height: 180px;
+  width: 75%;
+  border-radius: 15px;
+}
+.row-options{
+    width: 98%;
+  background-color: white;
+  border-radius: 0px;
+    ion-col{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+      ion-card {
+        height: 60px;
+        width: 90%;
+        border-radius: 5px;
+        border: 1px solid #cdcbcb;
+        box-shadow: none;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        b {
+          color: black;
+        }
+        ion-card-content{
+            height: 100%;
+        }
+      }
+      ion-card:hover {
+        border: 1px solid rgb(22, 127, 247) !important;
+      }
+      ion-item{
+        ion-img{
+            width: 10vw;
+            margin-right: 4vw;
+        }
+        .ipva-img{
+          width: 8vw;
+        }
+      }
+      ion-item::part(native) {
+        padding-left: 0%;
+      }
+      h3{
+        width: 100%;
+        
+        b{
+            color:rgb(22, 127, 247);
+        }
+      }
+      p{
+        color:#929090;
+      }
+      .border{
+        border:1px solid rgb(0, 119, 255) !important;
+      }
+}
+.info{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+  }
+  ion-button {
+    text-decoration: none;
+    width: 90%;
+    height: 60px;
+    margin-top: 30px;
+    --border-radius: 10px;
+    font-size: 1rem;
+    font-family: $font-family;
+  
+    // @extend %margin-top;
+  }

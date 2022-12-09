@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class=" ion-align-items-center">
+      <ion-row class=" row-title ion-justify-content-start ion-align-items-center">
+          <ion-col>
+              <h1>Status do seu pedido</h1>
+              <p>Para finalizar o  pagamento no boleto, você precisa enviar
+                o comprovante de pagamento. </p>
+          </ion-col>
+          
+      </ion-row>
+      <ion-row *ngFor="let item of steps">
+        <ion-col size="12" class="steps">
+          <div class="flex-center"> 
+            <ion-img *ngIf="item.status == 'aprovado'" src="../../../assets/order-status/checkVerde.png"></ion-img>
+            <ion-img *ngIf="item.status == 'analise'" src="../../../assets/order-status/analise.png"></ion-img>
+            <ion-img *ngIf="item.status == 'reprovado'" src="../../../assets/order-status/reprovado.png"></ion-img>
+          </div>
+          <div class="flex-center margin-left">
+            <h2><b>{{item.step}}</b></h2>
+            <p>{{item.data}}</p>
+         </div>
+          
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button   [routerLink]="['/documents']" > Continuar liberação</ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button  fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
+        </ion-col>
+      </ion-row>
+</ion-grid>
+</ion-content>
