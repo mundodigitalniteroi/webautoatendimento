@@ -104,3 +104,31 @@ ion-button {
         }
     }
   }
+  @media(min-width:768px){
+    .step-1{
+        display: none;
+    }
+    .step-2{
+        display: block !important;
+    }
+    ion-grid{
+      width: 60% !important;
+
+    }
+    .col-btn{
+        width: 100%;
+        justify-content: center;
+    }
+    ion-button {
+        width: 50%;
+    }
+    .steps{
+        width: 100%;
+    }
+    .step-1{
+        width: 35% !important;
+    }
+    .title-steps{
+        display: none;
+    }
+  }

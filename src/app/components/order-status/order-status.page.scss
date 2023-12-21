@@ -57,3 +57,8 @@ h1{
   .margin-left{
     margin-left: 15px;
   }
+  @media(min-width:768px){
+    ion-grid{
+      width: 50%;
+    }
+  }

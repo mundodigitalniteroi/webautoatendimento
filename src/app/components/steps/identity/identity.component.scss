@@ -18,3 +18,9 @@ $font-family: Arial, Helvetica, sans-serif;
     margin-top: 20px;
     --color:rgb(107, 107, 107);
   }
+  @media(min-width:768px){
+    ion-list{
+      width: 60% !important;
+
+    }
+  }

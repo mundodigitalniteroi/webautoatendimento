@@ -1,10 +1,15 @@
 <ion-content [fullscreen]="true" class="ion-align-items-center">
     <ion-grid >
-        <ion-row class="ion-align-items-center ion-justify-content-center row-center">
-            <ion-img src="../../../assets/home/Illustrasi(1).png"></ion-img>
-            <h1 class="">Seja Bem-vindo</h1>
-            <p class="ion-text-center ">Lorem Ipsum is simply dummy text of the printing </p>
-            <ion-button (click)="goPublicSearch()">Fazer busca</ion-button>
+        <ion-row class="ion-align-items-center ion-justify-content-center row-center" >
+            <ion-col size-md="6" class="ion-align-items-end ion-justify-content-center" style="display: flex;">
+                <ion-img src="../../../assets/home/Illustrasi(1).png"></ion-img>
+            </ion-col>
+            <ion-col size-md="6" class="ion-align-items-center ion-justify-content-center col-center" style="display: flex;">
+                <h1 class="ion-text-center">Seja Bem-vindo</h1>
+                <p class="ion-text-center ">Clique no botão abaixo para iniciar a liberação do seu veículo.</p>
+                <ion-button (click)="goPublicSearch()" class="btn-busca">Fazer busca</ion-button>
+            </ion-col>
+           
         </ion-row>
     </ion-grid>
 </ion-content>

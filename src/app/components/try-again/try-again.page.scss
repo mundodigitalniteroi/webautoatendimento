@@ -32,3 +32,8 @@ ion-button {
   .person{
 
   }
+  @media(min-width:768px){
+    ion-grid{
+      width: 50%;
+    }
+  }

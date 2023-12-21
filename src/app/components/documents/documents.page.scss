@@ -104,6 +104,11 @@ ion-card {
   
     // @extend %margin-top;
   }
+  @media(min-width:768px){
+    ion-grid{
+      width: 50%;
+    }
+  }
   @media (min-width:810px){
     .row-options{
     ion-item{

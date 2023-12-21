@@ -44,3 +44,8 @@ ion-button {
   font-family: $font-family;
   --background: rgb(255, 255, 255);
 }
+@media(min-width:768px){
+  ion-grid{
+    width: 50%;
+  }
+}

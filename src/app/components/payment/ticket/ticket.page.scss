@@ -80,6 +80,16 @@ ion-card {
   ion-item::part(native) {
     padding-left: 0%;
   }
+  @media(min-width:768px){
+    ion-grid{
+      width: 50%;
+    }
+    .row-buttons{
+      ion-button{
+        width: 50%;
+      }
+    }
+  }
   @media (min-width:810px){
     ion-item{
       ion-img{

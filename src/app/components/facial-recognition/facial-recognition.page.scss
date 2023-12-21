@@ -32,3 +32,16 @@ ion-button {
   .person{
 
   }
+  @media(min-width:768px){
+    .picture-1{
+      display: none;
+    }
+    .picture-2{
+      display: block !important;
+      margin-top: 15%;
+    }
+    
+    ion-grid{
+      width: 60%;
+    }
+  }

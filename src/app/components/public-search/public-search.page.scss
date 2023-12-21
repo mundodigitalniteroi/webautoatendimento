@@ -56,3 +56,20 @@ h1 {
   ion-item::part(native) {
     padding-left: 0%;
   }
+
+  @media(min-width:768px){
+    ion-grid {
+      height: 100%;
+      width: 60%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    
+    }
+    h1{
+      font-size: 4rem;
+    }
+   .btn-search{
+    width: 60%;
+   }
+  }

@@ -145,3 +145,8 @@ ion-button {
     width: 20px !important;
   }
 }
+@media(min-width:768px){
+  ion-grid{
+    width: 50%;
+  }
+}

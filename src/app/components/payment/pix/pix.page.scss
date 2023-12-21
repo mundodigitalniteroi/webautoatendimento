@@ -81,3 +81,13 @@ ion-button:nth-child(2){
 // .row-buttons{
 //     text-align: center;
 // }
+@media(min-width:768px){
+  ion-grid{
+    width: 50%;
+  }
+  .row-buttons{
+    ion-button{
+      width: 50%;
+    }
+  }
+}

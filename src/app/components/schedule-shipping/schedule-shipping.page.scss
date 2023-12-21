@@ -90,3 +90,8 @@ ion-button {
 .back{
   margin-top: 0%;
 }
+@media(min-width:768px){
+  ion-grid{
+    width: 50%;
+  }
+}

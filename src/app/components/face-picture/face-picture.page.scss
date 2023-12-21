@@ -38,3 +38,8 @@ ion-button {
     margin-top: 15px;
     margin-bottom: 15px;
   }
+  @media(min-width:768px){
+    ion-grid{
+      width: 50%;
+    }
+  }

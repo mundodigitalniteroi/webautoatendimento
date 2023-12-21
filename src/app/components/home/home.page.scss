@@ -10,9 +10,9 @@ ion-grid {
   justify-content: center;
 }
 .row-center {
-  width: 90%;
+  width: 100%;
   flex-direction: column !important;
-  height: 80%;
+  height: 100%;
 }
 ion-img {
   width: 100%;
@@ -27,7 +27,6 @@ h1 {
 p {
   @extend %margin-top;
   color: grey;
-  width: 80%;
   font-family: $font-family;
 }
 ion-button {
@@ -38,4 +37,32 @@ ion-button {
   font-family: $font-family;
   --background: rgb(72, 135, 252);
   @extend %margin-top;
+}
+.col-center{
+  justify-content: start !important;
+  width: 100%;
+  flex-direction: column !important;
+  height: 100%;
+}
+
+@media(min-width:768px){
+  .row-center {
+    width: 100%;
+    flex-direction: row !important;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn-busca{
+    width: 60%;
+  }
+  .col-center{
+    background-color: #F7F7F7;
+    width: 100%;
+    flex-direction: column !important;
+    justify-content: center !important;
+    height: 100%;
+  }
+
 }
