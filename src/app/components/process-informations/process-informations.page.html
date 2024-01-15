@@ -5,14 +5,10 @@
   <ion-row class="ion-justify-content-center ">
     <ion-card>
       <ion-card-content class="info">
-        <p><b>Formulário GRV:</b> 914191627</p>
-        <p><b>Placa:</b> NFH4907</p>
-        <p><b>Marca/modelo:</b> HONDA/CG 150 TITAN ESD</p>
-        <p><b>Tipo de veículo:</b> MOTOCICLETA</p>
-        <p><b>Data/hora Guarda:</b> 23/06/2018 - 06:45</p>
-        <p><b>Pátio Destino:</b> GUANAMBI, BA, CEP: 46430-000)</p>
-        <p><b>Telefone:</b> (77) 9962-1801</p>
-      </ion-card-content>
+        <p><b>Formulário GRV:</b> {{informations.veiculo.processo}}</p>
+        <p><b>Placa:</b>  {{informations.veiculo.placa}}</p>
+        <p><b>Marca/modelo:</b>  {{informations.veiculo.marcaModelo}}</p>
+        </ion-card-content>
     </ion-card>
   </ion-row>
   <ion-row class="ion-justify-content-center ">
@@ -27,33 +23,26 @@
         <ion-col size="6">
           <ion-row>
             <h4><b>Tipo</b></h4>
-            <p>Acionamento Remoção</p>
-            <p>Acionamento Remoção</p>
-            <p>Acionamento Remoção</p>
+            <p *ngFor="let debito of  informations.debitos">{{debito.nome}}</p>
+
           </ion-row>
         </ion-col>
         <ion-col size="2">
           <ion-row class="ion-text-center ">
             <h4><b>Total</b></h4>
-            <p>R$87,45</p>
-            <p>R$87,45</p>
-            <p>R$87,45</p>
+            <p *ngFor="let debito of  informations.debitos">R${{debito.valor}}</p>
           </ion-row>
         </ion-col>
         <ion-col size="2">
           <ion-row class="ion-text-center">
             <h4><b>Qtd</b></h4>
-            <p>x 1</p>
-            <p>x 1</p>
-            <p>x 20</p>
+            <p *ngFor="let debito of  informations.debitos">x {{debito.quantidade}}</p>
           </ion-row>
         </ion-col>
         <ion-col size="2">
           <ion-row class="ion-text-center">
             <h4><b>Subtotal</b></h4>
-            <p>R$87,45</p>
-            <p>R$87,45</p>
-            <p>R$87,45</p>
+            <p *ngFor="let debito of  informations.debitos">R${{debito.valorTotal}}</p>
           </ion-row>
         </ion-col>
       </ion-card-content>
@@ -66,7 +55,7 @@
         </ion-col>
         <ion-col class="border" size="6">
           <ion-row class="ion-text-end">
-            <h4 class="price">R$324,15</h4>
+            <h4 class="price">R${{valorTotal}}</h4>
           </ion-row>
         </ion-col>
       </ion-card-content>

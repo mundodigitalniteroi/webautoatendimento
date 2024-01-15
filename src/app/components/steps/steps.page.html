@@ -11,10 +11,10 @@
       <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
     </ion-item> -->
       <ion-row  class="steps ion-justify-content-center ion-align-items-center">
-        <ion-img src="../../../assets/Step process signup0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
-        <ion-img src="../../../assets/Step process signup1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
-        <ion-img src="../../../assets/Step process signup2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
-        <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
+        <ion-img src="../../../assets/step0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
+        <ion-img src="../../../assets/step1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
+        <ion-img src="../../../assets/step2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
+        <ion-img src="../../../assets/step3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
         <ion-img src="../../../assets/step/step1.png" class="step-2" style="display: none;" *ngIf="step == 'indentity'"></ion-img>
         <ion-img src="../../../assets/step/step2.png" class="step-2" style="display: none;" *ngIf="step == 'address'"></ion-img>
         <ion-img src="../../../assets/step/step3.png" class="step-2" style="display: none;" *ngIf="step == 'verify'"></ion-img>
@@ -31,8 +31,8 @@
         </ion-card-header>
       
         <ion-card-content [ngClass]="{'verifyComplete': step == 'verifyComplete' }">
-          <app-identity *ngIf="step == 'indentity'"></app-identity>
-          <app-address *ngIf="step == 'address'"></app-address>
+          <app-identity *ngIf="step == 'indentity'" [saveFields]="saveIdentity"></app-identity>
+          <app-address *ngIf="step == 'address'" [saveFields]="saveAdress"></app-address>
           <app-verification *ngIf="step == 'verify'"></app-verification>
           <ion-img src="../../../assets/ri_checkbox-circle-fill.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
           <ion-img src="../../../assets/step/checkBlue.png" class="step-2" style="display: none;" *ngIf="step == 'verifyComplete'"></ion-img>

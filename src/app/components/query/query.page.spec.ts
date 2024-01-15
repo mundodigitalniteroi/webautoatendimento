@@ -1,24 +1,24 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { PublicSearchPage } from './public-search.page';
+import { QueryPage } from './query.page';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
 describe('PublicSearchPage', () => {
-  let component: PublicSearchPage;
-  let fixture: ComponentFixture<PublicSearchPage>;
+  let component: QueryPage;
+  let fixture: ComponentFixture<QueryPage>;
   let consultaDebitoService: ConsultaDebitoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicSearchPage],
+      declarations: [QueryPage],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [FormBuilder, ConsultaDebitoService]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PublicSearchPage);
+    fixture = TestBed.createComponent(QueryPage);
     component = fixture.componentInstance;
     consultaDebitoService = TestBed.inject(ConsultaDebitoService);
   });

@@ -6,11 +6,11 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
 import { SetInformations } from 'src/app/state/registro/registro.action';
 
 @Component({
-  selector: 'app-public-search',
-  templateUrl: './public-search.page.html',
-  styleUrls: ['./public-search.page.scss']
+  selector: 'app-query',
+  templateUrl: './query.page.html',
+  styleUrls: ['./query.page.scss']
 })
-export class PublicSearchPage implements OnInit {
+export class QueryPage implements OnInit {
   form: FormGroup;
   informations;
   constructor(
@@ -34,14 +34,14 @@ export class PublicSearchPage implements OnInit {
       const payload = {
         informacaoConsulta:deb
       }
-      this.store.dispatch(new SetInformations(payload));
-      this.router.navigate(['/process-informations'])
+      // this.store.dispatch(new SetInformations(payload));
+      // this.router.navigate(['/process-informations'])
 
     })
   }
 
   goProcessInformation(){
-    this.router.navigate(['/process-informations'])
+    // this.router.navigate(['/process-informations'])
   }
  
 }

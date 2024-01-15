@@ -13,7 +13,9 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
   }
   goPublicSearch(){
-    this.router.navigate(['/public-search'])
+    this.router.navigate(['/term-acception'])
   }
-  
+  goQuery(){
+    this.router.navigate(['/query'])
+  }
 }

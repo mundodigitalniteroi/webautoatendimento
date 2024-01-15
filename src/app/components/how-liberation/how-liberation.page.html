@@ -26,7 +26,7 @@
                     </div>
                 </ion-row>
                 <ion-row class="ion-justify-content-center row-btns" >
-                    <ion-button  class="next" [routerLink]="['/step']" [disabled]="!selection">Continuar</ion-button>
+                    <ion-button  class="next"  [disabled]="!selection" (click)="saveContact()">Continuar</ion-button>
                 </ion-row>
                 <ion-row class="ion-justify-content-center row-btns" >
                     <ion-button fill="outline" [routerLink]="['/process-informations']">Voltar</ion-button>

@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PublicSearchPage } from './public-search.page';
-import { PublicSearchRoutingModule } from './public-search-routing.module';
+import { QueryPage } from './query.page';
+import { QueryRoutingModule } from './query-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 
 
 @NgModule({
-  declarations: [PublicSearchPage],
+  declarations: [QueryPage],
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
-    PublicSearchRoutingModule,
+    QueryRoutingModule,
     ReactiveFormsModule
   ],
   providers: [ConsultaDebitoService]
 })
-export class PublicSearchModule { }
+export class QueryModule { }

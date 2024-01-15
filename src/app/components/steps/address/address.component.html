@@ -1,23 +1,49 @@
-<ion-grid >
+<ion-grid [formGroup]="form">
+    <ion-row class="ion-justify-content-start" style="margin-top: 15px;" *ngIf="options.tipoProprietario != 'PF'">
+        <h1>Dados da Empresa</h1>
+      </ion-row>
+    <ion-list  *ngIf="options.tipoProprietario != 'PF'">
+        <ion-item class="ion-justify-content-start" >
+            <ion-input placeholder="Digite seu CEP" formControlName="cepEmpresa"  [brmasker]="{mask:'00000-000', len:9}" (ionChange)="consultaCEP('empresa')"></ion-input>
+        </ion-item>
+        <ion-item counter="true">
+            <ion-input placeholder="Digite sua rua" formControlName="ruaEmpresa"></ion-input>
+        </ion-item>
+        <ion-item class="ion-justify-content-start" >
+            <ion-input placeholder="Digite o número" formControlName="numeroEmpresa"></ion-input>
+        </ion-item>
+        <ion-item counter="true">
+            <ion-input placeholder="Complemento" formControlName="complementoEmpresa"></ion-input>
+        </ion-item>
+        <ion-item class="ion-justify-content-start" >
+            <ion-input  placeholder="Digite o estado" formControlName="estadoEmpresa" [brmasker]="{mask:'00', len:2, type:'alfa'}"></ion-input>
+        </ion-item>
+        <ion-item counter="true">
+            <ion-input placeholder="Selecione a cidade" formControlName="cidadeEmpresa"></ion-input>
+        </ion-item>
+    </ion-list>
 
+    <ion-row class="ion-justify-content-start" style="margin-top: 15px;" >
+        <h1>Dados do Proprietário</h1>
+      </ion-row>
     <ion-list >
         <ion-item class="ion-justify-content-start" >
-            <ion-input placeholder="Digite seu CEP"></ion-input>
+            <ion-input placeholder="Digite seu CEP" formControlName="cepProp"  [brmasker]="{mask:'00000-000', len:9}" (ionChange)="consultaCEP('proprietario')"></ion-input>
         </ion-item>
         <ion-item counter="true">
-            <ion-input placeholder="Digite sua rua"></ion-input>
+            <ion-input placeholder="Digite sua rua" formControlName="ruaProp"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
-            <ion-input placeholder="Digite o número"></ion-input>
+            <ion-input placeholder="Digite o número" formControlName="numeroProp"></ion-input>
         </ion-item>
         <ion-item counter="true">
-            <ion-input placeholder="Complemento"></ion-input>
+            <ion-input placeholder="Complemento" formControlName="complementoProp"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
-            <ion-select placeholder="Selecione o estado"></ion-select>
+            <ion-input  placeholder="Digite o estado" formControlName="estadoProp" [brmasker]="{mask:'00', len:2, type:'alfa'}"></ion-input>
         </ion-item>
         <ion-item counter="true">
-            <ion-select placeholder="Selecione a cidade"></ion-select>
+            <ion-input placeholder="Selecione a cidade" formControlName="cidadeProp"></ion-input>
         </ion-item>
     </ion-list>
 

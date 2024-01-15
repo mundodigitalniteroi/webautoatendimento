@@ -57,7 +57,8 @@ const routes: Routes = [
   {
     path: 'payment-confirmed',
     loadChildren: () => import('./components/payment/payment-confirmed/payment-confirmed.module').then( m => m.PaymentConfirmedPageModule)
-  },  {
+  },
+  {
     path: 'schedule-shipping',
     loadChildren: () => import('./components/schedule-shipping/schedule-shipping.module').then( m => m.ScheduleShippingPageModule)
   },
@@ -84,6 +85,14 @@ const routes: Routes = [
   {
     path: 'try-again',
     loadChildren: () => import('./components/try-again/try-again.module').then( m => m.TryAgainPageModule)
+  },
+  {
+    path: 'term-acception',
+    loadChildren: () => import('./components/term-acception/term-acception.module').then( m => m.TermAcceptionPageModule)
+  },
+  {
+    path: 'query',
+    loadChildren: () => import('./components/query/query.module').then( m => m.QueryModule)
   },
 
   // {

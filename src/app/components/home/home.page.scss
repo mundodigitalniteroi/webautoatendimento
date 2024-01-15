@@ -3,6 +3,13 @@ $font-family: Arial, Helvetica, sans-serif;
 %margin-top {
   margin-top: 30px;
 }
+.btn-consulta{
+  --background:white;
+  --border-color:rgb(72, 135, 252);
+  --color:rgb(72, 135, 252);
+  --border-style:solid;
+  --border-width:1px;
+}
 
 ion-grid {
   height: 100%;

@@ -1,7 +1,13 @@
 $font-family: Arial, Helvetica, sans-serif;
+ion-grid{
+  margin-top: 50%;
+}
 ion-content{
     background-color: beige !important;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .verifyComplete{
         display: flex;
         align-items:center;
@@ -24,7 +30,7 @@ ion-content{
     display: flex;
     align-items:center;
     .step-1{
-        width: 90%;
+        width: 100%;
     }
 }
 h1{
@@ -72,6 +78,9 @@ ion-button {
   .col-btn{
     width: 100%;
     justify-content: center;
+    ion-button{
+      width: 90%;
+    }
 }
   .text-center{
     text-align: center;
