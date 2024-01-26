@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { RegistroState } from 'src/app/state/registro/registro.state';
 
@@ -17,6 +18,7 @@ export class StepsPage implements OnInit {
   saveAdress = false;
   constructor(
     private store: Store,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +38,10 @@ export class StepsPage implements OnInit {
     if (this.step == 'address') {
       this.saveAdress = true;
       setTimeout(() => {
-        this.step = 'verify'
-        this.title = 'Verificação'
-        this.subtitle = 'Por favor, digite o código enviado para'
+        this.router.navigate(['/facial-recognition'])
+        // this.step = 'verify'
+        // this.title = 'Verificação'
+        // this.subtitle = 'Por favor, digite o código enviado para'
       }, 1000);
 
       return

@@ -37,7 +37,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
  
 
   ngOnInit(): void {
-    this.getTipoPessoas();
+    
     this.options = this.store.selectSnapshot(RegistroState.all);
     this.form = this.fb.group({
       pessoaJuridica: [false],
@@ -63,6 +63,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
       razaoSocial:[null, Validators.required]
 
     });
+    this.getTipoPessoas();
     // console.log(this.saveFields)
   }
 
@@ -86,14 +87,18 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
     this.atendimentoService.getTipoPessoas().subscribe((item: any) => {
       // console.log(item)
       this.tipoPessoas = item.data;
+      const getPessoa = this.tipoPessoas.find(pess => pess.descricao == 'PF');
+      this.form.get('tipoPessoaId').patchValue(getPessoa.tipoPessoaId)
     })
     )
   }
   
   save() {
     const formValue = this.form?.value;
+    console.log(formValue)
     const payload = {
       tipoProprietario: formValue?.campo,
+      tipoPessoaId: formValue?.tipoPessoaId,
       proprietarioPf: {
         nomeProp: formValue?.nomeProp,
         dataProp:formValue?.dataProp,

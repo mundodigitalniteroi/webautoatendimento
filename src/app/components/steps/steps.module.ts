@@ -9,7 +9,6 @@ import { StepRoutingModule } from './steps-routing.module';
 import { AddressComponent } from './address/address.component';
 import { IdentityComponent } from './identity/identity.component';
 import { VerificationComponent } from './verification/verification.component';
-import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
 
 
 
@@ -22,7 +21,6 @@ import { AtendimentoService } from 'src/app/services/atendimento/atendimento.ser
     ReactiveFormsModule,
     StepRoutingModule,
     BrMaskerModule
-  ],
-  providers:[AtendimentoService]
+  ]
 })
 export class StepModule { }

@@ -24,3 +24,22 @@ export class SetAdress {
     static readonly type = 'Armazenar Dados do endereço';
     constructor(public payload: any) {}
 }
+export class SetFacialRocgnition {
+    static readonly type = 'Armazenar Foto do reconhecimento facial';
+    constructor(public payload: any) {}
+}
+
+export class SetDocumentUpload{
+    static readonly type = 'Armazenar Documentos Necessários';
+    constructor(public payload: any) {}
+}
+
+export class SetProtocol{
+    static readonly type = 'Armazenar Protocolo do Atendimento';
+    constructor(public payload: any) {}
+}
+
+export class FinalizarAtendimento{
+    static readonly type = 'Finalizar Atendimento';
+    constructor(public payload: any) {}
+}

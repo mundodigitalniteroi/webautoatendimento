@@ -16,10 +16,11 @@ export class ProcessInformationsPage implements OnInit {
   ) {
     this.options = this.store.selectSnapshot(RegistroState.all);
     this.informations = this.options?.informacaoConsulta;
-    // console.log(this.options)
-    this.informations?.debitos.forEach(item => {
-      this.valorTotal += item.valorTotal;
-    }) 
+
+    console.log(this.informations)
+    // this.informations?.debitos.forEach(item => {
+    //   this.valorTotal += item.valorTotal;
+    // }) 
     this.valorTotal = this.limitarDuasCasasDecimais(this.valorTotal);
   
   }

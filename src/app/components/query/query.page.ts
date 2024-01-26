@@ -28,16 +28,15 @@ export class QueryPage implements OnInit {
 
   consultarDebito(){
     // console.log(this.consultaDebitoService.getDebitos(this.form.value.campo))
-    this.consultaDebitoService.getDebitos(this.form.value.campo).subscribe(deb => {
+    // this.consultaDebitoService.consultaVeiculo().subscribe(deb => {
     
-      
-      const payload = {
-        informacaoConsulta:deb
-      }
-      // this.store.dispatch(new SetInformations(payload));
-      // this.router.navigate(['/process-informations'])
+    //     console.log(deb)
+    //   const payload = {
+    //     informacaoConsulta:deb
+    //   }
 
-    })
+
+    // })
   }
 
   goProcessInformation(){

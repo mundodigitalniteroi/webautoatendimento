@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,14 @@ export class AtendimentoService {
 
     getTipoAtendimento(){
       return this.http.get(this.apiUrl + `TipoAtendimento`);
+    }
+
+    getTiposDocumentos(tipoPessoaId, terminalId, tipoAtendimentoId ){
+      return this.http.get(this.apiUrl + `ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`);
+    }
+
+    insertAtendimento(atendimento){
+      return this.http.post(this.apiUrl + `Atendimento`, atendimento);
     }
     
 }

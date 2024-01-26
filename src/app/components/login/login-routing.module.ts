@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePage } from './home.page';
+import { LoginPage } from './login.page';
 
 const routes: Routes = [
   {
+    path: 'login',
+    component: LoginPage,
+  },
+  {
     path: '',
-    component: HomePage,
+    redirectTo: '/login',
+    pathMatch: 'full'
   }
 ];
 
@@ -13,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomeRoutingModule {}
+export class LoginRoutingModule {}

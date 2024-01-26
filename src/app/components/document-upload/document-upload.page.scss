@@ -74,11 +74,22 @@ ion-button {
     border:1px solid rgb(0, 119, 255) !important;
   }
   @media(min-width:768px){
+    ion-item{
+      ion-img{
+          width: 6vw !important;
+          margin-right: 4vw;
+      }
+      .ipva-img{
+        width: 4vw !important;;
+      }
+    }
+  }
+  @media(min-width:1025px){
     ion-grid{
       width: 60%;
     }
   }
-  @media (min-width:810px){
+  @media (min-width:1025px){
     
     ion-item{
       ion-img{

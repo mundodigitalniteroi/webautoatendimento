@@ -6,11 +6,11 @@ import { tap } from 'rxjs/operators';
 
 import { Injectable, NgZone } from '@angular/core';
 import { OperacaoModel } from 'src/app/interfaces/operacao.interface';
-import {  SetAdress, SetCadastro, SetIdentity, SetInformations, SetPessoa } from './registro.action';
-
+import {  FinalizarAtendimento, SetAdress, SetCadastro, SetDocumentUpload, SetFacialRocgnition, SetIdentity, SetInformations, SetPessoa, SetProtocol } from './registro.action';
+import { StateReset } from 'ngxs-reset-plugin';
 
 @State<OperacaoModel>({
-  name: 'auth',
+  name: 'registro',
   defaults: null,
 })
 @Injectable()
@@ -67,6 +67,7 @@ export class RegistroState {
     ctx.patchState({
       ...state,
       tipoProprietario: payload.payload.tipoProprietario,
+      tipoPessoaId: payload.payload.tipoPessoaId,
       proprietarioPf:{
         nome: payload.payload.proprietarioPf.nomeProp,
         dataNascimento:payload.payload.proprietarioPf.dataProp,
@@ -118,18 +119,44 @@ export class RegistroState {
       }, 
     });
   }
-  // @Action(SetImpressora)
-  // setImpressora(ctx: StateContext<OperacaoModel>, payload) {
-  //   const state = ctx.getState;
-  //   ctx.patchState({
-  //     ...state,
-  //     impressoraSelecionada: payload.payload,
-  //   });
-  // }
+  @Action(SetFacialRocgnition)
+  setFacialRocgnition(ctx: StateContext<OperacaoModel>, payload) {
+    const state = ctx.getState;
+    console.log(payload)
+    ctx.patchState({
+      ...state,
+      fotoFacial:{
+        tipo: payload.payload.tipo,
+        base64: payload.payload.base64,
+        tamanho: payload.payload.tamanho,
+      },
+    });
+  }
 
+  @Action(SetDocumentUpload)
+  setDocumentUpload(ctx: StateContext<OperacaoModel>, payload) {
+    const state = ctx.getState;
+    console.log(payload)
+    ctx.patchState({
+      ...state,
+      fotos:payload.payload
+    });
+  }
 
-  // @Action(Logout)
-  // logout(ctx: StateContext<OperacaoModel>) {
-  //   this.zone.run(() => this.router.navigate(['/login']));
-  // }
+  @Action(SetProtocol)
+  setProtocol(ctx: StateContext<OperacaoModel>, payload) {
+    const state = ctx.getState;
+    console.log(payload)
+    ctx.patchState({
+      ...state,
+      protocolo:payload.payload
+    });
+  }
+
+  @Action(FinalizarAtendimento)
+  finalizarAtendimento(ctx: StateContext<OperacaoModel>, payload) {
+    const state = ctx.getState;
+      this.store.dispatch(new StateReset(RegistroState));
+      this.zone.run(() => this.router.navigate(['/home']));
+   }
 }

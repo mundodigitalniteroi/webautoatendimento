@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HowLiberationRoutingModule } from './how-liberation-routing.module';
 import { HowLiberationPage } from './how-liberation.page';
+import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
 
 
 
@@ -15,6 +16,7 @@ import { HowLiberationPage } from './how-liberation.page';
     IonicModule,
     FormsModule,
     HowLiberationRoutingModule
-  ]
+  ],
+  providers:[AtendimentoService]
 })
 export class HowLiberationModule { }

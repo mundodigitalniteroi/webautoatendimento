@@ -15,6 +15,7 @@ import { FacialRecognitionPage } from './facial-recognition.page';
     IonicModule,
     FormsModule,
     FacialRecognitionRoutingModule
-  ]
+  ],
+  providers:[]
 })
 export class FacialRecognitionModule { }

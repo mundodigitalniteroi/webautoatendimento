@@ -1,5 +1,6 @@
 export interface OperacaoModel {
     tipoPessoa: string;
+    tipoPessoaId: number;
     tipoProprietario:string;
     endereco: EnderecoModel;
     proprietarioPf: ProprietarioPFModel;
@@ -12,6 +13,13 @@ export interface OperacaoModel {
     enderecoPF: EnderecoPFModel;
     enderecoPJ: EnderecoPJModel;
     informacaoConsulta:{};
+    fotoFacial:{
+      tipo:string;
+      base64:string;
+      tamanho: string;
+    }
+    fotos: [],
+    protocolo: string;
     // geoLocalizacao: Geolocation;
     // dadosOperacao: DadosOperacaoModel;
     // dadosVeiculo: DadosVeiculoModel;

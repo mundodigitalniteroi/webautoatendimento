@@ -8,6 +8,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { NgxsModule } from '@ngxs/store';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistroState } from './state/registro/registro.state';
+import { AuthState } from './state/auth/auth.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,7 @@ import { RegistroState } from './state/registro/registro.state';
     IonicModule.forRoot(), 
     AppRoutingModule, 
     IonicStorageModule.forRoot(),
-    NgxsModule.forRoot([RegistroState]),
+    NgxsModule.forRoot([RegistroState, AuthState]),
     HttpClientModule
   
   ],

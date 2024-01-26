@@ -1,0 +1,16 @@
+<ion-content [fullscreen]="true" >
+
+    <ion-grid class="ion-text-center ion-justify-content-center ion-align-items-center" style="height: 205vw; display: flex;">
+
+      <ion-card>
+        <ion-card-content [ngClass]="{'verifyComplete': true }">
+            <h1 style="margin: 0;margin-top: 20px;"><b>Atendimento Finalizado</b></h1>
+          <ion-img src="../../../assets/ri_checkbox-circle-fill.png" style="margin: 0;margin-top: 20px;" class="step-1" ></ion-img>
+          <h2 ><b>Protocolo do Atendimento<br>{{options?.protocolo}}</b></h2>
+          <ion-button  [routerLink]="['/facial-recognition']" (click)="imprimir()">Imprimir</ion-button>
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-grid>
+  </ion-content>
+  

@@ -13,8 +13,8 @@
                 <ion-input placeholder="Digite o RENAVAM"></ion-input>
             </ion-item>
             <ion-item counter="true" lines="none" class="ion-justify-content-start ion-align-items-center" >
-                <!-- <ion-img src="../../../assets/public-search/dashicons_warning.png"></ion-img> -->
-                <!-- <p class="warning">Os dados estão incorretos, verifique novamente</p> -->
+                <ion-img *ngIf="error"  src="../../../assets/public-search/dashicons_warning.png"></ion-img>
+                <p *ngIf="error" class="warning">Os dados estão incorretos, verifique novamente</p>
             </ion-item>
         </ion-list>
          <ion-button (click)="consultarDebito()" class="btn-search">Buscar</ion-button>
