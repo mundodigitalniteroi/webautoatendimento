@@ -4,21 +4,27 @@
       </ion-row>
     <ion-list  *ngIf="options.tipoProprietario != 'PF'">
         <ion-item class="ion-justify-content-start" >
-            <ion-input placeholder="Digite seu CEP" formControlName="cepEmpresa"  [brmasker]="{mask:'00000-000', len:9}" (ionChange)="consultaCEP('empresa')"></ion-input>
+            <ion-label position="floating">CEP</ion-label>
+            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu CEP" formControlName="cepEmpresa"  [brmasker]="{mask:'00000-000', len:9}"  maxlength="9" (ionChange)="consultaCEP('empresa')"></ion-input>
         </ion-item>
         <ion-item counter="true">
+            <ion-label position="floating">Rua</ion-label>
             <ion-input placeholder="Digite sua rua" formControlName="ruaEmpresa"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
-            <ion-input placeholder="Digite o número" formControlName="numeroEmpresa"></ion-input>
+            <ion-label position="floating">Número</ion-label>
+            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite o número" formControlName="numeroEmpresa"></ion-input>
         </ion-item>
         <ion-item counter="true">
+            <ion-label position="floating">Complemento</ion-label>
             <ion-input placeholder="Complemento" formControlName="complementoEmpresa"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
+            <ion-label position="floating">Estado</ion-label>
             <ion-input  placeholder="Digite o estado" formControlName="estadoEmpresa" [brmasker]="{mask:'00', len:2, type:'alfa'}"></ion-input>
         </ion-item>
         <ion-item counter="true">
+            <ion-label position="floating">Cidade</ion-label>
             <ion-input placeholder="Selecione a cidade" formControlName="cidadeEmpresa"></ion-input>
         </ion-item>
     </ion-list>
@@ -28,21 +34,27 @@
       </ion-row>
     <ion-list >
         <ion-item class="ion-justify-content-start" >
-            <ion-input placeholder="Digite seu CEP" formControlName="cepProp"  [brmasker]="{mask:'00000-000', len:9}" (ionChange)="consultaCEP('proprietario')"></ion-input>
+            <ion-label position="floating">CEP</ion-label>
+            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu CEP" formControlName="cepProp"  [brmasker]="{mask:'00000-000', len:9}" maxlength="9" (ionChange)="consultaCEP('proprietario')"></ion-input>
         </ion-item>
         <ion-item counter="true">
+            <ion-label position="floating">Rua</ion-label>
             <ion-input placeholder="Digite sua rua" formControlName="ruaProp"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
-            <ion-input placeholder="Digite o número" formControlName="numeroProp"></ion-input>
+            <ion-label position="floating">Número</ion-label>
+            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite o número" formControlName="numeroProp"></ion-input>
         </ion-item>
         <ion-item counter="true">
+            <ion-label position="floating">Complemento</ion-label>
             <ion-input placeholder="Complemento" formControlName="complementoProp"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
+            <ion-label position="floating">Estado</ion-label>
             <ion-input  placeholder="Digite o estado" formControlName="estadoProp" [brmasker]="{mask:'00', len:2, type:'alfa'}"></ion-input>
         </ion-item>
         <ion-item counter="true">
+            <ion-label position="floating">Cidade</ion-label>
             <ion-input placeholder="Selecione a cidade" formControlName="cidadeProp"></ion-input>
         </ion-item>
     </ion-list>

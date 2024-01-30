@@ -36,4 +36,18 @@ export class CameraService {
 
       return capturedPhoto;
     }
+    public async getFrontPhoto(headerLabel: string = '') {
+      // Take a photo
+      const capturedPhoto = await Camera.getPhoto({
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+        quality: 80,
+        direction: CameraDirection.Front,
+        presentationStyle: 'fullscreen',
+        promptLabelHeader: headerLabel,
+        correctOrientation: true
+      });
+
+      return capturedPhoto;
+    }
 }

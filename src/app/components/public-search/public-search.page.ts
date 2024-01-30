@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { AuthState } from 'src/app/state/auth/auth.state';
@@ -16,11 +17,13 @@ export class PublicSearchPage implements OnInit {
   informations;
   error = false;
   options;
+  loading = false;
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private consultaDebitoService: ConsultaDebitoService,
     private store: Store,
+    private toastController: ToastController,
     ) { }
 
   ngOnInit(): void {
@@ -28,11 +31,11 @@ export class PublicSearchPage implements OnInit {
       campo: ['KUM3752', Validators.required],
     });
     this.options = this.store.selectSnapshot(AuthState.all);
-    console.log(this.options)
+    // console.log(this.options)
   }
 
   consultarDebito(){
-  
+    this.loading = true;
     this.error = false;
     
     const payload = {
@@ -47,6 +50,8 @@ export class PublicSearchPage implements OnInit {
     } 
     this.consultaDebitoService.consultaVeiculo(payload).subscribe(
       deb => {
+        // console.log(deb)
+        this.loading = false;
       const payload = {
         informacaoConsulta:deb
       }
@@ -54,8 +59,10 @@ export class PublicSearchPage implements OnInit {
       this.store.dispatch(new SetInformations(payload));
       this.router.navigate(['/process-informations'])
     },
-      (erro) => {
+      (erro) => {// console.log(erro)
         this.error = true;
+        this.loading = false;
+        this.toast(`Error: ${erro.error.mensagem.avisosImpeditivos[0]}`);
       },
     )
   }
@@ -63,5 +70,11 @@ export class PublicSearchPage implements OnInit {
   goProcessInformation(){
     this.router.navigate(['/process-informations'])
   }
- 
+  async toast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+    });
+    toast.present();
+  }
 }

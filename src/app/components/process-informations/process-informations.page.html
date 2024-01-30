@@ -27,26 +27,26 @@
         <ion-col size="6">
           <ion-row>
             <h4><b>Tipo</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemFaturamentoServico">{{debito.nomeServico}}</p>
+            <p *ngFor="let debito of  informations.faturamento.listagemServico">{{debito.nomeServico}}</p>
 
           </ion-row>
         </ion-col>
         <ion-col size="2">
           <ion-row class="ion-text-center ">
             <h4><b>Total</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemFaturamentoServico">R${{debito.valorTipoServico}}</p>
+            <p *ngFor="let debito of  informations.faturamento.listagemServico">R${{debito.valorTipoServico}}</p>
           </ion-row>
         </ion-col>
         <ion-col size="2">
           <ion-row class="ion-text-center">
             <h4><b>Qtd</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemFaturamentoServico">x {{debito.quantidadeServico}}</p>
+            <p *ngFor="let debito of  informations.faturamento.listagemServico">x {{debito.quantidadeServico}}</p>
           </ion-row>
         </ion-col>
         <ion-col size="2">
           <ion-row class="ion-text-center">
             <h4><b>Subtotal</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemFaturamentoServico">R${{debito.valorFaturado}}</p>
+            <p *ngFor="let debito of  informations.faturamento.listagemServico">R${{debito.valorFaturado}}</p>
           </ion-row>
         </ion-col>
       </ion-card-content>

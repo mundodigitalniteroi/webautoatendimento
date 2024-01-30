@@ -35,12 +35,12 @@ export class DocumentUploadPage implements OnInit {
   }
 
   getTiposDocumentos(){
-    console.log('1');
+    // console.log('1');
     this.options = this.store.selectSnapshot(RegistroState.all);
     this.informacoesLogin =  this.store.selectSnapshot(AuthState.all);
-    console.log(this.options, this.informacoesLogin)
+    // console.log(this.options, this.informacoesLogin)
       this.atendimentoService.getTiposDocumentos(this.options?.tipoPessoaId, this.informacoesLogin?.terminalId,this.options?.tipoAtendimentoId ).subscribe( (resp: any) =>{
-      console.log(resp)
+      // console.log(resp)
         this.documentos = resp.data;
     })
   }
@@ -53,13 +53,13 @@ export class DocumentUploadPage implements OnInit {
     this.checkComp = true;
   }
 
-  newPhoto(tipoDocumentoId, nome) {
+  newPhoto(tipoDocumentoId, nome, param) {
     this.cameraService.requestPermission().then(item =>{
 
       if(item.camera == "granted"){
         this.cameraService.getPhoto()
         .then(foto => {
-          console.log(foto)
+          // console.log(foto)
           const fotoModel = {
             tipo: 'image/jpeg',
             base64: foto.dataUrl,
@@ -67,9 +67,35 @@ export class DocumentUploadPage implements OnInit {
             tamanho:foto.exif.ImageLength,
             nome:nome + '.jpg'
           };
+
           this.fotos.push(fotoModel);
           
-        });
+          switch (param) {
+            case 'checkCrlv':
+              this.checkCrlv = true;
+              break;
+      
+            case 'checkIpva':
+              this.checkIpva = true;
+              break;
+      
+            case 'checkMulta':
+              this.checkMulta = true;
+              break;
+
+            case 'checkLicen':
+              this.checkLicen = true;
+              break;
+
+            case 'checkComp':
+              this.checkComp = true;
+              break;
+              
+            default:
+              break;
+        }
+      }
+        );
       }
     })
 
@@ -80,8 +106,8 @@ export class DocumentUploadPage implements OnInit {
 
     const atendimento:any =  this.store.selectSnapshot(RegistroState.all);
     const informacoesLogin = this.store.selectSnapshot(AuthState.all);
-    const dataNacimentoPessoa = 
-    console.log(atendimento, informacoesLogin)
+    // const dataNacimentoPessoa = 
+    // console.log(atendimento, informacoesLogin)
     const atendimentoCompleto = {
       responsavel: atendimento?.tipoAtendimentoId == '1' || atendimento.tipoPessoaId != 2 ? null :  {
         nome: atendimento?.tipoAtendimentoId == '2' ? atendimento?.procuradorPf?.nome  : atendimento?.empresa?.razaoSocial,
@@ -158,7 +184,7 @@ export class DocumentUploadPage implements OnInit {
     })
     this.atendimentoService.insertAtendimento(atendimentoCompleto).subscribe((item: any) => {
       const protocolo = item.data.protocolo;
-      console.log(atendimentoCompleto)
+      // console.log(atendimentoCompleto)
       this.store.dispatch(new SetProtocol(protocolo));
       this.router.navigate(['/complete'])
     })

@@ -10,7 +10,7 @@
       <ion-img src="../../../assets/Step process signup2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
       <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
     </ion-item> -->
-      <ion-row  class="steps ion-justify-content-center ion-align-items-center">
+      <!-- <ion-row  class="steps ion-justify-content-center ion-align-items-center">
         <ion-img src="../../../assets/step0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
         <ion-img src="../../../assets/step1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
         <ion-img src="../../../assets/step2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
@@ -18,7 +18,7 @@
         <ion-img src="../../../assets/step/step1.png" class="step-2" style="display: none;" *ngIf="step == 'indentity'"></ion-img>
         <ion-img src="../../../assets/step/step2.png" class="step-2" style="display: none;" *ngIf="step == 'address'"></ion-img>
         <ion-img src="../../../assets/step/step3.png" class="step-2" style="display: none;" *ngIf="step == 'verify'"></ion-img>
-      </ion-row>
+      </ion-row> -->
     <ion-grid class="ion-text-center">
       <div class=" verify" lines="none" *ngIf="step == 'verify'">
         <h1>{{title}}</h1>
@@ -48,7 +48,7 @@
       
     </ion-grid>
     <ion-row   class="col-btn">
-      <ion-button *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" (click)="changeStep()">Continuar</ion-button>
+      <ion-button *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" style="font-size: 1.4rem;" (click)="changeStep()">Continuar</ion-button>
 
     </ion-row>
   </ion-content>

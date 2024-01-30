@@ -30,7 +30,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
    
     if(changes.saveFields){
-      // console.log(changes.saveFields);
+      // // console.log(changes.saveFields);
       this.save();
     }
   }
@@ -64,7 +64,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
 
     });
     this.getTipoPessoas();
-    // console.log(this.saveFields)
+    // // console.log(this.saveFields)
   }
 
   changeValues(campo) {
@@ -85,7 +85,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
   getTipoPessoas(){
     this.sub.push(
     this.atendimentoService.getTipoPessoas().subscribe((item: any) => {
-      // console.log(item)
+      // // console.log(item)
       this.tipoPessoas = item.data;
       const getPessoa = this.tipoPessoas.find(pess => pess.descricao == 'PF');
       this.form.get('tipoPessoaId').patchValue(getPessoa.tipoPessoaId)
@@ -95,7 +95,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
   
   save() {
     const formValue = this.form?.value;
-    console.log(formValue)
+    // console.log(formValue)
     const payload = {
       tipoProprietario: formValue?.campo,
       tipoPessoaId: formValue?.tipoPessoaId,
@@ -122,7 +122,13 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.store.dispatch(new SetIdentity(payload));
 }
+inputChanged(event: any) {
+  // Remove caracteres não numéricos
+  const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
 
+  // Atualiza o valor do campo de entrada
+  event.target.value = inputValue;
+}
   ngOnDestroy(): void {
     this.sub.forEach(item => item.unsubscribe())
   }

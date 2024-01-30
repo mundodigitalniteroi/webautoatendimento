@@ -13,7 +13,7 @@ export class CompleteComponent implements OnInit {
 
   constructor(private store: Store,) {
     this.options = this.store.selectSnapshot(RegistroState.all);
-    // console.log(this.options)
+    // // console.log(this.options)
    }
 
   ngOnInit(): void {

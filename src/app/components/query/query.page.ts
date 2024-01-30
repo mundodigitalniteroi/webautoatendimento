@@ -27,10 +27,10 @@ export class QueryPage implements OnInit {
   }
 
   consultarDebito(){
-    // console.log(this.consultaDebitoService.getDebitos(this.form.value.campo))
+    // // console.log(this.consultaDebitoService.getDebitos(this.form.value.campo))
     // this.consultaDebitoService.consultaVeiculo().subscribe(deb => {
     
-    //     console.log(deb)
+    //     // console.log(deb)
     //   const payload = {
     //     informacaoConsulta:deb
     //   }

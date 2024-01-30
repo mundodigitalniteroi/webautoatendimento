@@ -22,7 +22,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.options = this.store.selectSnapshot(RegistroState.all);
-    // console.log(this.options)
+    // // console.log(this.options)
     this.form = this.fb.group({
       cepProp: [null, Validators.required],
       ruaProp: [null],
@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
    
     if(changes.saveFields){
-      // console.log(changes.saveFields);
+      // // console.log(changes.saveFields);
       this.save();
     }
   }
@@ -64,7 +64,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }
   }
   populaDadosForm(dados, param) {
-    // console.log(dados)
+    // // console.log(dados)
     if(param == 'empresa'){
       this.form.patchValue({
         ruaEmpresa:dados.logradouro,
@@ -111,5 +111,11 @@ export class AddressComponent implements OnInit, OnChanges {
     }
     this.store.dispatch(new SetAdress(payload));
 }
+inputChanged(event: any) {
+  // Remove caracteres não numéricos
+  const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
 
+  // Atualiza o valor do campo de entrada
+  event.target.value = inputValue;
+}
 }

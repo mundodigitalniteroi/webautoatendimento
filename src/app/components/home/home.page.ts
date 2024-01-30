@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { AuthState } from 'src/app/state/auth/auth.state';
+import { AtendimentoService } from '../../services/atendimento/atendimento.service';
 
 @Component({
   selector: 'app-home',
@@ -13,16 +15,24 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
+    private menu: MenuController,
+    private atendimentoService: AtendimentoService
     ) { }
 
   ngOnInit(): void {
     this.options = this.store.selectSnapshot(AuthState.all);
-    console.log(this.options)
+    // console.log(this.options)
   }
   goPublicSearch(){
     this.router.navigate(['/term-acception'])
   }
   goQuery(){
     this.router.navigate(['/query'])
+  }
+  fecharMenu(){
+    this.menu.close();
+  }
+  openMenu(){
+      this.atendimentoService.emitInformations.next(true)
   }
 }

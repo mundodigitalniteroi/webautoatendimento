@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AtendimentoService {
   private apiUrl ='https://api.atendimento.gestordepatios.app.br/';
+  emitInformations: Subject<any> = new Subject<any>();
+  closeMenu: Subject<any> = new Subject<any>();
   constructor(
 
     public http: HttpClient,

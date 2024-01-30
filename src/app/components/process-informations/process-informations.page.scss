@@ -4,12 +4,13 @@ ion-content {
 }
 .info{
     p{
+      font-size: 16px;
         padding-bottom: 10px;
     }
 }
 h2 {
   color: rgb(22, 127, 247);
-  font-size: 0.9rem;
+  font-size: 1.6rem;
   font-weight: 700;
   font-family: $font-family;
 }
@@ -41,14 +42,14 @@ ion-card {
     }
 
     h4 {
-      font-size: 0.8rem;
+      font-size: 1.3rem !important;
       font-family: $font-family;
       margin-bottom: 20px;
     }
 
     p {
       height: 25px;
-      font-size: 0.8rem;
+      font-size: 1.2rem !important;
       font-family: $font-family;
       margin-bottom: 18px;
     }
@@ -57,7 +58,7 @@ ion-card {
 
 p {
   font-family: $font-family;
-  font-size: 0.8rem;
+  font-size: 1.2rem !important;
 }
 
 ion-card {
@@ -67,7 +68,7 @@ ion-card {
     border-top: 1px solid grey;
     padding-top: 25px;
     h4{
-        font-size: 1.2rem !important;
+        font-size: 1.6rem !important;
         font-weight: 700;
     }
     .result{
@@ -83,7 +84,7 @@ ion-button {
     margin-left: 10px;
     margin-right: 10px;
     --border-radius: 10px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-family: $font-family;
     // --background: rgb(72, 135, 252);
   }

@@ -27,7 +27,7 @@ export class FacialRecognitionPage implements OnInit {
   newPhoto() {
     this.cameraService.requestPermission().then(item =>{
       if(item.camera == "granted"){
-        this.cameraService.getPhoto()
+        this.cameraService.getFrontPhoto()
         .then(foto => {
           const fotoModel = {
             tipo: 'image/jpeg',
@@ -35,7 +35,7 @@ export class FacialRecognitionPage implements OnInit {
             tamanho:foto.exif.ImageLength,
           };
           this.fotos.push(fotoModel);
-          console.log(this.fotos)
+          // console.log(this.fotos)
           this.store.dispatch(new SetFacialRocgnition(this.fotos[0]));
           this.router.navigate(['/document-upload'])
         });

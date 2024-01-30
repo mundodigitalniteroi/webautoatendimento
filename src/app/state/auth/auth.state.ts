@@ -36,7 +36,7 @@ export class AuthState {
   @Action(Login)
   login(ctx: StateContext<AuthModel>, payload) {
     const state = ctx.getState;
-    console.log(payload)
+    // console.log(payload)
     ctx.patchState({
       ...state,
       clienteId: payload.payload.clienteId,

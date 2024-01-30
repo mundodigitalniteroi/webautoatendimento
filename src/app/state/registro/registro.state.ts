@@ -62,7 +62,7 @@ export class RegistroState {
 
   @Action(SetIdentity)
   setIdentity(ctx: StateContext<OperacaoModel>, payload) {
-    // console.log(payload)
+    // // console.log(payload)
     const state = ctx.getState;
     ctx.patchState({
       ...state,
@@ -122,7 +122,7 @@ export class RegistroState {
   @Action(SetFacialRocgnition)
   setFacialRocgnition(ctx: StateContext<OperacaoModel>, payload) {
     const state = ctx.getState;
-    console.log(payload)
+    // console.log(payload)
     ctx.patchState({
       ...state,
       fotoFacial:{
@@ -136,7 +136,7 @@ export class RegistroState {
   @Action(SetDocumentUpload)
   setDocumentUpload(ctx: StateContext<OperacaoModel>, payload) {
     const state = ctx.getState;
-    console.log(payload)
+    // console.log(payload)
     ctx.patchState({
       ...state,
       fotos:payload.payload
@@ -146,7 +146,7 @@ export class RegistroState {
   @Action(SetProtocol)
   setProtocol(ctx: StateContext<OperacaoModel>, payload) {
     const state = ctx.getState;
-    console.log(payload)
+    // console.log(payload)
     ctx.patchState({
       ...state,
       protocolo:payload.payload

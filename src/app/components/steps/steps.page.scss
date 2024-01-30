@@ -15,9 +15,10 @@ ion-content{
         }
         h1{
             margin-bottom:30% ;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
     }
+  
 }
 .steps{
     height: 15%;
@@ -28,7 +29,7 @@ ion-content{
     }
 }
 h1{
-    font-size: 1.2rem;
+    font-size: 1.8rem;
 }
 ion-list{
     width: 100%;
@@ -43,12 +44,13 @@ ion-card-title{
 font-family: Arial, Helvetica, sans-serif;
 font-style: normal;
 font-weight: 700;
-font-size: 1.3rem;
+font-size: 1.6rem;
 line-height: 24px;
 letter-spacing: 0.374px;
 color: #031A2E;
 }
 ion-card-subtitle{
+    font-size: 1.1rem;
     font-family: $font-family;
     font-style: normal;
 }

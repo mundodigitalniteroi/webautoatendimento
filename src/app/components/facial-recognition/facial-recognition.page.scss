@@ -5,6 +5,16 @@ ion-grid{
     flex-direction: column;
     height: 100%;
 }
+.btn-enviar{
+  text-decoration: none;
+  width: 95%;
+  height: 60px;
+  margin-top: 30px;
+  --border-radius: 10px;
+  
+  font-family: $font-family;
+  --background: rgb(72, 135, 252);
+}
 ion-button {
     text-decoration: none;
     width: 95%;
@@ -13,9 +23,10 @@ ion-button {
     --border-radius: 10px;
     font-size: 1rem;
     font-family: $font-family;
-    --background: rgb(72, 135, 252);
+    font-size: 1.6rem;
     // @extend %margin-top;
   }
+
   .face-icon{
     margin-top: 15%;
     width: 10vw;
@@ -24,10 +35,10 @@ ion-button {
     color: rgb(22, 127, 247);
     font-family: $font-family;
     font-weight: 700;
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
   p{
-    font-size: 0.9rem;
+    font-size: 1.5rem;
   }
   .person{
 

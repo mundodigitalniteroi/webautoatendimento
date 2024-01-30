@@ -2,9 +2,10 @@
     <ion-grid class=" ion-align-items-center ion-justify-content-center">
         <h1>Upload de documentos</h1>
         <p>Envie os documentos abaixo</p>
+      
         <ion-row *ngIf="documentos.length > 0" class=" ion-justify-content-start ion-align-items-center" (mouseup)="line = true">
-            <!-- <ion-card (click)="takePhoto()"> -->
-                <ion-card  (click)="checkCrlv = true; newPhoto(documentos[0]?.tipoDocumentoId, documentos[0].descricao)"  [ngClass]="{'border': line  }">
+          
+                <ion-card  (click)=" newPhoto(documentos[0]?.tipoDocumentoId, documentos[0].descricao, 'checkCrlv')"  [ngClass]="{'border': line  }">
                 <ion-card-content class="info ">
                     <ion-item lines="none" class="ion-text-start">
                         <ion-img src="../../../assets/document-upload/crlv.png"></ion-img>
@@ -17,7 +18,7 @@
             </ion-card>
         </ion-row>
         <ion-row *ngIf="documentos.length > 1" class="ion-justify-content-center " (mouseup)="line = true">
-            <ion-card  (click)="checkIpva = true; newPhoto(documentos[1]?.tipoDocumentoId, documentos[1].descricao)"  [ngClass]="{'border': line  }">
+            <ion-card  (click)=" newPhoto(documentos[1]?.tipoDocumentoId, documentos[1].descricao, 'checkIpva')"  [ngClass]="{'border': line  }">
                 <ion-card-content class="info">
                     <ion-item lines="none" class="ion-text-start">
                         <ion-img class="ipva-img" src="../../../assets/document-upload/Vector.jpg"></ion-img>
@@ -30,7 +31,7 @@
             </ion-card>
         </ion-row>
         <ion-row *ngIf="documentos.length > 2" class="ion-justify-content-center " (mouseup)="line = true" >
-            <ion-card  (click)="checkMulta = true; newPhoto(documentos[2]?.tipoDocumentoId, documentos[2].descricao)"  [ngClass]="{'border': line  }"> 
+            <ion-card  (click)=" newPhoto(documentos[2]?.tipoDocumentoId, documentos[2].descricao, 'checkMulta')"  [ngClass]="{'border': line  }"> 
                 <ion-card-content class="info">
                     <ion-item lines="none" class="ion-text-start">
                         <ion-img src="../../../assets/document-upload/nadaMul.png"></ion-img>
@@ -43,7 +44,7 @@
             </ion-card>
         </ion-row>
         <ion-row *ngIf="documentos.length > 3" class="ion-justify-content-center " (mouseup)="line = true">
-            <ion-card (click)="checkLicen = true; newPhoto(documentos[3]?.tipoDocumentoId, documentos[3].descricao)"  [ngClass]="{'border': line  }">
+            <ion-card (click)=" newPhoto(documentos[3]?.tipoDocumentoId, documentos[3].descricao, 'checkLicen')"  [ngClass]="{'border': line  }">
                 <ion-card-content class="info">
                     <ion-item lines="none" class="ion-text-start">
                         <ion-img src="../../../assets/document-upload/nadaLice.png"></ion-img>
@@ -57,7 +58,7 @@
             </ion-card>
         </ion-row>
         <ion-row *ngIf="documentos.length > 4" class="ion-justify-content-center " (mouseup)="line = true">
-            <ion-card (click)="checkComp = true; newPhoto(documentos[4]?.tipoDocumentoId, documentos[4].descricao)"  [ngClass]="{'border': line  }">
+            <ion-card (click)=" newPhoto(documentos[4]?.tipoDocumentoId, documentos[4].descricao, 'checkComp')"  [ngClass]="{'border': line  }">
                 <ion-card-content class="info">
                     <ion-item lines="none" class="ion-text-start">
                         <ion-img src="../../../assets/document-upload/comp.png"></ion-img>
@@ -69,6 +70,7 @@
                 </ion-card-content>
             </ion-card>
         </ion-row>
-        <ion-button (click)="save()">Enviar</ion-button>
+        <ion-button (click)="save()" class="btn-enviar">Enviar</ion-button>
+        <ion-button fill="outline" [routerLink]="['/facial-recognition']">Voltar</ion-button>
     </ion-grid>
 </ion-content>

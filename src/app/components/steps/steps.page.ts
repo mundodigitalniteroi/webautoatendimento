@@ -23,12 +23,12 @@ export class StepsPage implements OnInit {
 
   ngOnInit(): void {
     this.options = this.store.selectSnapshot(RegistroState.all);
-    // console.log(this.options)
+    // // console.log(this.options)
   }
   changeStep() {
     if (this.step == 'indentity') {
       this.saveIdentity = true;
-      // console.log(this.saveIdentity);
+      // // console.log(this.saveIdentity);
       setTimeout(() => {
         this.step = 'address'
         this.title = 'Cadastro de endereço'
