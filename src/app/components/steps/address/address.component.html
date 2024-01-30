@@ -5,7 +5,7 @@
     <ion-list  *ngIf="options.tipoProprietario != 'PF'">
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">CEP</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChangedCep($event)" placeholder="Digite seu CEP" formControlName="cepEmpresa"    maxlength="9" (ionChange)="consultaCEP('empresa')"></ion-input>
+            <ion-input inputmode="numeric" (ionChange)="inputChangedCep($event); consultaCEP('empresa')" placeholder="Digite seu CEP" formControlName="cepEmpresa"    maxlength="8" ></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Rua</ion-label>
@@ -13,7 +13,7 @@
         </ion-item>
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">Número</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite o número" formControlName="numeroEmpresa"></ion-input>
+            <ion-input inputmode="numeric" (ionChange)="inputChangedCep($event)" placeholder="Digite o número" formControlName="numeroEmpresa"></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Complemento</ion-label>
@@ -35,7 +35,7 @@
     <ion-list >
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">CEP</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChangedCep($event)" placeholder="Digite seu CEP" formControlName="cepProp"  [brmasker]="{mask:'00000-000', len:9}" maxlength="9" (ionChange)="consultaCEP('proprietario')"></ion-input>
+            <ion-input inputmode="numeric" (ionChange)="inputChangedCep($event); consultaCEP('proprietario')" placeholder="Digite seu CEP" formControlName="cepProp"  maxlength="8" ></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Rua</ion-label>
@@ -43,7 +43,7 @@
         </ion-item>
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">Número</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite o número" formControlName="numeroProp"></ion-input>
+            <ion-input inputmode="numeric" (ionChange)="inputChangedCep($event)" placeholder="Digite o número" formControlName="numeroProp"></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Complemento</ion-label>

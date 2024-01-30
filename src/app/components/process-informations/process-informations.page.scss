@@ -42,7 +42,7 @@ ion-card {
     }
 
     h4 {
-      font-size: 1.3rem !important;
+      font-size: 1.3rem ;
       font-family: $font-family;
       margin-bottom: 20px;
     }
@@ -75,6 +75,7 @@ ion-card {
         color:rgb(158, 158, 158);
     }
     .price{
+      font-size: 2rem !important;
         color:black;
     }
 }

@@ -33,4 +33,12 @@ export class ProcessInformationsPage implements OnInit {
   limitarDuasCasasDecimais(numero) {
     return parseFloat(numero.toString().match(/^\d+(?:\.\d{0,2})?/));
 }
+
+formatarNumero(numero: number): string {
+  if (!isNaN(numero)) {
+    return numero.toString().replace('.', ',');
+  } else {
+    return 'Número inválido';
+  }
+  }
 }

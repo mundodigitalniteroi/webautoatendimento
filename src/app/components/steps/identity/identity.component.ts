@@ -124,17 +124,48 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
 }
 inputChanged(event: any) {
   // Remove caracteres não numéricos
-  const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
+  const inputValue = event.target.value.replace(/\D/g, '');
 
   // Atualiza o valor do campo de entrada
   event.target.value = inputValue;
 }
-inputChangedName(event: any) {
-  // Remove caracteres não alfabéticos
-  const inputValue = event.target.value.replace(/[^A-Za-z]/g, '');
+
+inputChangedCPF(event: any) {
+  let input = event.target.value;
+  if(input.length == 15){
+    event.target.value =  this.validarCPF('input');
+  }
+  
+
+  // Remove caracteres não numéricos
+  // const inputValue = event.target.value.replace(/\D/g, '');
 
   // Atualiza o valor do campo de entrada
-  event.target.value = inputValue;
+  // event.target.value = inputValue;
+}
+inputChangedName(event: any) {
+  const input = event.target.value;
+  // Remove caracteres não alfabéticos
+  // const inputValue = event.target.value.replace(/[^A-Za-z]/g, '');
+
+  // Atualiza o valor do campo de entrada
+  // event.target.value = inputValue;
+}
+validarCPF(input: string): string {
+  // Remove todos os caracteres não numéricos
+  const numeros = input.replace(/[^0-9]/g, '');
+
+  // Verifica se a string resultante tem o formato esperado (XXX.XXX.XXX-XX)
+  const regex = /^(\d{3})(\d{3})(\d{3})(\d{2})$/;
+  const match = numeros.match(regex);
+
+  if (match) {
+    // Reorganiza os grupos com os caracteres específicos
+    return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+  } else {
+    // Retorna uma string vazia se o formato não for válido
+    return '';
+  }
 }
   ngOnDestroy(): void {
     this.sub.forEach(item => item.unsubscribe())

@@ -26,19 +26,19 @@
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Data de nascimento</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite sua data de nascimento" formControlName="dataProp" [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
+            <ion-input inputmode="numeric"  placeholder="Digite sua data de nascimento" formControlName="dataProp" [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">CPF</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu CPF" formControlName="cpfProp" [brmasker]="{person: true}" placeholder="000.000.000-00" maxlength="14"></ion-input>
+            <ion-input inputmode="numeric"   placeholder="Digite seu CPF" formControlName="cpfProp" [brmasker]="{person: true}" placeholder="000.000.000-00" maxlength="14"></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">CNH</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite sua CNH" formControlName="cnhProp"></ion-input>
+            <ion-input inputmode="numeric"  placeholder="Digite sua CNH" formControlName="cnhProp" [brmasker]="{mask:'000.000.000.00', len:14}" maxlength="14"></ion-input>
         </ion-item>
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">Telefone</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu telefone"  formControlName="telefoneProp" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input>
+            <ion-input inputmode="numeric"  placeholder="Digite seu telefone"  formControlName="telefoneProp" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Email</ion-label>
@@ -59,22 +59,22 @@
         
         <ion-item counter="true">
             <ion-label position="floating">Data de nascimento</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite sua data de nascimento" formControlName="dataProc"  [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
+            <ion-input inputmode="numeric"  placeholder="Digite sua data de nascimento" formControlName="dataProc"  [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
         </ion-item>
 
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">CPF</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu CPF" formControlName="cpfProc" [brmasker]="{person: true}" placeholder="000.000.000-00" maxlength="14"></ion-input>
+            <ion-input inputmode="numeric" placeholder="Digite seu CPF" formControlName="cpfProc" [brmasker]="{person: true}" placeholder="000.000.000-00" maxlength="14"></ion-input>
         </ion-item>
 
         <ion-item counter="true">
             <ion-label position="floating">CNH</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite sua CNH" formControlName="cnhProc"></ion-input>
+            <ion-input inputmode="numeric"  placeholder="Digite sua CNH" formControlName="cnhProc"  [brmasker]="{mask:'000.000.000.00', len:14}" maxlength="14"></ion-input>
         </ion-item>
 
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">Telefone</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu telefone" formControlName="telefoneProc" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input>
+            <ion-input inputmode="numeric" placeholder="Digite seu telefone" formControlName="telefoneProc" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input>
         </ion-item>
 
         <ion-item counter="true">
