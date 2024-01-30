@@ -8,25 +8,52 @@
       <ion-title class="ion-text-center">{{ this.options.descricao + ' | ' + this.options.codigo }}</ion-title>
     </ion-toolbar>
   </ion-header> -->
-  
+
 <ion-content [fullscreen]="true" class="ion-align-items-center">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button (click)="openMenu()"></ion-menu-button>
-          </ion-buttons>
-          
-      </ion-toolbar>
-    <ion-grid  style="height: 90vw;">
-        <ion-row class="ion-align-items-center ion-justify-content-center row-center" >
-            <ion-col size-lg="6" class="ion-align-items-end ion-justify-content-center" style="display: flex;">
-                <ion-img src="../../../assets/home/Illustrasi(1).png"></ion-img>
-            </ion-col>
-            <ion-col size-lg="6" class="ion-align-items-center ion-justify-content-center col-center" style="display: flex;">
-                <h1 class="ion-text-center">Seja Bem-vindo</h1>
-                <p class="ion-text-center ">Clique no botão abaixo para iniciar a liberação do seu veículo.</p>
-                <ion-button (click)="goPublicSearch()" class="btn-busca">Novo Atendimento</ion-button>
-                <ion-button (click)="goQuery()" class="btn-busca btn-consulta">Consulta</ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button (click)="openMenu()"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-grid style="height: 90vw">
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center row-center"
+    >
+      <ion-col
+        size-lg="6"
+        class="ion-align-items-end ion-justify-content-center"
+        style="display: flex"
+      >
+        <ion-img src="../../../assets/home/Illustrasi(1).png"></ion-img>
+      </ion-col>
+      <ion-col
+        size-lg="6"
+        class="ion-align-items-center ion-justify-content-center col-center"
+        style="display: flex"
+      >
+        <h1 class="ion-text-center">Seja Bem-vindo</h1>
+        <p class="ion-text-center">
+          Clique no botão abaixo para iniciar a liberação do seu veículo.
+        </p>
+        <ion-button (click)="goPublicSearch()" class="btn-busca"
+          >Novo Atendimento</ion-button
+        >
+        <ion-button (click)="goQuery()" class="btn-busca btn-consulta"
+          >Consulta</ion-button
+        >
+        <!-- <div *ngIf="image">
+          <img [src]="image" alt="" srcset="" />
+        </div>
+        <ion-button
+          (click)="openCamera()"
+          color="primary"
+          expand="block"
+          fill="solid"
+          size="default"
+        >
+          Open Camera
+        </ion-button> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

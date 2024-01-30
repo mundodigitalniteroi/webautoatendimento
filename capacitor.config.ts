@@ -3,7 +3,6 @@ const config: CapacitorConfig = {
   appId: 'autoatendimento.patiosg.com.br',
   appName: 'Auto Atendimento',
   bundledWebRuntime: false,
-  npmClient: 'npm',
   webDir: 'www',
 };
 
