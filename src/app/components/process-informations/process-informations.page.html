@@ -5,7 +5,7 @@
   <ion-row class="ion-justify-content-center ">
     <ion-card>
       <ion-card-content class="info">
-        <p><b>Formulário GRV:</b> {{informations.veiculo.processo}}</p>
+        <p><b>Formulário GRV:</b> {{informations.numeroProcesso}}</p>
         <p><b>Placa:</b>  {{informations.veiculo.placa}}</p>
         <p><b>Marca/modelo:</b>  {{informations.veiculo.marcaModelo.marcaModelo}}</p>
         <p><b>Tipo de veículo:</b> {{informations.veiculo.tipoVeiculo.descricao}}</p>
@@ -27,8 +27,7 @@
         <ion-col size="6">
           <ion-row>
             <h4><b>Tipo</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemServico">{{debito.nomeServico}}</p>
-
+              <p *ngFor="let debito of  informations.faturamento.listagemServico">{{debito.nomeServico}}</p>
           </ion-row>
         </ion-col>
         <ion-col size="2">

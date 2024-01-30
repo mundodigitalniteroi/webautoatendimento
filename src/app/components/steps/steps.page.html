@@ -48,8 +48,8 @@
       
     </ion-grid>
     <ion-row   class="col-btn">
-      <ion-button *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" style="font-size: 1.4rem;" (click)="changeStep()">Continuar</ion-button>
-
+      <ion-button class="btn-search"  *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" style="font-size: 1.4rem;" (click)="changeStep()">Continuar</ion-button>
+      <ion-button fill="outline" (click)="voltar(step)">Voltar</ion-button>
     </ion-row>
   </ion-content>
   
