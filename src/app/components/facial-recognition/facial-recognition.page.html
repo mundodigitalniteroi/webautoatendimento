@@ -1,11 +1,10 @@
 <ion-content [fullscreen]="true" >
     <ion-grid class="ion-text-center ion-align-items-center">
-        <ion-img class="face-icon picture-1" src="../../../assets/facial-recognition/tabler-icon-face-id.png"></ion-img>
-        <ion-img class=" picture-2" style="display: none;" src="../../../assets/facial-recognition/recognition.png"></ion-img>
-        <h1>Reconhecimento facial</h1>
-        <p>Escolha um ambiente bem iluminado<br> 
-            e não use nada que esconda o seu rosto</p>
-        <ion-img class="person" src="../../../assets/facial-recognition/ilustra-desktop-003 1.png"></ion-img>
+        <!-- <ion-img class="face-icon picture-1" src="../../../assets/facial-recognition/tabler-icon-face-id.png"></ion-img>
+        <ion-img class=" picture-2" style="display: none;" src="../../../assets/facial-recognition/recognition.png"></ion-img> -->
+        <h1 style="margin-top: 170px">Tire uma foto</h1>
+        <p>Posicione em frente a câmera<br> e não use nada que esconda o seu rosto</p>
+        <ion-img class="person" src="../../../assets/facial-recognition/selfie 1.png"></ion-img>
         <p>Essa validação é apenas uma etapa de segurança</p>
         <ion-button  (click)="newPhoto()" class="btn-enviar">Tirar foto</ion-button>
         <ion-button fill="outline" [routerLink]="['/step']">Voltar</ion-button>

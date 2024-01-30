@@ -118,4 +118,11 @@ inputChanged(event: any) {
   // Atualiza o valor do campo de entrada
   event.target.value = inputValue;
 }
+inputChangedCep(event: any){
+   // Remove caracteres não numéricos
+   const inputValue = event.target.value.replace(/\D/g, '');
+
+   // Atualiza o valor do campo de entrada
+   event.target.value = inputValue;
+}
 }

@@ -50,14 +50,14 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
       cpfProp:[null, Validators.required],
       cnhProp:[null, Validators.required],
       telefoneProp:[null, Validators.required],
-      emailProp:[null, Validators.required],
+      emailProp:[null, Validators.required, Validators.email],
       // Region Procurador
       nomeProc:[null, Validators.required],
       dataProc:[null, Validators.required],
       cpfProc:[null, Validators.required],
       cnhProc:[null, Validators.required],
       telefoneProc:[null, Validators.required],
-      emailProc:[null, Validators.required],
+      emailProc:[null, Validators.required, Validators.email],
       // Region Pessoa Jurídica
       cnpj:[null, Validators.required],
       razaoSocial:[null, Validators.required]
@@ -125,6 +125,13 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
 inputChanged(event: any) {
   // Remove caracteres não numéricos
   const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
+
+  // Atualiza o valor do campo de entrada
+  event.target.value = inputValue;
+}
+inputChangedName(event: any) {
+  // Remove caracteres não alfabéticos
+  const inputValue = event.target.value.replace(/[^A-Za-z]/g, '');
 
   // Atualiza o valor do campo de entrada
   event.target.value = inputValue;

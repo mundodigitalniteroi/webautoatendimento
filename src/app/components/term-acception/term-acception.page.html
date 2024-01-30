@@ -18,6 +18,7 @@
           <ion-checkbox slot="end" [(ngModel)]="value"></ion-checkbox>
         </ion-item>
       </ion-list>
-      <ion-button [routerLink]="['/public-search']" [disabled]="!value">Continuar</ion-button>
+      <ion-button [routerLink]="['/public-search']" class="btn-search" [disabled]="!value">Continuar</ion-button>
+      <ion-button fill="outline" [routerLink]="['/home']">Voltar</ion-button>
    </ion-grid>
 </ion-content>        

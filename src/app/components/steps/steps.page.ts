@@ -53,4 +53,17 @@ export class StepsPage implements OnInit {
     }
   }
 
+  voltar(step){
+    switch (step) {
+      case 'indentity':
+        this.router.navigate(['/how-liberation'])
+          break;
+      case 'address':
+        setTimeout(() => {
+          this.step = 'indentity'
+          this.title = 'Cadastro Pessoal'
+        }, 1000);
+      break
+  }
+  }
 }

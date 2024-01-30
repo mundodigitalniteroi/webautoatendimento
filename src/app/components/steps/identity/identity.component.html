@@ -1,9 +1,9 @@
 <ion-grid  [formGroup]="form">
-    <ion-row class="ion-justify-content-start" style="margin-top: 15px;">
-        <h1>Tipo:</h1>
-      </ion-row>
+    <!-- <ion-row class="ion-justify-content-start" style="margin-top: 15px;">
+        
+      </ion-row> -->
     <ion-list class="flex ion-justify-content-start ion-margin-start" style="margin-top: 15px;">
-
+        <h1 style="padding-right: 15px;">Tipo:</h1>
         <ion-radio-group class="flex"  (click)="changeValues('PF')"  formControlName="pessoaFisica">
             <ion-radio [value]="true" (click)="changeValues('PF')">Pessoa Física</ion-radio>
         </ion-radio-group>
@@ -22,7 +22,7 @@
 
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">Nome</ion-label>
-            <ion-input placeholder="Digite seu nome completo" formControlName="nomeProp"></ion-input>
+            <ion-input (ionChange)="inputChangedName($event)" placeholder="Digite seu nome completo" formControlName="nomeProp"></ion-input>
         </ion-item>
         <ion-item counter="true">
             <ion-label position="floating">Data de nascimento</ion-label>
@@ -54,7 +54,7 @@
 
         <ion-item class="ion-justify-content-start" >
             <ion-label position="floating">Nome</ion-label>
-            <ion-input placeholder="Digite seu nome completo" formControlName="nomeProc"></ion-input>
+            <ion-input (ionChange)="inputChangedName($event)" placeholder="Digite seu nome completo" formControlName="nomeProc"></ion-input>
         </ion-item>
         
         <ion-item counter="true">
