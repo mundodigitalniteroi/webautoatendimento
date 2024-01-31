@@ -119,7 +119,7 @@ export class DocumentUploadPage implements OnInit {
         tipoPessoaId: atendimento?.tipoPessoaId ? atendimento?.tipoPessoaId : "",
         endereco: {
           enderecoId: 0,
-          logradouro: "",
+          logradouro: atendimento?.enderecoPJ?.rua ? atendimento?.enderecoPJ?.rua : "",
           numero: atendimento?.enderecoPJ?.numero ? atendimento?.enderecoPJ?.numero : "",
           complemento: atendimento?.enderecoPJ?.complemento ? atendimento?.enderecoPJ?.complemento : "",
           bairro: atendimento?.enderecoPJ?.bairro ? atendimento?.enderecoPJ?.bairro : "",
@@ -141,7 +141,7 @@ export class DocumentUploadPage implements OnInit {
         tipoPessoaId: atendimento?.tipoPessoaId ? atendimento?.tipoPessoaId : "",
         endereco: {
           enderecoId: 0,
-          logradouro: "",
+          logradouro: atendimento?.enderecoPF?.rua ? atendimento?.enderecoPF?.rua : "",
           numero: atendimento?.enderecoPF?.numero ? atendimento?.enderecoPF?.numero : "",
           complemento: atendimento?.enderecoPF?.complemento ? atendimento?.enderecoPF?.complemento : "",
           bairro: atendimento?.enderecoPF?.bairro ? atendimento?.enderecoPF?.bairro : "",

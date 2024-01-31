@@ -1,4 +1,4 @@
-$font-family: Arial, Helvetica, sans-serif;
+$font-family: Inter;
 ion-grid{
     display: flex;
     align-items: center;
@@ -46,6 +46,7 @@ ion-button {
     font-size: 1.2rem;
     text-align: start;
     padding: 0 15px;
+    font-family: $font-family;
   }
   .person{
 
