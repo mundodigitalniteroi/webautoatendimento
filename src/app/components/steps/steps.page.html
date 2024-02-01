@@ -42,6 +42,7 @@
       >
         <app-identity
           *ngIf="step == 'indentity'"
+          (emitFormValue)="receiveFormValue($event)"
           [saveFields]="saveIdentity"
         ></app-identity>
         <app-address
@@ -80,6 +81,7 @@
     <ion-button
       class="btn-search"
       *ngIf="step == 'indentity' || step == 'address' || step == 'verify'"
+      [disabled]="!form"
       style="font-size: 1.4rem"
       (click)="changeStep()"
       >Continuar</ion-button

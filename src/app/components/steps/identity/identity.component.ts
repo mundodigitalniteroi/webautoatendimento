@@ -1,9 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,6 +22,7 @@ import { RegistroState } from 'src/app/state/registro/registro.state';
   styleUrls: ['./identity.component.scss'],
 })
 export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
+  @Output() emitFormValue = new EventEmitter();
   @Input() saveFields = false;
   pessoaFisica = true;
   pessoaJuridica = false;
@@ -44,14 +47,14 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
       cpfProp: [null, Validators.required],
       cnhProp: [null, Validators.required],
       telefoneProp: [null, Validators.required],
-      emailProp: [null, Validators.required, Validators.email],
+      emailProp: [null, Validators.required],
       // Region Procurador
       nomeProc: [null, Validators.required],
       dataProc: [null, Validators.required],
       cpfProc: [null, Validators.required],
       cnhProc: [null, Validators.required],
       telefoneProc: [null, Validators.required],
-      emailProc: [null, [Validators.required, Validators.email]],
+      emailProc: [null, Validators.required],
       // Region Pessoa Jurídica
       cnpj: [null, Validators.required],
       razaoSocial: [null, Validators.required],
@@ -85,6 +88,7 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
       this.form.get('pessoaJuridica').patchValue(true);
       this.form.get('tipoPessoaId').patchValue(getPessoa.tipoPessoaId);
     }
+    this.changeForm();
   }
 
   getTipoPessoas() {
@@ -146,6 +150,13 @@ export class IdentityComponent implements OnInit, OnDestroy, OnChanges {
     event.target.value = inputValue;
   }
 
+  changeForm(){
+    const payload = {
+      tipoPessoa: this.options?.tipoPessoa,
+      form: this.form
+    }
+    this.emitFormValue.emit(payload);
+  }
   ngOnDestroy(): void {
     this.sub.forEach((item) => item.unsubscribe());
   }

@@ -16,19 +16,19 @@ export class StepsPage implements OnInit {
   options;
   saveIdentity = false;
   saveAdress = false;
+  form: boolean = false;
+  tipoAtendimento:any = null;
   constructor(
     private store: Store,
     private router: Router,
   ) { }
 
   ngOnInit(): void {
-    this.options = this.store.selectSnapshot(RegistroState.all);
     // // console.log(this.options)
   }
   changeStep() {
     if (this.step == 'indentity') {
       this.saveIdentity = true;
-      // // console.log(this.saveIdentity);
       setTimeout(() => {
         this.step = 'address'
         this.title = 'Cadastro de endereço'
@@ -52,7 +52,56 @@ export class StepsPage implements OnInit {
       return
     }
   }
+  receiveFormValue(event){
+    // console.log(event);
+    this.form = event.form.valid;
+    let formValues = event.form.value;
+    event.tipoPessoa = "procurador"
+      if(formValues.campo == 'PF' && event.tipoPessoa == "proprietario"){
+      this.form =  formValues.nomeProp ?  true :  false;
+      this.form =  formValues.dataProp ?   true : false;
+      this.form =  formValues.cpfProp ?  true : false;
+      this.form =  formValues.cnhProp ?  true : false;
+      this.form =  formValues.telefoneProp ?  true : false;
+      this.form =  formValues.emailProp ?   true : false;
+      }
 
+      if(formValues.campo == 'PJ' && event.tipoPessoa == "proprietario"){
+        this.form = formValues.cnpj ?  true : false;
+        this.form = formValues.razaoSocial ?  true : false;
+        // console.log(this.form)
+      }
+
+      if(formValues.campo == 'PF' && event.tipoPessoa == "procurador"){
+        this.form = formValues.nomeProp ?  true : false;
+        this.form = formValues.dataProp ?   true : false;
+        this.form = formValues.cpfProp ?  true : false;
+        this.form = formValues.cnhProp ?  true : false;
+        this.form = formValues.telefoneProp ?  true : false;
+        this.form = formValues.emailProp ?   true : false;
+
+        this.form = formValues.nomeProc ?  true : false;
+        this.form = formValues.dataProc ?  true : false;
+        this.form = formValues.cpfProc ?  true : false;
+        this.form = formValues.cnhProc ?  true : false;
+        this.form = formValues.telefoneProc ?  true : false;
+        this.form = formValues.emailProc ?  true : false;
+      }
+
+      if(formValues.campo == 'PJ' && event.tipoPessoa == "procurador"){
+        this.form = formValues.nomeProp ?  true : false;
+        this.form = formValues.dataProp ?   true : false;
+        this.form = formValues.cpfProp ?  true : false;
+        this.form = formValues.cnhProp ?  true : false;
+        this.form = formValues.telefoneProp ?  true : false;
+        this.form = formValues.emailProp ?   true : false;
+
+        this.form = formValues.cnpj ?  true : false;
+        this.form = formValues.razaoSocial ?  true : false;
+      }
+      
+  
+  }
   voltar(step){
     switch (step) {
       case 'indentity':

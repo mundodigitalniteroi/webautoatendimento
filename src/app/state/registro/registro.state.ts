@@ -62,7 +62,8 @@ export class RegistroState {
 
   @Action(SetIdentity)
   setIdentity(ctx: StateContext<OperacaoModel>, payload) {
-    // // console.log(payload)
+    console.log(payload.payload.proprietarioPf.nomeProp)
+    // payload
     const state = ctx.getState;
     ctx.patchState({
       ...state,
