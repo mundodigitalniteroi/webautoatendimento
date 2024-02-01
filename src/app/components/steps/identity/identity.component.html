@@ -1,104 +1,218 @@
-<ion-grid  [formGroup]="form">
-    <!-- <ion-row class="ion-justify-content-start" style="margin-top: 15px;">
+<ion-grid [formGroup]="form">
+  <!-- <ion-row class="ion-justify-content-start" style="margin-top: 15px;">
         
       </ion-row> -->
-    <ion-list class="flex ion-justify-content-start ion-margin-start" style="margin-top: 15px;">
-        <h1 style="padding-right: 15px;">Tipo:</h1>
-        <ion-radio-group class="flex"  (click)="changeValues('PF')"  formControlName="pessoaFisica">
-            <ion-radio [value]="true" (click)="changeValues('PF')">Pessoa Física</ion-radio>
-        </ion-radio-group>
-        <p style="margin: 0; margin-left: 10px;" (click)="changeValues('PF')">Pessoa Física</p>
-        <ion-radio-group class="flex ion-margin-start" (click)="changeValues('PJ')"  formControlName="pessoaJuridica">
-          <ion-radio [value]="true" (click)="changeValues('PJ')">Pessoa Jurídica</ion-radio>
-      </ion-radio-group>
-      <p style="margin: 0; margin-left: 10px;" (click)="changeValues('PJ')">Pessoa Jurídica</p>
-      </ion-list>
+  <ion-list
+    class="flex ion-justify-content-start ion-margin-start"
+    style="margin-top: 15px"
+  >
+    <h1 style="padding-right: 15px">Proprietário:</h1>
+    <ion-radio-group
+      class="flex"
+      (click)="changeValues('PF')"
+      formControlName="pessoaFisica"
+    >
+      <ion-radio [value]="true" (click)="changeValues('PF')"
+        >Pessoa Física</ion-radio
+      >
+    </ion-radio-group>
+    <p style="margin: 0; margin-left: 10px" (click)="changeValues('PF')">
+      Pessoa Física
+    </p>
+    <ion-radio-group
+      class="flex ion-margin-start"
+      (click)="changeValues('PJ')"
+      formControlName="pessoaJuridica"
+    >
+      <ion-radio [value]="true" (click)="changeValues('PJ')"
+        >Pessoa Jurídica</ion-radio
+      >
+    </ion-radio-group>
+    <p style="margin: 0; margin-left: 10px" (click)="changeValues('PJ')">
+      Pessoa Jurídica
+    </p>
+  </ion-list>
 
-      <ion-row class="ion-justify-content-start" style="margin-top: 15px;" *ngIf="form.value.campo == 'PF' || (form.value.campo == 'PJ' && options?.tipoPessoa == 'proprietario')">
-        <h1>Dados do Proprietário</h1>
-      </ion-row>
- 
-    <ion-list  *ngIf="form.value.campo == 'PF' || (form.value.campo == 'PJ' && options?.tipoPessoa == 'proprietario')">
+  <ion-row
+    *ngIf="form.value.campo == 'PJ'"
+    class="ion-justify-content-start"
+    style="margin-top: 15px"
+  >
+    <h1>Dados do Proprietário</h1>
+  </ion-row>
 
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">Nome</ion-label>
-            <ion-input (ionChange)="inputChangedName($event)" placeholder="Digite seu nome completo" formControlName="nomeProp"></ion-input>
-        </ion-item>
-        <ion-item counter="true">
-            <ion-label position="floating">Data de nascimento</ion-label>
-            <ion-input inputmode="numeric"  placeholder="Digite sua data de nascimento" formControlName="dataProp" [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
-        </ion-item>
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">CPF</ion-label>
-            <ion-input inputmode="numeric"   placeholder="Digite seu CPF" formControlName="cpfProp" [brmasker]="{person: true}" placeholder="000.000.000-00" maxlength="14"></ion-input>
-        </ion-item>
-        <ion-item counter="true">
-            <ion-label position="floating">CNH</ion-label>
-            <ion-input inputmode="numeric"  placeholder="Digite sua CNH" formControlName="cnhProp" [brmasker]="{mask:'000.000.000.00', len:14}" maxlength="14"></ion-input>
-        </ion-item>
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">Telefone</ion-label>
-            <ion-input inputmode="numeric"  placeholder="Digite seu telefone"  formControlName="telefoneProp" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input>
-        </ion-item>
-        <ion-item counter="true">
-            <ion-label position="floating">Email</ion-label>
-            <ion-input inputmode="email" placeholder="Digite seu email" formControlName="emailProp"></ion-input>
-        </ion-item>
-    </ion-list>
+  <ion-list *ngIf="form.value.campo == 'PJ'">
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">CNPJ</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite seu CNPJ"
+        formControlName="cnpj"
+        [brmasker]="{ mask: '99.999.999/9999-99', len: 18, type: 'num' }"
+      ></ion-input>
+    </ion-item>
+    <ion-item counter="true">
+      <ion-label position="floating">Razão Social</ion-label>
+      <ion-input
+        placeholder="Digite sua Razão Social"
+        formControlName="razaoSocial"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
 
-    <ion-row class="ion-justify-content-start" style="margin-top: 15px;" *ngIf="options?.tipoPessoa == 'procurador' ">
-        <h1>Dados do Procurador</h1>
-      </ion-row>
- 
-    <ion-list *ngIf="options?.tipoPessoa == 'procurador' ">
+  <ion-row
+    class="ion-justify-content-start"
+    style="margin-top: 15px"
+    *ngIf="form.value.campo == 'PF'"
+  >
+    <h1>Dados do Proprietário</h1>
+  </ion-row>
+  <ion-row
+    class="ion-justify-content-start"
+    style="margin-top: 15px"
+    *ngIf="form.value.campo == 'PJ' && options?.tipoPessoa == 'proprietario'"
+  >
+    <h1>Dados do Responsável</h1>
+  </ion-row>
 
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">Nome</ion-label>
-            <ion-input (ionChange)="inputChangedName($event)" placeholder="Digite seu nome completo" formControlName="nomeProc"></ion-input>
-        </ion-item>
-        
-        <ion-item counter="true">
-            <ion-label position="floating">Data de nascimento</ion-label>
-            <ion-input inputmode="numeric"  placeholder="Digite sua data de nascimento" formControlName="dataProc"  [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
-        </ion-item>
+  <ion-list
+    *ngIf="
+      form.value.campo == 'PF' ||
+      (form.value.campo == 'PJ' && options?.tipoPessoa == 'proprietario')
+    "
+  >
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">Nome Completo</ion-label>
+      <ion-input
+        (ionChange)="inputChangedName($event)"
+        placeholder="Digite seu nome completo"
+        formControlName="nomeProp"
+        errorText="Nome é Obrigatório"
+      ></ion-input>
+    </ion-item>
+    <ion-item counter="true">
+      <ion-label position="floating">Data de Nascimento</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite sua data de nascimento"
+        formControlName="dataProp"
+        [appIonMask]="{
+          mask: '99/99/9999',
+          blockedKeys: [',', '.', '+', '-']
+        }"
+        maxlength="10"
+      ></ion-input>
+    </ion-item>
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">CPF</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite seu CPF"
+        formControlName="cpfProp"
+        [brmasker]="{ mask: '999.999.999-99', len: 14, type: 'num' }"
+        placeholder="000.000.000-00"
+        maxlength="14"
+      ></ion-input>
+    </ion-item>
+    <ion-item counter="true">
+      <ion-label position="floating">CNH</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite sua CNH"
+        formControlName="cnhProp"
+        [brmasker]="{ mask: '', type: 'num' }"
+      ></ion-input>
+    </ion-item>
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">Celular</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite seu celular"
+        formControlName="telefoneProp"
+        [brmasker]="{ phone: true, type: 'num' }"
+      ></ion-input>
+    </ion-item>
+    <ion-item counter="true">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input
+        type="email"
+        inputmode="email"
+        placeholder="Digite seu email"
+        formControlName="emailProp"
+        email
+      ></ion-input>
+      <ion-note slot="error">Email inválido</ion-note>
+    </ion-item>
+  </ion-list>
 
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">CPF</ion-label>
-            <ion-input inputmode="numeric" placeholder="Digite seu CPF" formControlName="cpfProc" [brmasker]="{person: true}" placeholder="000.000.000-00" maxlength="14"></ion-input>
-        </ion-item>
+  <ion-row
+    class="ion-justify-content-start"
+    style="margin-top: 15px"
+    *ngIf="options?.tipoPessoa == 'procurador'"
+  >
+    <h1>Dados do Procurador</h1>
+  </ion-row>
 
-        <ion-item counter="true">
-            <ion-label position="floating">CNH</ion-label>
-            <ion-input inputmode="numeric"  placeholder="Digite sua CNH" formControlName="cnhProc"  [brmasker]="{mask:'000.000.000.00', len:14}" maxlength="14"></ion-input>
-        </ion-item>
+  <ion-list *ngIf="options?.tipoPessoa == 'procurador'">
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">Nome Completo</ion-label>
+      <ion-input
+        (ionChange)="inputChangedName($event)"
+        placeholder="Digite seu nome completo"
+        formControlName="nomeProc"
+      ></ion-input>
+    </ion-item>
 
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">Telefone</ion-label>
-            <ion-input inputmode="numeric" placeholder="Digite seu telefone" formControlName="telefoneProc" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input>
-        </ion-item>
+    <ion-item counter="true">
+      <ion-label position="floating">Data de Nascimento</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite sua data de nascimento"
+        formControlName="dataProc"
+        [brmasker]="{ mask: '99/99/9999', len: 10, type: 'num' }"
+      ></ion-input>
+    </ion-item>
 
-        <ion-item counter="true">
-            <ion-label position="floating">Email</ion-label>
-            <ion-input inputmode="email" placeholder="Digite seu email" formControlName="emailProc"></ion-input>
-        </ion-item>
-    </ion-list>
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">CPF</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite seu CPF"
+        formControlName="cpfProc"
+        [brmasker]="{ mask: '999.999.999-99', len: 14, type: 'num' }"
+        placeholder="000.000.000-00"
+        maxlength="14"
+      ></ion-input>
+    </ion-item>
 
-    <ion-row *ngIf="form.value.campo == 'PJ'" class="ion-justify-content-start" style="margin-top: 15px;">
-        <h1>Dados da Empresa</h1>
-      </ion-row>
- 
-    <ion-list *ngIf="form.value.campo == 'PJ'">
+    <ion-item counter="true">
+      <ion-label position="floating">CNH</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite sua CNH"
+        formControlName="cnhProc"
+        [brmasker]="{ mask: '', type: 'num' }"
+      ></ion-input>
+    </ion-item>
 
-        <ion-item class="ion-justify-content-start" >
-            <ion-label position="floating">CNPJ</ion-label>
-            <ion-input inputmode="numeric" (ionChange)="inputChanged($event)" placeholder="Digite seu CNPJ" formControlName="cnpj"></ion-input>
-        </ion-item>
-        <ion-item counter="true">
-            <ion-label position="floating">Razão Social</ion-label>
-            <ion-input placeholder="Digite sua Razão Social" formControlName="razaoSocial"></ion-input>
-        </ion-item>
-    </ion-list>
+    <ion-item class="ion-justify-content-start">
+      <ion-label position="floating">Celular</ion-label>
+      <ion-input
+        inputmode="numeric"
+        placeholder="Digite seu celular"
+        formControlName="telefoneProc"
+        [brmasker]="{ phone: true, type: 'num' }"
+      ></ion-input>
+    </ion-item>
 
-   
-
+    <ion-item counter="true">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input
+        type="email"
+        inputmode="email"
+        placeholder="Digite seu email"
+        formControlName="emailProc"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
 </ion-grid>

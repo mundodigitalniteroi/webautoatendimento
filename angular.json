@@ -14,6 +14,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["moment"],
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -45,7 +46,8 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "aot": true
           },
           "configurations": {
             "production": {

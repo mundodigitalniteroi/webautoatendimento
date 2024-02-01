@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { ConsultaCepService } from 'src/app/services/consulta-cep.service';
@@ -8,24 +14,24 @@ import { RegistroState } from 'src/app/state/registro/registro.state';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss']
+  styleUrls: ['./address.component.scss'],
 })
 export class AddressComponent implements OnInit, OnChanges {
   @Input() saveFields = false;
   form: FormGroup;
   options;
-  constructor( 
+  constructor(
     private cepService: ConsultaCepService,
     private fb: FormBuilder,
-    private store: Store,
-    ) { }
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.options = this.store.selectSnapshot(RegistroState.all);
     // // console.log(this.options)
     this.form = this.fb.group({
       cepProp: [null, Validators.required],
-      ruaProp: [null],
+      ruaProp: [null, Validators.required],
       numeroProp: [null, [Validators.required, Validators.minLength(1)]],
       estadoProp: [null, [Validators.required]],
       complementoProp: [null],
@@ -34,55 +40,57 @@ export class AddressComponent implements OnInit, OnChanges {
       observacoesProp: [null],
       // region empresa
       cepEmpresa: [null, Validators.required],
-      ruaEmpresa: [null],
+      ruaEmpresa: [null, Validators.required],
       numeroEmpresa: [null, [Validators.required, Validators.minLength(1)]],
       estadoEmpresa: [null, [Validators.required]],
       complementoEmpresa: [null],
       cidadeEmpresa: [null, [Validators.required]],
       bairroEmpresa: [null, [Validators.required]],
-      observacoesEmpresa: [null]
+      observacoesEmpresa: [null],
     });
   }
+
   ngOnChanges(changes: SimpleChanges): void {
-   
-    if(changes.saveFields){
+    if (changes.saveFields) {
       // // console.log(changes.saveFields);
       this.save();
     }
   }
+
   consultaCEP(param) {
     let cep;
-    if(param == 'empresa'){
+    if (param == 'empresa') {
       cep = this.form.get('cepEmpresa').value;
-    }else{
+    } else {
       cep = this.form.get('cepProp').value;
     }
-    
+
     if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-      .subscribe(dados => this.populaDadosForm(dados, param));
+      this.cepService
+        .consultaCEP(cep)
+        .subscribe((dados) => this.populaDadosForm(dados, param));
     }
   }
+
   populaDadosForm(dados, param) {
     // // console.log(dados)
-    if(param == 'empresa'){
+    if (param == 'empresa') {
       this.form.patchValue({
-        ruaEmpresa:dados.logradouro,
+        ruaEmpresa: dados.logradouro,
         bairroEmpresa: dados.bairro,
         cidadeEmpresa: dados.localidade,
-        estadoEmpresa: dados.uf
-    });
-    }else{
-      
+        estadoEmpresa: dados.uf,
+      });
+    } else {
       this.form.patchValue({
-        ruaProp:dados.logradouro,
+        ruaProp: dados.logradouro,
         bairroProp: dados.bairro,
         cidadeProp: dados.localidade,
-        estadoProp: dados.uf
-    });
+        estadoProp: dados.uf,
+      });
     }
-    
   }
+
   save() {
     const formValue = this.form?.value;
     const payload = {
@@ -95,7 +103,6 @@ export class AddressComponent implements OnInit, OnChanges {
         cidade: formValue?.cidadeProp,
         bairro: formValue?.bairroProp,
         observacoes: formValue?.observacoesProp,
-
       },
       enderecoPJ: {
         cep: formValue?.cepEmpresa,
@@ -107,22 +114,23 @@ export class AddressComponent implements OnInit, OnChanges {
         bairro: formValue?.bairroEmpresa,
         observacoes: formValue?.observacoesEmpresa,
       },
-
-    }
+    };
     this.store.dispatch(new SetAdress(payload));
-}
-inputChanged(event: any) {
-  // Remove caracteres não numéricos
-  const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
+  }
 
-  // Atualiza o valor do campo de entrada
-  event.target.value = inputValue;
-}
-inputChangedCep(event: any){
-   // Remove caracteres não numéricos
-   const inputValue = event.target.value.replace(/\D/g, '');
+  inputChanged(event: any) {
+    // Remove caracteres não numéricos
+    const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
 
-   // Atualiza o valor do campo de entrada
-   event.target.value = inputValue;
-}
+    // Atualiza o valor do campo de entrada
+    event.target.value = inputValue;
+  }
+
+  inputChangedCep(event: any) {
+    // Remove caracteres não numéricos
+    const inputValue = event.target.value.replace(/\D/g, '');
+
+    // Atualiza o valor do campo de entrada
+    event.target.value = inputValue;
+  }
 }

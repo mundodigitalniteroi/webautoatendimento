@@ -1,36 +1,34 @@
 $font-family: Arial, Helvetica, sans-serif;
-ion-menu-button{
+ion-menu-button {
   width: 50px;
-  --background:rgb(255, 255, 255);
+  --background: rgb(255, 255, 255);
 }
 
-ion-toolbar{
+ion-toolbar {
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  ion-title{
+  ion-title {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
-   
-    
   }
-  ion-button{
+  ion-button {
     height: 40px;
     margin-top: 0px;
-    --background:transparent !important;
+    --background: transparent !important;
   }
 }
 
 %margin-top {
   margin-top: 30px;
 }
-.btn-consulta{
-  --background:white;
-  --border-color:rgb(72, 135, 252);
-  --color:rgb(72, 135, 252);
-  --border-style:solid;
-  --border-width:1px;
+.btn-consulta {
+  --background: white;
+  --border-color: rgb(72, 135, 252);
+  --color: rgb(72, 135, 252);
+  --border-style: solid;
+  --border-width: 1px;
 }
 
 ion-grid {
@@ -68,14 +66,14 @@ ion-button {
   --background: rgb(72, 135, 252);
   @extend %margin-top;
 }
-.col-center{
-  justify-content: start !important;
+.col-center {
+  justify-content: flex-start !important;
   width: 100%;
   flex-direction: column !important;
   height: 100%;
 }
 
-@media(min-width:1025px){
+@media (min-width: 1025px) {
   .row-center {
     width: 100%;
     flex-direction: row !important;
@@ -84,15 +82,14 @@ ion-button {
     justify-content: center;
     align-items: center;
   }
-  .btn-busca{
+  .btn-busca {
     width: 60%;
   }
-  .col-center{
-    background-color: #F7F7F7;
+  .col-center {
+    background-color: #f7f7f7;
     width: 100%;
     flex-direction: column !important;
     justify-content: center !important;
     height: 100%;
   }
-
 }

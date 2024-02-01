@@ -1,6 +1,6 @@
 import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
-  appId: 'autoatendimento.patiosg.com.br',
+  appId: 'br.com.patiosg.autoatendimento',
   appName: 'Auto Atendimento',
   bundledWebRuntime: false,
   webDir: 'www',

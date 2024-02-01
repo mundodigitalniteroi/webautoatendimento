@@ -3,15 +3,15 @@ $font-family: Arial, Helvetica, sans-serif;
 %margin-top {
   margin-top: 30px;
 }
-.btn-consulta{
-  --background:white;
-  --border-color:rgb(72, 135, 252);
-  --color:rgb(72, 135, 252);
-  --border-style:solid;
-  --border-width:1px;
+.btn-consulta {
+  --background: white;
+  --border-color: rgb(72, 135, 252);
+  --color: rgb(72, 135, 252);
+  --border-style: solid;
+  --border-width: 1px;
 }
-p{
-  color: var(--grey, #61707F);
+p {
+  color: var(--grey, #61707f);
   text-align: center;
   font-family: Inter;
   font-size: 20px;
@@ -35,7 +35,7 @@ ion-img {
   height: 200px;
 }
 h1 {
-  color: var(--primary, #031A2E);
+  color: var(--primary, #031a2e);
   text-align: center;
   font-family: Inter;
   font-size: 32px;
@@ -57,32 +57,31 @@ ion-button {
   --background: rgb(72, 135, 252);
   @extend %margin-top;
 }
-.col-center{
-  justify-content: start !important;
+.col-center {
+  justify-content: flex-start !important;
   width: 100%;
   flex-direction: column !important;
   height: 100%;
 }
 
-.input-section{
+.input-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #EEEEEE;
-  border: 1px solid #DEDEDE;
+  background: #eeeeee;
+  border: 1px solid #dedede;
   border-radius: 5px;
   width: 80%;
   height: 57px;
-  .input-file{
+  .input-file {
     width: 80%;
     font-size: 20px;
     background: transparent;
     border: none;
     outline: none;
   }
-  
 }
-.loading{
+.loading {
   position: absolute;
   width: 100%;
   display: flex;
@@ -101,7 +100,7 @@ ion-button {
   transform-origin: 40px 40px;
 }
 .lds-roller div:after {
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
   width: 7px;
@@ -174,7 +173,7 @@ ion-button {
     transform: rotate(360deg);
   }
 }
-@media(min-width:1025px){
+@media (min-width: 1025px) {
   .row-center {
     width: 100%;
     flex-direction: row !important;
@@ -183,15 +182,14 @@ ion-button {
     justify-content: center;
     align-items: center;
   }
-  .btn-busca{
+  .btn-busca {
     width: 60%;
   }
-  .col-center{
-    background-color: #F7F7F7;
+  .col-center {
+    background-color: #f7f7f7;
     width: 100%;
     flex-direction: column !important;
     justify-content: center !important;
     height: 100%;
   }
-
 }

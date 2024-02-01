@@ -9,18 +9,23 @@ import { StepRoutingModule } from './steps-routing.module';
 import { AddressComponent } from './address/address.component';
 import { IdentityComponent } from './identity/identity.component';
 import { VerificationComponent } from './verification/verification.component';
-
-
+import { IonMaskDirective } from '../../directives/ion-mask.directive';
 
 @NgModule({
-  declarations: [StepsPage, AddressComponent, IdentityComponent, VerificationComponent],
+  declarations: [
+    StepsPage,
+    AddressComponent,
+    IdentityComponent,
+    VerificationComponent,
+    IonMaskDirective,
+  ],
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
     StepRoutingModule,
-    BrMaskerModule
-  ]
+    BrMaskerModule,
+  ],
 })
-export class StepModule { }
+export class StepModule {}

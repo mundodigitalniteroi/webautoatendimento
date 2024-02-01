@@ -1,4 +1,4 @@
-package io.ionic.demo.pg.cap.ng;
+package br.com.patiosg.autoatendimento;
 
 import com.getcapacitor.BridgeActivity;
 

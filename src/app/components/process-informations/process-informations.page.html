@@ -1,74 +1,92 @@
-<ion-content fullscreen class="ion-justify-content-center ">
-  <ion-row class="ion-justify-content-center ">
+<ion-content fullscreen class="ion-justify-content-center">
+  <ion-row class="ion-justify-content-center">
     <h2>Informações do processo</h2>
   </ion-row>
-  <ion-row class="ion-justify-content-center ">
+  <ion-row class="ion-justify-content-center">
     <ion-card>
       <ion-card-content class="info">
         <p><b>Formulário GRV:</b> {{informations.numeroProcesso}}</p>
-        <p><b>Placa:</b>  {{informations.veiculo.placa}}</p>
-        <p><b>Marca/modelo:</b>  {{informations.veiculo.marcaModelo.marcaModelo}}</p>
-        <p><b>Tipo de veículo:</b> {{informations.veiculo.tipoVeiculo.descricao}}</p>
-        <p><b>Data/hora Guarda:</b> {{informations.dataHoraGuarda}}</p>
-        <p><b>Pátio Destino:</b> {{informations.deposito.nome + ' | ' + informations.deposito.endereco }}</p>
+        <p><b>Placa:</b> {{informations.veiculo.placa}}</p>
+        <p>
+          <b>Marca/modelo:</b> {{informations.veiculo.marcaModelo.marcaModelo}}
+        </p>
+        <p>
+          <b>Tipo de veículo:</b> {{informations.veiculo.tipoVeiculo.descricao}}
+        </p>
+        <p>
+          <b>Data/hora Guarda:</b> {{informations.dataHoraGuarda |
+          date:'dd/MM/YYYY HH:mm'}}
+        </p>
+        <p>
+          <b>Pátio Destino:</b> {{informations.deposito.nome + ' | ' +
+          informations.deposito.endereco }}
+        </p>
         <p><b>Telefone:</b> {{informations.deposito.telefone}}</p>
-        </ion-card-content>
+      </ion-card-content>
     </ion-card>
   </ion-row>
-  <ion-row class="ion-justify-content-center ">
+  <ion-row class="ion-justify-content-center">
     <div class="position-aligned">
       <h3>Serviços Prestados</h3>
     </div>
-
   </ion-row>
   <ion-row class="ion-justify-content-center">
     <ion-card class="ion-justify-content-center">
       <ion-card-content class="table">
-        <ion-col size="6">
+        <ion-grid>
           <ion-row>
-            <h4><b>Tipo</b></h4>
-              <p *ngFor="let debito of  informations.faturamento.listagemServico">{{debito.nomeServico}}</p>
+            <ion-col size="6">
+              <h4><b>Tipo</b></h4>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <h4><b>Total</b></h4>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <h4><b>Qtd</b></h4>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <h4><b>Subtotal</b></h4>
+            </ion-col>
           </ion-row>
-        </ion-col>
-        <ion-col size="2">
-          <ion-row class="ion-text-center ">
-            <h4><b>Total</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemServico">R${{formatarNumero(debito.valorTipoServico)}}</p>
+          <ion-row
+            *ngFor="let debito of  informations.faturamento.listagemServico"
+          >
+            <ion-col size="6">
+              <p>{{debito.nomeServico}}</p>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <p>R$ {{debito.valorTipoServico | currency}}</p>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <p>{{debito.quantidadeServico}}</p>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <p>{{debito.valorFaturado | currency}}</p>
+            </ion-col>
           </ion-row>
-        </ion-col>
-        <ion-col size="2">
-          <ion-row class="ion-text-center">
-            <h4><b>Qtd</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemServico">x {{debito.quantidadeServico}}</p>
-          </ion-row>
-        </ion-col>
-        <ion-col size="2">
-          <ion-row class="ion-text-center">
-            <h4><b>Subtotal</b></h4>
-            <p *ngFor="let debito of  informations.faturamento.listagemServico">R${{formatarNumero(debito.valorFaturado)}}</p>
-          </ion-row>
-        </ion-col>
-      </ion-card-content>
 
-      <ion-card-content class="table">
-        <ion-col class="border" size="6">
-          <ion-row class="ion-text-start">
-            <h4 class="result">Total</h4>
+          <ion-row class="border ion-text-start ion-align-items-center">
+            <ion-col size="6">
+              <h4 class="result">TOTAL</h4>
+            </ion-col>
+            <ion-col class="ion-text-right" size="6">
+              <h4 class="price">
+                {{informations.faturamento.valorFaturado | currency}}
+              </h4>
+            </ion-col>
           </ion-row>
-        </ion-col>
-        <ion-col class="border" size="6">
-          <ion-row class="ion-text-end">
-            <h4 class="price">R${{formatarNumero(informations.faturamento.valorFaturado)}}</h4>
-          </ion-row>
-        </ion-col>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
   </ion-row>
-  <ion-row class="ion-justify-content-center" >
-    <ion-button  class="next" [routerLink]="['/how-liberation']">Liberar veículo</ion-button>
-    
+  <ion-row class="ion-justify-content-center">
+    <ion-button class="next" [routerLink]="['/how-liberation']"
+      >Liberar veículo</ion-button
+    >
   </ion-row>
-  <ion-row class="ion-justify-content-center" >
-    <ion-button fill="outline" [routerLink]="['/public-search']">Voltar</ion-button>
+  <ion-row class="ion-justify-content-center">
+    <ion-button fill="outline" [routerLink]="['/public-search']"
+      >Voltar</ion-button
+    >
   </ion-row>
 </ion-content>

@@ -1,16 +1,18 @@
-
-
-  <ion-content [fullscreen]="true" >
-    <ion-item lines="none" class="title-steps">
-      <h1 *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" >Complete todos os passos</h1>
-    </ion-item>
-    <!-- <ion-item class="steps ion-justify-content-center ion-align-items-center" lines="none">
+<ion-content [fullscreen]="true">
+  <ion-item lines="none" class="title-steps ion-text-center">
+    <ion-label
+      *ngIf="step == 'indentity' || step == 'address' || step == 'verify'"
+    >
+      <h1>Cadastro</h1>
+    </ion-label>
+  </ion-item>
+  <!-- <ion-item class="steps ion-justify-content-center ion-align-items-center" lines="none">
       <ion-img src="../../../assets/Step process signup0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
       <ion-img src="../../../assets/Step process signup1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
       <ion-img src="../../../assets/Step process signup2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
       <ion-img src="../../../assets/Step process signup3.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
     </ion-item> -->
-      <!-- <ion-row  class="steps ion-justify-content-center ion-align-items-center">
+  <!-- <ion-row  class="steps ion-justify-content-center ion-align-items-center">
         <ion-img src="../../../assets/step0.png" class="step-1" *ngIf="step == 'indentity'"></ion-img>
         <ion-img src="../../../assets/step1.png" class="step-1" *ngIf="step == 'address'"></ion-img>
         <ion-img src="../../../assets/step2.png" class="step-1" *ngIf="step == 'verify'"></ion-img>
@@ -19,38 +21,69 @@
         <ion-img src="../../../assets/step/step2.png" class="step-2" style="display: none;" *ngIf="step == 'address'"></ion-img>
         <ion-img src="../../../assets/step/step3.png" class="step-2" style="display: none;" *ngIf="step == 'verify'"></ion-img>
       </ion-row> -->
-    <ion-grid class="ion-text-center">
-      <div class=" verify" lines="none" *ngIf="step == 'verify'">
-        <h1>{{title}}</h1>
-        <p>{{subtitle}}<br> <b>{{email}}</b></p>
-      </div>
-      <ion-card>
-        <ion-card-header *ngIf="step == 'indentity' || step == 'address'" >
-          <ion-card-title>{{title}}</ion-card-title>
-          <ion-card-subtitle *ngIf="step == 'indentity' || step == 'address'">{{subtitle}} </ion-card-subtitle>
-        </ion-card-header>
-      
-        <ion-card-content [ngClass]="{'verifyComplete': step == 'verifyComplete' }">
-          <app-identity *ngIf="step == 'indentity'" [saveFields]="saveIdentity"></app-identity>
-          <app-address *ngIf="step == 'address'" [saveFields]="saveAdress"></app-address>
-          <app-verification *ngIf="step == 'verify'"></app-verification>
-          <ion-img src="../../../assets/ri_checkbox-circle-fill.png" class="step-1" *ngIf="step == 'verifyComplete'"></ion-img>
-          <ion-img src="../../../assets/step/checkBlue.png" class="step-2" style="display: none;" *ngIf="step == 'verifyComplete'"></ion-img>
-          <h1 *ngIf="step == 'verifyComplete'"><b>Obrigado por se<br>Registrar</b></h1>
-          <ion-button  *ngIf="step == 'verifyComplete'" [routerLink]="['/facial-recognition']">Continuar</ion-button>
-        </ion-card-content>
-      </ion-card>
-      <div class=" verify" lines="none" *ngIf="step == 'verify'">
-        <p class="no-code">Não recebeu um código de verificação</p>
-        <br>
-        <p><u>Reenviar código</u></p>
-      </div>
-      
-    </ion-grid>
-    <ion-row   class="col-btn">
-      <ion-button class="btn-search"  *ngIf="step == 'indentity' || step == 'address' || step == 'verify'" style="font-size: 1.4rem;" (click)="changeStep()">Continuar</ion-button>
-      <ion-button fill="outline" (click)="voltar(step)">Voltar</ion-button>
-    </ion-row>
-  </ion-content>
-  
- 
+  <ion-grid class="ion-text-center">
+    <div class="verify" lines="none" *ngIf="step == 'verify'">
+      <h1>{{title}}</h1>
+      <p>
+        {{subtitle}}<br />
+        <b>{{email}}</b>
+      </p>
+    </div>
+    <ion-card>
+      <ion-card-header *ngIf="step == 'indentity' || step == 'address'">
+        <ion-card-title>{{title}}</ion-card-title>
+        <ion-card-subtitle *ngIf="step == 'indentity' || step == 'address'"
+          >{{subtitle}}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content
+        [ngClass]="{'verifyComplete': step == 'verifyComplete' }"
+      >
+        <app-identity
+          *ngIf="step == 'indentity'"
+          [saveFields]="saveIdentity"
+        ></app-identity>
+        <app-address
+          *ngIf="step == 'address'"
+          [saveFields]="saveAdress"
+        ></app-address>
+        <app-verification *ngIf="step == 'verify'"></app-verification>
+        <ion-img
+          src="../../../assets/ri_checkbox-circle-fill.png"
+          class="step-1"
+          *ngIf="step == 'verifyComplete'"
+        ></ion-img>
+        <ion-img
+          src="../../../assets/step/checkBlue.png"
+          class="step-2"
+          style="display: none"
+          *ngIf="step == 'verifyComplete'"
+        ></ion-img>
+        <h1 *ngIf="step == 'verifyComplete'">
+          <b>Obrigado por se<br />Registrar</b>
+        </h1>
+        <ion-button
+          *ngIf="step == 'verifyComplete'"
+          [routerLink]="['/facial-recognition']"
+          >Continuar</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+    <div class="verify" lines="none" *ngIf="step == 'verify'">
+      <p class="no-code">Não recebeu um código de verificação</p>
+      <br />
+      <p><u>Reenviar código</u></p>
+    </div>
+  </ion-grid>
+  <ion-row class="col-btn">
+    <ion-button
+      class="btn-search"
+      *ngIf="step == 'indentity' || step == 'address' || step == 'verify'"
+      style="font-size: 1.4rem"
+      (click)="changeStep()"
+      >Continuar</ion-button
+    >
+    <ion-button fill="outline" (click)="voltar(step)">Voltar</ion-button>
+  </ion-row>
+</ion-content>
