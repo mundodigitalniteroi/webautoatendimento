@@ -145,7 +145,10 @@ export class DocumentUploadPage implements OnInit {
                 ? atendimento?.tipoPessoaId
                 : '',
               endereco: {
-                logradouro: '',
+                enderecoId: 0,
+                logradouro: atendimento?.enderecoPJ?.rua
+                  ? atendimento?.enderecoPJ?.rua
+                  : '',
                 numero: atendimento?.enderecoPJ?.numero
                   ? atendimento?.enderecoPJ?.numero
                   : '',
@@ -164,7 +167,10 @@ export class DocumentUploadPage implements OnInit {
                 cep: atendimento?.enderecoPJ?.cep
                   ? atendimento?.enderecoPJ?.cep
                   : '',
+                latitude: 0,
+                longitude: 0,
               },
+              enderecoId: 0,
             },
       pessoa: {
         nome: atendimento?.proprietarioPf?.nome
@@ -190,7 +196,9 @@ export class DocumentUploadPage implements OnInit {
           : '',
         endereco: {
           enderecoId: 0,
-          logradouro: '',
+          logradouro: atendimento?.enderecoPF?.rua
+            ? atendimento?.enderecoPF?.rua
+            : '',
           numero: atendimento?.enderecoPF?.numero
             ? atendimento?.enderecoPF?.numero
             : '',

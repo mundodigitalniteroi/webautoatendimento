@@ -1,4 +1,4 @@
-$font-family: Arial, Helvetica, sans-serif;
+$font-family: Inter;
 
 ion-content {
     background-color: beige !important;
@@ -20,6 +20,7 @@ ion-content {
         h1 {
             margin-bottom: 30%;
             font-size: 2rem;
+            font-family: $font-family;
         }
     }
 
@@ -37,6 +38,7 @@ ion-content {
 
 h1 {
     font-size: 1.8rem;
+    font-family: $font-family;
 }
 
 ion-list {
@@ -57,6 +59,7 @@ ion-card-title {
     font-size: 1.6rem;
     line-height: 24px;
     letter-spacing: 0.374px;
+    font-family: $font-family;
     color: #031A2E;
 }
 
@@ -74,6 +77,7 @@ ion-card {
 
 ion-card-header {
     text-align: start;
+    font-family: $font-family;
 }
 
 .btn-search {
@@ -120,6 +124,7 @@ ion-button {
 
     p {
         color: #61707F;
+        font-family: $font-family;
     }
 
     .no-code {

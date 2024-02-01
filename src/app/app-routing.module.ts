@@ -135,6 +135,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'foto-facial',
+    loadChildren: () =>
+      import('./components/foto-facial/foto-facial.module').then(
+        (m) => m.FotoFacialModule
+      ),
+  },
+  {
     path: 'loading-picture',
     loadChildren: () =>
       import('./components/loading-picture/loading-picture.module').then(

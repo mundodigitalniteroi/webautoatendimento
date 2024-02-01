@@ -1,4 +1,4 @@
-$font-family: Arial, Helvetica, sans-serif;
+$font-family: Inter;
 ion-menu-button {
   width: 50px;
   --background: rgb(255, 255, 255);
@@ -10,7 +10,7 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
   ion-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: $font-family;
     font-size: 1rem;
   }
   ion-button {
@@ -32,7 +32,7 @@ ion-toolbar {
 }
 
 ion-grid {
-  height: 100%;
+  height: 85%;
   display: flex;
   justify-content: center;
 }

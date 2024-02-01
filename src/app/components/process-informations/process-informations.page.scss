@@ -1,10 +1,11 @@
-$font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$font-family: Inter;
 ion-content {
   --background: rgb(240, 240, 240);
 }
 .info {
   p {
     font-size: 16px;
+    font-family: $font-family;
     padding-bottom: 10px;
   }
 }
@@ -70,12 +71,13 @@ ion-card {
   h4 {
     font-size: 1.6rem !important;
     font-weight: 700;
+    font-family: $font-family;
   }
   .result {
     color: rgb(158, 158, 158);
   }
   .price {
-    font-size: 3rem !important;
+    font-size: 2rem !important;
     color: black;
   }
 }

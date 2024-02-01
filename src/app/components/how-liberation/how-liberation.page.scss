@@ -1,4 +1,4 @@
-$font-family: Arial, Helvetica, sans-serif;
+$font-family: Inter;
 .flex {
   flex-direction: column;
 }
@@ -92,10 +92,12 @@ section {
     margin-right: 0% !important;
     color: black;
     font-weight: 700;
+    font-family: $font-family;
   }
 }
 h1 {
   width: 100%;
+  font-family: $font-family;
 }
 .selection {
   width: 100% !important;
@@ -135,6 +137,7 @@ h1 {
   }
   h1 {
     width: 100%;
+    font-family: $font-family;
   }
   // .col-center{
   //   background-color: #F7F7F7;
