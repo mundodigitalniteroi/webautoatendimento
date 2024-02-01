@@ -145,7 +145,6 @@ export class DocumentUploadPage implements OnInit {
                 ? atendimento?.tipoPessoaId
                 : '',
               endereco: {
-                enderecoId: 0,
                 logradouro: atendimento?.enderecoPJ?.rua
                   ? atendimento?.enderecoPJ?.rua
                   : '',
@@ -167,10 +166,7 @@ export class DocumentUploadPage implements OnInit {
                 cep: atendimento?.enderecoPJ?.cep
                   ? atendimento?.enderecoPJ?.cep
                   : '',
-                latitude: 0,
-                longitude: 0,
               },
-              enderecoId: 0,
             },
       pessoa: {
         nome: atendimento?.proprietarioPf?.nome
@@ -195,7 +191,6 @@ export class DocumentUploadPage implements OnInit {
           ? atendimento?.tipoPessoaId
           : '',
         endereco: {
-          enderecoId: 0,
           logradouro: atendimento?.enderecoPF?.rua
             ? atendimento?.enderecoPF?.rua
             : '',
@@ -215,10 +210,7 @@ export class DocumentUploadPage implements OnInit {
             ? atendimento?.enderecoPF?.estado
             : '',
           cep: atendimento?.enderecoPF?.cep ? atendimento?.enderecoPF?.cep : '',
-          latitude: 0,
-          longitude: 0,
         },
-        enderecoId: 0,
       },
       tipoAtendimentoId: atendimento?.tipoAtendimentoId
         ? atendimento?.tipoAtendimentoId
@@ -239,15 +231,7 @@ export class DocumentUploadPage implements OnInit {
       referencia: atendimento?.informacaoConsulta?.numeroProcesso
         ? atendimento?.informacaoConsulta?.numeroProcesso
         : '',
-      documentos: [
-        // {
-        //   tipoDocumentoId: 0,
-        //   nome: "string",
-        //   tipo: "string",
-        //   tamanho: 0,
-        //   base64: "string"
-        // }
-      ],
+      documentos: [],
     };
     this.fotos.forEach((foto) => {
       let formatFoto = {
