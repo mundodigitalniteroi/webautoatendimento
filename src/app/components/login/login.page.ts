@@ -8,41 +8,46 @@ import { Login } from 'src/app/state/auth/auth.action';
 @Component({
   selector: 'app-home',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss']
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  codigo:string = 'M7W2JT';
+  codigo: string = 'M7W2JT';
+  senha: string = '123';
   loading = false;
   constructor(
     private router: Router,
     private authService: AuthService,
     private store: Store,
-    private toastController: ToastController,
-    ) { }
+    private toastController: ToastController
+  ) {}
 
-  ngOnInit(): void {
-  }
-  goHome(){
-    this.router.navigate(['/home'])
+  ngOnInit(): void {}
+  goHome() {
+    this.router.navigate(['/home']);
   }
 
-  login(){
+  login() {
     this.loading = true;
-    this.authService.login(this.codigo).subscribe( (info: any) => {
-      // console.log(info);
-      this.loading = false;
-      if(info.data){
-        this.store.dispatch(new Login(info.data));
-        this.router.navigate(['/home']);
-      }else{
-        this.toast('Error: Não foi possível efetuar o login com este código');
+    this.authService.login(this.codigo, this.senha).subscribe(
+      (info: any) => {
+        // console.log(info);
+        this.loading = false;
+        if (info.data) {
+          this.store.dispatch(new Login(info.data));
+          this.router.navigate(['/home']);
+        } else {
+          this.toast('Error: Não foi possível efetuar o login com este código');
+        }
+      },
+      (e) => {
+        this.loading = false;
+        if (e.error && e.error.message) {
+          this.toast(e.error.message);
+        } else {
+          this.toast('Houve um erro ao realizar o login');
+        }
       }
-    },
-    (error)=> {
-      this.loading = false;
-      this.toast('Error: Não foi possível efetuar o login com este código');
-    }
-    )
+    );
   }
   async toast(message: string) {
     const toast = await this.toastController.create({

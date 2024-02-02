@@ -2,17 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl ='https://api.atendimento.gestordepatios.app.br/terminal/';
-  constructor(
+  private apiUrl = 'https://api.atendimento.gestordepatios.app.br/terminal/';
+  constructor(public http: HttpClient) {}
 
-    public http: HttpClient,
-    ) { }
-
-     login(token: string) {
-      return this.http.get(this.apiUrl + `login?codigo=${token}`);
-    }
-
+  login(codigo: string, senha: string) {
+    const body = {
+      codigo: codigo,
+      senha: senha,
+    };
+    return this.http.post(this.apiUrl + 'login', body);
   }
+}

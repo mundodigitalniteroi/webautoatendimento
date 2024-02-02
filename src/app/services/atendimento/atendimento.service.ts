@@ -1,57 +1,46 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
+import { AuthState } from 'src/app/state/auth/auth.state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AtendimentoService {
-  private apiUrl ='https://api.atendimento.gestordepatios.app.br/';
+  private apiUrl = 'https://api.atendimento.gestordepatios.app.br/';
   emitInformations: Subject<any> = new Subject<any>();
   closeMenu: Subject<any> = new Subject<any>();
-  constructor(
+  headers: HttpHeaders;
+  constructor(public http: HttpClient, private store: Store) {
+    this.store.select(AuthState.token).subscribe((t) => {
+      this.headers = new HttpHeaders({
+        Authorization: `Bearer ${t}`,
+      });
+    });
+  }
 
-    public http: HttpClient,
-    ) { }
+  getTipoPessoas() {
+    return this.http.get(this.apiUrl + `TipoPessoa`, { headers: this.headers });
+  }
 
-     getDebitos(termo: string) {
-      return this.http.get(this.apiUrl + `consultar?termo=${termo}`);
-    }
+  getTipoAtendimento() {
+    return this.http.get(this.apiUrl + `TipoAtendimento`, {
+      headers: this.headers,
+    });
+  }
 
-    getTipoPessoas(){
-      return this.http.get(this.apiUrl + `TipoPessoa`);
-    }
+  getTiposDocumentos(tipoPessoaId, terminalId, tipoAtendimentoId) {
+    return this.http.get(
+      this.apiUrl +
+        `ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`,
+      { headers: this.headers }
+    );
+  }
 
-    getTipoPessoa(id){
-      return this.http.get(this.apiUrl + `TipoPessoa/` + id);
-    }
-
-    getTipoDocumentos(){
-      return this.http.get(this.apiUrl + `TipoDocumento`);
-    }
-    
-    getTipoDocumento(id){
-      return this.http.get(this.apiUrl + `TipoDocumento/` + id );
-    }
-
-    getEstabelecimentos(){
-      return this.http.get(this.apiUrl + `Estabelecimento`);
-    }
-
-    getEstabelecimento(id){
-      return this.http.get(this.apiUrl + `Estabelecimento/`+ id);
-    }
-
-    getTipoAtendimento(){
-      return this.http.get(this.apiUrl + `TipoAtendimento`);
-    }
-
-    getTiposDocumentos(tipoPessoaId, terminalId, tipoAtendimentoId ){
-      return this.http.get(this.apiUrl + `ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`);
-    }
-
-    insertAtendimento(atendimento){
-      return this.http.post(this.apiUrl + `Atendimento`, atendimento);
-    }
-    
+  insertAtendimento(atendimento) {
+    return this.http.post(this.apiUrl + `Atendimento`, atendimento, {
+      headers: this.headers,
+    });
+  }
 }

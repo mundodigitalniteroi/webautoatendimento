@@ -1,23 +1,69 @@
-<ion-content [fullscreen]="true" >
-    <ion-grid >
-        <ion-row class="ion-align-items-center ion-justify-content-center row-center" >
-            <ion-col size-lg="6" class="ion-align-items-end ion-justify-content-center" style="display: flex; height: 40%;">
-                <ion-img src="../../../assets/login/logo.png" style="width: 55%;"></ion-img>
-            </ion-col>
-            <ion-col size-lg="6" class="ion-align-items-center ion-justify-content-center col-center" style="display: flex;">
-                <h1 class="ion-text-center">LOGIN</h1>
-                <p class="ion-text-center " style="margin-top: 15px;">Entre com o código do terminal</p>
-                <section class="input-section" style="display: flex;" >
-                    <ion-img src="../../../assets/login/Group (1).svg" style="width: 25px; height: 25px; margin-right: 10px;"></ion-img>
-                    <input type="text" class="input-file" id="arquivo" [(ngModel)]="codigo" placeholder="Código">
-                </section>
-                <ion-button (click)="login()" class="btn-busca" style="width: 90%;">Entrar</ion-button>
-            </ion-col>
-            
-        </ion-row>
-        <div class="loading" *ngIf="loading">
-            <div  class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-         </div>
-    </ion-grid>
-
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center row-center"
+    >
+      <ion-col
+        size-lg="6"
+        class="ion-align-items-end ion-justify-content-center"
+        style="display: flex; height: 40%"
+      >
+        <ion-img
+          src="../../../assets/login/logo.png"
+          style="width: 55%"
+        ></ion-img>
+      </ion-col>
+      <ion-col
+        size-lg="6"
+        class="ion-align-items-center ion-justify-content-center col-center"
+        style="display: flex"
+      >
+        <h1 class="ion-text-center">LOGIN</h1>
+        <p class="ion-text-center" style="margin-top: 15px">
+          Entre com o código e senha do terminal
+        </p>
+        <section class="input-section" style="display: flex">
+          <ion-img
+            src="../../../assets/login/codigo.svg"
+            style="width: 25px; height: 25px; margin-right: 10px"
+          ></ion-img>
+          <input
+            type="text"
+            class="input-file"
+            id="codigo"
+            [(ngModel)]="codigo"
+            placeholder="Código"
+          />
+        </section>
+        <section class="input-section" style="display: flex">
+          <ion-img
+            src="../../../assets/login/password.svg"
+            style="width: 25px; height: 25px; margin-right: 10px"
+          ></ion-img>
+          <input
+            type="password"
+            class="input-file"
+            id="senha"
+            [(ngModel)]="senha"
+            placeholder="Senha"
+          />
+        </section>
+        <ion-button (click)="login()" class="btn-busca" style="width: 90%"
+          >Entrar</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <div class="loading" *ngIf="loading">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </ion-grid>
 </ion-content>
