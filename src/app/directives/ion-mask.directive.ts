@@ -23,10 +23,13 @@ export class IonMaskDirective {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: any): void {
+    console.log(event.key);
     // Bloqueia teclas especificadas
     if (
-      this.maskConfig.blockedKeys &&
-      this.maskConfig.blockedKeys.includes(event.key)
+      (this.maskConfig.blockedKeys &&
+        this.maskConfig.blockedKeys.includes(event.key)) ||
+      event.key == 'Unidentified' ||
+      event.key
     ) {
       event.preventDefault();
     }
