@@ -42,22 +42,28 @@
   </ion-row>
 
   <ion-list *ngIf="form.value.campo == 'PJ'">
-    <ion-item class="ion-justify-content-start">
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('cnpj').valid && form.get('cnpj').touched">
       <ion-label position="floating">CNPJ</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite seu CNPJ"
         formControlName="cnpj"
         [brmasker]="{ mask: '99.999.999/9999-99', len: 18, type: 'num' }"
       ></ion-input>
     </ion-item>
-    <ion-item counter="true">
+    <div class="error-message" *ngIf="!form.get('cnpj').valid && form.get('cnpj').touched">CNPJ obrigatório</div>
+
+    <ion-item counter="true" [class.ion-item-invalid]="!form.get('razaoSocial').valid && form.get('razaoSocial').touched">
       <ion-label position="floating">Razão Social</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         placeholder="Digite sua Razão Social"
         formControlName="razaoSocial"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('razaoSocial').valid && form.get('razaoSocial').touched">Razão Social obrigatória</div>
+
   </ion-list>
 
   <ion-row
@@ -81,18 +87,21 @@
       (form.value.campo == 'PJ' && options?.tipoPessoa == 'proprietario')
     "
   >
-    <ion-item class="ion-justify-content-start">
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('nomeProp').valid && form.get('nomeProp').touched">
       <ion-label position="floating">Nome Completo</ion-label>
       <ion-input
-        (ionChange)="inputChangedName($event)"
+        (ionChange)="inputChangedName($event);changeForm()"
         placeholder="Digite seu nome completo"
         formControlName="nomeProp"
         errorText="Nome é Obrigatório"
       ></ion-input>
     </ion-item>
-    <ion-item counter="true">
+    <div class="error-message" *ngIf="!form.get('nomeProp').valid && form.get('nomeProp').touched">Nome obrigatório</div>
+
+    <ion-item counter="true"  [class.ion-item-invalid]="!form.get('dataProp').valid && form.get('dataProp').touched">
       <ion-label position="floating">Data de Nascimento</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite sua data de nascimento"
         formControlName="dataProp"
@@ -103,9 +112,12 @@
         maxlength="10"
       ></ion-input>
     </ion-item>
-    <ion-item class="ion-justify-content-start">
-      <ion-label position="floating">CPF</ion-label>
+    <div class="error-message" *ngIf="!form.get('dataProp').valid && form.get('dataProp').touched">Data de nascimento obrigatória</div>
+
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('cpfProp').valid && form.get('cpfProp').touched">
+      <ion-label position="floating" >CPF</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite seu CPF"
         formControlName="cpfProp"
@@ -114,27 +126,36 @@
         maxlength="14"
       ></ion-input>
     </ion-item>
-    <ion-item counter="true">
+    <div class="error-message" *ngIf="!form.get('cpfProp').valid && form.get('cpfProp').touched">CPF obrigatório</div>
+
+    <ion-item counter="true" [class.ion-item-invalid]="!form.get('cnhProp').valid && form.get('cnhProp').touched">
       <ion-label position="floating">CNH</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite sua CNH"
         formControlName="cnhProp"
         [brmasker]="{ mask: '', type: 'num' }"
       ></ion-input>
     </ion-item>
-    <ion-item class="ion-justify-content-start">
+    <div class="error-message" *ngIf="!form.get('cnhProp').valid && form.get('cnhProp').touched">CNH obrigatória</div>
+
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('telefoneProp').valid && form.get('telefoneProp').touched">
       <ion-label position="floating">Celular</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite seu celular"
         formControlName="telefoneProp"
         [brmasker]="{ phone: true, type: 'num' }"
       ></ion-input>
     </ion-item>
-    <ion-item counter="true">
+    <div class="error-message" *ngIf="!form.get('telefoneProp').valid && form.get('telefoneProp').touched">Telefone obrigatório</div>
+
+    <ion-item counter="true" [class.ion-item-invalid]="!form.get('emailProp').valid && form.get('emailProp').touched">
       <ion-label position="floating">Email</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         type="email"
         inputmode="email"
         placeholder="Digite seu email"
@@ -143,6 +164,8 @@
       ></ion-input>
       <ion-note slot="error">Email inválido</ion-note>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('emailProp').valid && form.get('emailProp').touched">Email obrigatório</div>
+
   </ion-list>
 
   <ion-row
@@ -154,28 +177,32 @@
   </ion-row>
 
   <ion-list *ngIf="options?.tipoPessoa == 'procurador'">
-    <ion-item class="ion-justify-content-start">
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('nomeProc').valid && form.get('nomeProc').touched">
       <ion-label position="floating">Nome Completo</ion-label>
       <ion-input
-        (ionChange)="inputChangedName($event)"
+        (ionChange)="changeForm(); inputChangedName($event)"
         placeholder="Digite seu nome completo"
         formControlName="nomeProc"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('nomeProc').valid && form.get('nomeProc').touched">Nome obrigatório</div>
 
-    <ion-item counter="true">
+    <ion-item counter="true" [class.ion-item-invalid]="!form.get('dataProc').valid && form.get('dataProc').touched">
       <ion-label position="floating">Data de Nascimento</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite sua data de nascimento"
         formControlName="dataProc"
         [brmasker]="{ mask: '99/99/9999', len: 10, type: 'num' }"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('dataProc').valid && form.get('dataProc').touched">Data de nascimento obrigatória</div>
 
-    <ion-item class="ion-justify-content-start">
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('cpfProc').valid && form.get('cpfProc').touched">
       <ion-label position="floating">CPF</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite seu CPF"
         formControlName="cpfProc"
@@ -184,35 +211,44 @@
         maxlength="14"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('cpfProc').valid && form.get('cpfProc').touched">CPF obrigatório</div>
 
-    <ion-item counter="true">
+    <ion-item counter="true" [class.ion-item-invalid]="!form.get('cnhProc').valid && form.get('cnhProc').touched">
       <ion-label position="floating">CNH</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite sua CNH"
         formControlName="cnhProc"
         [brmasker]="{ mask: '', type: 'num' }"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('cnhProc').valid && form.get('cnhProc').touched">CNH obrigatório</div>
 
-    <ion-item class="ion-justify-content-start">
+    <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="!form.get('telefoneProc').valid && form.get('telefoneProc').touched">
       <ion-label position="floating">Celular</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         inputmode="numeric"
         placeholder="Digite seu celular"
         formControlName="telefoneProc"
         [brmasker]="{ phone: true, type: 'num' }"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('telefoneProc').valid && form.get('telefoneProc').touched">Telefone obrigatório</div>
 
-    <ion-item counter="true">
+
+    <ion-item counter="true" [class.ion-item-invalid]="!form.get('emailProc').valid && form.get('emailProc').touched">
       <ion-label position="floating">Email</ion-label>
       <ion-input
+      (ionChange)="changeForm()"
         type="email"
         inputmode="email"
         placeholder="Digite seu email"
         formControlName="emailProc"
       ></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!form.get('emailProc').valid && form.get('emailProc').touched">Email obrigatório</div>
+
   </ion-list>
 </ion-grid>
