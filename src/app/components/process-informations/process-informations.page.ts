@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { RegistroState } from 'src/app/state/registro/registro.state';
+import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 @Component({
@@ -13,7 +13,7 @@ export class ProcessInformationsPage implements OnInit {
   informations;
   valorTotal = 0;
   constructor(private store: Store) {
-    this.options = this.store.selectSnapshot(RegistroState.all);
+    this.options = this.store.selectSnapshot(AtendimentoState.all);
     this.informations = this.options?.informacaoConsulta;
   }
 

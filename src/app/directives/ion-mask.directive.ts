@@ -1,4 +1,10 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+} from '@angular/core';
 
 @Directive({
   selector: '[appIonMask]',
@@ -10,7 +16,7 @@ export class IonMaskDirective {
     blockedKeys?: string[];
   } = { mask: '' };
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, private ref: ChangeDetectorRef) {}
 
   @HostListener('input', ['$event'])
   onInput(event: any): void {
@@ -19,21 +25,21 @@ export class IonMaskDirective {
     let maskedValue: string = this.applyMask(value);
 
     this.el.nativeElement.value = maskedValue;
+
+    this.ref.detectChanges();
   }
 
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: any): void {
-    console.log(event.key);
-    // Bloqueia teclas especificadas
-    if (
-      (this.maskConfig.blockedKeys &&
-        this.maskConfig.blockedKeys.includes(event.key)) ||
-      event.key == 'Unidentified' ||
-      event.key
-    ) {
-      event.preventDefault();
-    }
-  }
+  // @HostListener('keydown', ['$event'])
+  // onKeyDown(event: any): void {
+  //   // Bloqueia teclas especificadas
+  //   if (
+  //     (this.maskConfig.blockedKeys &&
+  //       this.maskConfig.blockedKeys.includes(event.key)) ||
+  //     event.key == 'Unidentified'
+  //   ) {
+  //     event.preventDefault();
+  //   }
+  // }
 
   private applyMask(value: string): string {
     const mask: string = this.maskConfig.mask;

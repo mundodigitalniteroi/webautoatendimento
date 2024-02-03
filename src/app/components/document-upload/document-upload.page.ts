@@ -7,8 +7,8 @@ import { AuthState } from 'src/app/state/auth/auth.state';
 import {
   SetDocumentUpload,
   SetProtocol,
-} from 'src/app/state/registro/registro.action';
-import { RegistroState } from 'src/app/state/registro/registro.state';
+} from 'src/app/state/atendimento/atendimento.action';
+import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import * as moment from 'moment';
 @Component({
   selector: 'app-document-upload',
@@ -39,7 +39,7 @@ export class DocumentUploadPage implements OnInit {
 
   getTiposDocumentos() {
     // console.log('1');
-    this.options = this.store.selectSnapshot(RegistroState.all);
+    this.options = this.store.selectSnapshot(AtendimentoState.all);
     this.informacoesLogin = this.store.selectSnapshot(AuthState.all);
     // console.log(this.options, this.informacoesLogin)
     this.atendimentoService
@@ -108,7 +108,7 @@ export class DocumentUploadPage implements OnInit {
   save() {
     this.store.dispatch(new SetDocumentUpload(this.fotos));
 
-    const atendimento: any = this.store.selectSnapshot(RegistroState.all);
+    const atendimento: any = this.store.selectSnapshot(AtendimentoState.all);
     const informacoesLogin = this.store.selectSnapshot(AuthState.all);
     // const dataNacimentoPessoa =
     // console.log(atendimento, informacoesLogin)

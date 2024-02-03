@@ -1,46 +1,91 @@
 <ion-content [fullscreen]="true" class="ion-align-items-center">
-    <ion-grid >
-        <ion-row class=" row-center">
-            <ion-col size-md="6" class="flex-md drive-md">
-                <ion-img src="../../../assets/how-liberation/drive5(1).png" class="drive-md"></ion-img>
-            </ion-col>
-            <ion-col size-md="12" class="flex-md background-md" >
-                <div class="selection">
-            <ion-row class="ion-align-items-center ion-justify-content-center ">
-                    <ion-img src="../../../assets/how-liberation/drive5(1).png" class="drive"></ion-img>
-                    <h1 class="ion-text-center">Como deseja liberar <br> o veículo ?</h1>
-                    <p class="ion-text-center ">Por favor, selecione a forma pela qual<br> você deseja retirar o veículo</p>
-                    <div class="options" size="12">
-                        <section class=" " (click)="changeSelection('proprietario')">
-                            <section class="check ion-justify-content-end" *ngIf="selection && optionSelected == 'proprietario'"><ion-img src="../../../assets/how-liberation/ri_checkbox-circle-fill.png"></ion-img></section>
-                            <div style="display: flex;flex-direction: column; justify-content: center;align-items: center;" [ngStyle]="{'margin-bottom': selection && optionSelected == 'proprietario' ? '15px' : '0'}">
-                                <ion-img src="../../../assets/how-liberation/chave 1.png"></ion-img>
-                                <p class="ion-text-center " >Proprietário</p>
-                            </div>
-                        </section>
-                        <section (click)="changeSelection('procurador')">
-                            <section class="check ion-justify-content-end" *ngIf="selection && optionSelected == 'procurador'"><ion-img src="../../../assets/how-liberation/ri_checkbox-circle-fill.png"></ion-img></section>
-                            <div [ngStyle]="{'margin-bottom': selection && optionSelected == 'procurador' ? '15px' : '0'}"  style="display: flex;flex-direction: column; justify-content: center;align-items: center;" >
-                                <ion-img src="../../../assets/how-liberation/procura-de-emprego 1.png"></ion-img>
-                                <p class="ion-text-center "> 
-                                    Procurador
-                                </p>
-                            </div>    
-                        </section>
-                    </div>
-                </ion-row>
-                <ion-row class="ion-justify-content-center row-btns" >
-                    <ion-button  class="next"  [disabled]="!selection" (click)="saveContact()">Continuar</ion-button>
-                </ion-row>
-                <ion-row class="ion-justify-content-center row-btns" >
-                    <ion-button fill="outline" [routerLink]="['/process-informations']">Voltar</ion-button>
-                </ion-row>
+  <ion-grid>
+    <ion-row class="row-center">
+      <ion-col size-md="6" class="flex-md drive-md">
+        <ion-img
+          src="../../../assets/how-liberation/drive5(1).png"
+          class="drive-md"
+        ></ion-img>
+      </ion-col>
+      <ion-col size-md="12" class="flex-md background-md">
+        <div class="selection">
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-img
+              src="../../../assets/how-liberation/cars.png"
+              class="drive"
+            ></ion-img>
+            <h1 class="ion-text-center">
+              Como deseja liberar <br />
+              o veículo?
+            </h1>
+            <p class="ion-text-center">
+              Por favor, selecione a forma pela qual<br />
+              você deseja retirar o veículo
+            </p>
+            <div class="options" size="12">
+              <section class=" " (click)="changeSelection('proprietario')">
+                <section
+                  class="check ion-justify-content-end"
+                  *ngIf="selection && optionSelected == 'proprietario'"
+                >
+                  <ion-img
+                    src="../../../assets/how-liberation/ri_checkbox-circle-fill.png"
+                  ></ion-img>
+                </section>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <ion-img
+                    src="../../../assets/how-liberation/chave 1.png"
+                  ></ion-img>
+                  <p class="ion-text-center">Proprietário</p>
                 </div>
-                
-            </ion-col>
-        </ion-row>
-       
-        
-    </ion-grid>
-    
+              </section>
+              <section (click)="changeSelection('procurador')">
+                <section
+                  class="check ion-justify-content-end"
+                  *ngIf="selection && optionSelected == 'procurador'"
+                >
+                  <ion-img
+                    src="../../../assets/how-liberation/ri_checkbox-circle-fill.png"
+                  ></ion-img>
+                </section>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <ion-img
+                    src="../../../assets/how-liberation/procura-de-emprego 1.png"
+                  ></ion-img>
+                  <p class="ion-text-center">Procurador</p>
+                </div>
+              </section>
+            </div>
+          </ion-row>
+          <ion-row class="ion-justify-content-center row-btns">
+            <ion-button
+              class="next"
+              [disabled]="!selection"
+              (click)="saveContact()"
+              >Continuar</ion-button
+            >
+          </ion-row>
+          <ion-row class="ion-justify-content-center row-btns">
+            <ion-button fill="outline" [routerLink]="['/process-informations']"
+              >Voltar</ion-button
+            >
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

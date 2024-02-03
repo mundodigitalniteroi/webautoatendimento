@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
-import { SetPessoa } from 'src/app/state/registro/registro.action';
+import { SetTipoAtendimento } from 'src/app/state/atendimento/atendimento.action';
 
 @Component({
   selector: 'app-how-liberation',
   templateUrl: './how-liberation.page.html',
-  styleUrls: ['./how-liberation.page.scss']
+  styleUrls: ['./how-liberation.page.scss'],
 })
 export class HowLiberationPage implements OnInit {
-  selection:boolean = false;
+  selection: boolean = false;
   optionSelected;
   tiposAtendimentos = [];
   tipoAtendimentoId;
@@ -18,42 +18,36 @@ export class HowLiberationPage implements OnInit {
     private store: Store,
     private router: Router,
     private atendimentoService: AtendimentoService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getTipoAtendimento()
+    this.getTipoAtendimento();
   }
 
-  changeSelection(option){
-
-    if(option == 'proprietario'){
-      this.selection = true ;
-      this.optionSelected = 'proprietario';
-      this.tipoAtendimentoId = this.tiposAtendimentos[0].tipoAtendimentoId;
-      return
-    }
-    if(option == 'procurador'){
-      this.selection = true ;
-      this.optionSelected = 'procurador';
-      this.tipoAtendimentoId = this.tiposAtendimentos[1].tipoAtendimentoId;
-    }
+  changeSelection(option) {
+    this.selection = true;
+    this.optionSelected = option;
+    const tipoAtendimento = this.tiposAtendimentos.find(
+      (item) => item.descricao == option
+    );
+    this.tipoAtendimentoId = tipoAtendimento?.tipoAtendimentoId || 1;
   }
 
-  getTipoAtendimento(){
+  getTipoAtendimento() {
     this.atendimentoService.getTipoAtendimento().subscribe((item: any) => {
       // // console.log(item);
       this.tiposAtendimentos = item.data;
-    })
+    });
   }
+
   saveContact() {
-    const tipoAtendimento = this.tiposAtendimentos.find(item => item.descricao)
     const payload = {
-      tipoPessoa: this.optionSelected,
-      tipoAtendimentoId:this.tipoAtendimentoId
-    }
-    this.store.dispatch(new SetPessoa(payload));
+      tipoAtendimento: this.optionSelected,
+      tipoAtendimentoId: this.tipoAtendimentoId,
+    };
+    this.store.dispatch(new SetTipoAtendimento(payload));
 
     // // console.log(payload)
-    this.router.navigate(['/step'])
+    this.router.navigate(['/identity']);
   }
 }

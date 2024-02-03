@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
 import { Injectable, NgZone } from '@angular/core';
-import { OperacaoModel } from 'src/app/interfaces/operacao.interface';
+import { AtendimentoModel } from 'src/app/interfaces/atendimento.interface';
 import { Login } from './auth.action';
 import { AuthModel } from 'src/app/interfaces/auth.interface';
 
@@ -50,7 +50,7 @@ export class AuthState {
   }
 
   // @Action(Logout)
-  // logout(ctx: StateContext<OperacaoModel>) {
+  // logout(ctx: StateContext<AtendimentoModel>) {
   //   this.zone.run(() => this.router.navigate(['/login']));
   // }
 }

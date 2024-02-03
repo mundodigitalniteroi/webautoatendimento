@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SplashScreen } from '@capacitor/splash-screen'
+import { SplashScreen } from '@capacitor/splash-screen';
 import { Store } from '@ngxs/store';
 import { AuthState } from './state/auth/auth.state';
 import { AtendimentoService } from './services/atendimento/atendimento.service';
@@ -8,7 +8,7 @@ import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
   options;
@@ -16,16 +16,14 @@ export class AppComponent implements OnInit {
     private store: Store,
     private atendimentoService: AtendimentoService,
     private router: Router,
-    private menu: MenuController,
-    ) {
+    private menu: MenuController
+  ) {
     this.initializeApp();
   }
   ngOnInit(): void {
-    // console.log(this.options)
-    this.atendimentoService.emitInformations.subscribe(resp => {
+    this.atendimentoService.emitInformations.subscribe((resp) => {
       this.options = this.store.selectSnapshot(AuthState.all);
-      // console.log(this.options)
-    })
+    });
   }
 
   initializeApp() {
@@ -37,9 +35,8 @@ export class AppComponent implements OnInit {
     */
     SplashScreen.hide();
   }
-  logout(){
-    this.menu.close()
+  logout() {
+    this.menu.close();
     this.router.navigate(['/login']);
-    
   }
 }

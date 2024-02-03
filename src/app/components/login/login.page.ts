@@ -40,9 +40,10 @@ export class LoginPage implements OnInit {
         }
       },
       (e) => {
+        console.log(e);
         this.loading = false;
-        if (e.error && e.error.message) {
-          this.toast(e.error.message);
+        if (e.status == 400 && e.error) {
+          this.toast(e.error.Message);
         } else {
           this.toast('Houve um erro ao realizar o login');
         }

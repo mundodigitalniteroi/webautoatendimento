@@ -39,6 +39,20 @@ const routes: Routes = [
       import('./components/steps/steps.module').then((m) => m.StepModule),
   },
   {
+    path: 'identity',
+    loadChildren: () =>
+      import('./components/identity/identity.module').then(
+        (m) => m.IdentityModule
+      ),
+  },
+  {
+    path: 'address',
+    loadChildren: () =>
+      import('./components/address/address.module').then(
+        (m) => m.AddressModule
+      ),
+  },
+  {
     path: 'facial-recognition',
     loadChildren: () =>
       import('./components/facial-recognition/facial-recognition.module').then(

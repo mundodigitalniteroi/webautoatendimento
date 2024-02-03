@@ -1,0 +1,522 @@
+<ion-content [fullscreen]="true">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" class="ion-text-center">
+      <h2>Cadastro</h2>
+    </ion-col>
+  </ion-row>
+  <ion-card *ngIf="this.form && state$ | async">
+    <ion-card-header>
+      <ion-card-title>Cadastro Pessoal</ion-card-title>
+      <ion-card-subtitle
+        >Por favor preencha os campos corretamente</ion-card-subtitle
+      >
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid [formGroup]="form">
+        <ion-list style="margin-top: 15px; margin-bottom: 15px">
+          <!-- <h1 style="padding-right: 15px">Proprietário:</h1>
+          <ion-radio-group class="flex" formControlName="tipoPessoaId">
+            <ion-radio *ngFor="let item of tipoPessoas" labelPlacement="end">
+              {{
+                item.descricao == 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'
+              }}</ion-radio
+            >
+          </ion-radio-group> -->
+          <ion-item>
+            <ion-label>Tipo do Proprietário</ion-label>
+            <ion-select
+              placeholder="Selecione o Tipo de Pessoa"
+              formControlName="tipoPessoaId"
+            >
+              <ion-select-option
+                [value]="item.tipoPessoaId"
+                *ngFor="let item of tipoPessoas"
+                >{{
+                  item.descricao == 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'
+                }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <!-- <p style="margin: 0; margin-left: 10px" (click)="changeValues('PF')">
+            Pessoa Física
+          </p>
+          <ion-radio-group
+            class="flex ion-margin-start"
+            (click)="changeValues('PJ')"
+            formControlName="pessoaJuridica"
+          >
+            <ion-radio [value]="true" (click)="changeValues('PJ')"
+              >Pessoa Jurídica</ion-radio
+            >
+          </ion-radio-group> 
+          <p style="margin: 0; margin-left: 10px" (click)="changeValues('PJ')">
+            Pessoa Jurídica
+          </p>-->
+        </ion-list>
+
+        <!-- <ion-row
+          *ngIf="form.get('tipoPessoaId') == 'PJ'"
+          class="ion-justify-content-start"
+          style="margin-top: 15px"
+        >
+          <h1>Dados do Proprietário</h1>
+        </ion-row> -->
+
+        <!-- <ion-list *ngIf="form.value.campo == 'PJ'">
+          <ion-item
+            class="ion-justify-content-start"
+            [class.ion-item-invalid]="
+              !form.get('cnpj').valid &&
+              (form.get('cnpj').dirty || submitAttempt)
+            "
+          >
+            <ion-label position="floating">CNPJ</ion-label>
+            <ion-input
+              inputmode="numeric"
+              placeholder="Digite seu CNPJ"
+              formControlName="cnpj"
+              [brmasker]="{ mask: '99.999.999/9999-99', len: 18, type: 'num' }"
+            ></ion-input>
+          </ion-item>
+          <div
+            class="error-message"
+            *ngIf="
+              !form.get('cnpj').valid &&
+              (form.get('cnpj').dirty || submitAttempt)
+            "
+          >
+            CNPJ é obrigatório
+          </div>
+
+          <ion-item
+            counter="true"
+            [class.ion-item-invalid]="
+              !form.get('razaoSocial').valid &&
+              (form.get('razaoSocial').dirty || submitAttempt)
+            "
+          >
+            <ion-label position="floating">Razão Social</ion-label>
+            <ion-input
+              placeholder="Digite sua Razão Social"
+              formControlName="razaoSocial"
+            ></ion-input>
+          </ion-item>
+          <div
+            class="error-message"
+            *ngIf="
+              !form.get('razaoSocial').valid &&
+              (form.get('razaoSocial').dirty || submitAttempt)
+            "
+          >
+            Razão Social é obrigatória
+          </div>
+        </ion-list> -->
+
+        <ion-row class="ion-justify-content-start" style="margin-top: 15px">
+          <h1>Dados do Proprietário</h1>
+        </ion-row>
+        <!-- <ion-row
+          class="ion-justify-content-start"
+          style="margin-top: 15px"
+          *ngIf="
+            form.value.campo == 'PJ' &&
+            options?.tipoAtendimento == 'proprietario'
+          "
+        >
+          <h1>Dados do Responsável</h1>
+        </ion-row> -->
+
+        <ion-list formGroupName="proprietario" *ngIf="proprietario">
+          <ng-template [ngIf]="isPessoaFisica">
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !proprietario.controls.nome.valid &&
+                (proprietario.controls.nome.dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Nome Completo</ion-label>
+              <ion-input
+                (ionChange)="inputChangedName($event)"
+                formControlName="nome"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !proprietario.controls.nome.valid &&
+                (proprietario.controls.nome.dirty || submitAttempt)
+              "
+            >
+              Nome é obrigatório
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="isPessoaJuridica">
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !proprietario.get('nome').valid &&
+                (proprietario.get('nome').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Razão Social</ion-label>
+              <ion-input
+                (ionChange)="inputChangedName($event)"
+                formControlName="nome"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !proprietario.get('nome').valid &&
+                (proprietario.get('nome').dirty || submitAttempt)
+              "
+            >
+              Razão Social é obrigatório
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="isPessoaFisica">
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="
+                !proprietario.get('dataNascimento').valid &&
+                (proprietario.get('dataNascimento').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Data de Nascimento</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="dataNascimento"
+                [appIonMask]="{
+                  mask: '99/99/9999',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+                maxlength="10"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !proprietario.get('dataNascimento').valid &&
+                (proprietario.get('dataNascimento').dirty || submitAttempt)
+              "
+            >
+              Data de nascimento é obrigatória
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="isPessoaFisica">
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !proprietario.get('cpfCnpj').valid &&
+                (proprietario.get('cpfCnpj').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">CPF</ion-label>
+              <ion-input
+                inputmode="numeric"
+                placeholder="Digite seu CPF"
+                formControlName="cpfCnpj"
+                [appIonMask]="{
+                  mask: '999.999.999-99',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+                maxlength="14"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !proprietario.get('cpfCnpj').valid &&
+                (proprietario.get('cpfCnpj').dirty || submitAttempt)
+              "
+            >
+              CPF é obrigatório
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="isPessoaJuridica">
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !proprietario.get('cpfCnpj').valid &&
+                (proprietario.get('cpfCnpj').dirty || submitAttempt)
+              "
+              *ngIf="isPessoaJuridica"
+            >
+              <ion-label position="floating">CNPJ</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="cpfCnpj"
+                [appIonMask]="{
+                  mask: '999.999.999/9999-99',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+                maxlength="19"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !proprietario.get('cpfCnpj').valid &&
+                (proprietario.get('cpfCnpj').dirty || submitAttempt)
+              "
+            >
+              CNPJ é obrigatório
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="isPessoaFisica">
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="
+                !proprietario.get('cnh').valid &&
+                (proprietario.get('cnh').dirty || submitAttempt)
+              "
+              *ngIf="isPessoaFisica"
+            >
+              <ion-label position="floating">CNH</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="cnh"
+                [appIonMask]="{
+                  mask: '',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !proprietario.get('cnh').valid &&
+                (proprietario.get('cnh').dirty || submitAttempt)
+              "
+            >
+              CNH é obrigatória
+            </div>
+          </ng-template>
+
+          <ion-item class="ion-justify-content-start">
+            <ion-label position="floating">Celular</ion-label>
+            <ion-input
+              inputmode="numeric"
+              formControlName="telefone"
+              [appIonMask]="{
+                mask: '(99) 99999-9999',
+                blockedKeys: [',', '.', '+', '-']
+              }"
+              maxlength="15"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item
+            counter="true"
+            [class.ion-item-invalid]="
+              !proprietario.controls.email.valid && submitAttempt
+            "
+          >
+            <ion-label position="floating">Email</ion-label>
+            <ion-input
+              type="email"
+              inputmode="email"
+              formControlName="email"
+              email
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+        <div
+          class="error-message"
+          *ngIf="!proprietario.controls.email.valid && submitAttempt"
+        >
+          Email é inválido
+        </div>
+
+        <ng-template
+          [ngIf]="
+            (state$ | async).tipoAtendimento == 'procurador' ||
+            (isPessoaJuridica &&
+              (state$ | async).tipoAtendimento == 'proprietario')
+          "
+        >
+          <ion-row class="ion-justify-content-start" style="margin-top: 15px">
+            <h1 *ngIf="(state$ | async).tipoAtendimento == 'proprietario'">
+              Dados do Responsável
+            </h1>
+            <h1 *ngIf="(state$ | async).tipoAtendimento == 'procurador'">
+              Dados do Procurador
+            </h1>
+          </ion-row>
+
+          <ion-list formGroupName="responsavel">
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !responsavel.get('nome').valid &&
+                (responsavel.get('nome').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Nome Completo</ion-label>
+              <ion-input
+                (ionChange)="inputChangedName($event)"
+                formControlName="nome"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !responsavel.get('nome').valid &&
+                (responsavel.get('nome').dirty || submitAttempt)
+              "
+            >
+              Nome obrigatório
+            </div>
+
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="
+                !responsavel.get('dataNascimento').valid &&
+                (responsavel.get('dataNascimento').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Data de Nascimento</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="dataNascimento"
+                [appIonMask]="{
+                  mask: '99/99/9999',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+                maxlength="10"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !responsavel.get('dataNascimento').valid &&
+                (responsavel.get('dataNascimento').dirty || submitAttempt)
+              "
+            >
+              Data de nascimento obrigatória
+            </div>
+
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !responsavel.get('cpf').valid &&
+                (responsavel.get('cpf').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">CPF</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="cpf"
+                [appIonMask]="{
+                  mask: '999.999.999-99',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+                maxlength="14"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !responsavel.get('cpf').valid &&
+                (responsavel.get('cpf').dirty || submitAttempt)
+              "
+            >
+              CPF obrigatório
+            </div>
+
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="
+                !responsavel.get('cnh').valid &&
+                (responsavel.get('cnh').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">CNH</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="cnh"
+                [appIonMask]="{
+                  mask: '',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !responsavel.get('cnh').valid &&
+                (responsavel.get('cnh').dirty || submitAttempt)
+              "
+            >
+              CNH obrigatório
+            </div>
+
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="
+                !responsavel.get('telefone').valid &&
+                (responsavel.get('telefone').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Celular</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="telefone"
+                [appIonMask]="{
+                  mask: '(99) 99999-9999',
+                  blockedKeys: [',', '.', '+', '-']
+                }"
+                maxlength="15"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !responsavel.get('telefone').valid &&
+                (responsavel.get('telefone').dirty || submitAttempt)
+              "
+            >
+              Telefone obrigatório
+            </div>
+
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="
+                !responsavel.get('email').valid &&
+                (responsavel.get('email').dirty || submitAttempt)
+              "
+            >
+              <ion-label position="floating">Email</ion-label>
+              <ion-input
+                type="email"
+                inputmode="email"
+                formControlName="email"
+              ></ion-input>
+            </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                !responsavel.get('email').valid &&
+                (responsavel.get('email').dirty || submitAttempt)
+              "
+            >
+              Email é inválido
+            </div>
+          </ion-list>
+        </ng-template>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-row class="col-btn">
+    <ion-col>
+      <ion-button class="btn-search" (click)="save()">Continuar</ion-button>
+      <ion-button fill="outline" (click)="voltar()">Voltar</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

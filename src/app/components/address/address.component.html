@@ -1,0 +1,204 @@
+<ion-content [fullscreen]="true">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" class="ion-text-center">
+      <h2>Cadastro</h2>
+    </ion-col>
+  </ion-row>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Cadastro de Endereço</ion-card-title>
+      <ion-card-subtitle
+        >Por favor preencha os campos corretamente</ion-card-subtitle
+      >
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid [formGroup]="form">
+        <ion-row class="ion-justify-content-start" style="margin-top: 15px">
+          <h1>Endereco do Proprietário</h1>
+        </ion-row>
+        <ion-list formGroupName="enderecoProprietario">
+          <ion-item
+            class="ion-justify-content-start"
+            [class.ion-item-invalid]="proprietarioInvalid('cep')"
+          >
+            <ion-label position="floating">CEP</ion-label>
+            <ion-input
+              inputmode="numeric"
+              (ionChange)="consultaCEP('proprietario')"
+              formControlName="cep"
+              [appIonMask]="{
+                mask: '99999-999',
+                blockedKeys: [',', '.', '+']
+              }"
+              maxlength="9"
+            ></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="proprietarioInvalid('cep')">
+            CEP é obrigatorio
+          </div>
+          <ion-item
+            counter="true"
+            [class.ion-item-invalid]="proprietarioInvalid('rua')"
+          >
+            <ion-label position="floating">Rua</ion-label>
+            <ion-input formControlName="rua"></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="proprietarioInvalid('rua')">
+            Rua é obrigatoria
+          </div>
+          <ion-item
+            class="ion-justify-content-start"
+            [class.ion-item-invalid]="proprietarioInvalid('numero')"
+          >
+            <ion-label position="floating">Número</ion-label>
+            <ion-input inputmode="numeric" formControlName="numero"></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="proprietarioInvalid('numero')">
+            Numero é obrigatorio
+          </div>
+
+          <ion-item counter="true">
+            <ion-label position="floating">Complemento</ion-label>
+            <ion-input formControlName="complemento"></ion-input>
+          </ion-item>
+          <ion-item
+            counter="true"
+            [class.ion-item-invalid]="proprietarioInvalid('bairro')"
+          >
+            <ion-label position="floating">Bairro</ion-label>
+            <ion-input formControlName="bairro"></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="proprietarioInvalid('bairro')">
+            Bairro é obrigatorio
+          </div>
+          <ion-item
+            counter="true"
+            [class.ion-item-invalid]="proprietarioInvalid('cidade')"
+          >
+            <ion-label position="floating">Cidade</ion-label>
+            <ion-input formControlName="cidade"></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="proprietarioInvalid('cidade')">
+            Cidade é obrigatorio
+          </div>
+          <ion-item
+            class="ion-justify-content-start"
+            [class.ion-item-invalid]="proprietarioInvalid('estado')"
+          >
+            <ion-label position="floating">Estado</ion-label>
+            <ion-input
+              formControlName="estado"
+              [brmasker]="{ mask: '00', len: 2, type: 'alfa' }"
+            ></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="proprietarioInvalid('estado')">
+            Estado é obrigatorio
+          </div>
+        </ion-list>
+
+        <ng-template
+          [ngIf]="
+            (form.get('enderecoResponsavel') &&
+              (state$ | async).tipoAtendimento == 'procurador') ||
+            ((state$ | async).tipoPessoaId == 2 &&
+              (state$ | async).tipoAtendimento == 'proprietario')
+          "
+        >
+          <ion-row class="ion-justify-content-start" style="margin-top: 15px">
+            <h1>Endereço do Procurador</h1>
+          </ion-row>
+          <ion-list formGroupName="enderecoResponsavel">
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="responsavelInvalid('cep')"
+            >
+              <ion-label position="floating">CEP</ion-label>
+              <ion-input
+                inputmode="numeric"
+                (ionChange)="consultaCEP('responsavel')"
+                formControlName="cep"
+                [appIonMask]="{
+                  mask: '99999-999',
+                  blockedKeys: [',', '.', '+']
+                }"
+                maxlength="9"
+              ></ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="responsavelInvalid('cep')">
+              CEP é obrigatorio
+            </div>
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="responsavelInvalid('rua')"
+            >
+              <ion-label position="floating">Rua</ion-label>
+              <ion-input formControlName="rua"></ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="responsavelInvalid('rua')">
+              Rua é obrigatoria
+            </div>
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="responsavelInvalid('numero')"
+            >
+              <ion-label position="floating">Número</ion-label>
+              <ion-input
+                inputmode="numeric"
+                formControlName="numero"
+              ></ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="responsavelInvalid('numero')">
+              Numero é obrigatorio
+            </div>
+
+            <ion-item counter="true">
+              <ion-label position="floating">Complemento</ion-label>
+              <ion-input formControlName="complemento"></ion-input>
+            </ion-item>
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="responsavelInvalid('bairro')"
+            >
+              <ion-label position="floating">Bairro</ion-label>
+              <ion-input formControlName="bairro"></ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="responsavelInvalid('bairro')">
+              Bairro é obrigatorio
+            </div>
+            <ion-item
+              counter="true"
+              [class.ion-item-invalid]="responsavelInvalid('cidade')"
+            >
+              <ion-label position="floating">Cidade</ion-label>
+              <ion-input formControlName="cidade"></ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="responsavelInvalid('cidade')">
+              Cidade é obrigatorio
+            </div>
+            <ion-item
+              class="ion-justify-content-start"
+              [class.ion-item-invalid]="responsavelInvalid('estado')"
+            >
+              <ion-label position="floating">Estado</ion-label>
+              <ion-input
+                formControlName="estado"
+                [brmasker]="{ mask: '00', len: 2, type: 'alfa' }"
+                maxlength="2"
+              ></ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="responsavelInvalid('estado')">
+              Estado é obrigatorio
+            </div>
+          </ion-list>
+        </ng-template>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-row class="col-btn">
+    <ion-col>
+      <ion-button class="btn-search" (click)="save()">Continuar</ion-button>
+      <ion-button fill="outline" (click)="voltar()">Voltar</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
