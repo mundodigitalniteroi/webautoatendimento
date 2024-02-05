@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
@@ -10,12 +10,14 @@ import {
 } from 'src/app/state/atendimento/atendimento.action';
 import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import * as moment from 'moment';
+import { ModalController, ToastController } from '@ionic/angular';
+import { PreviewPage } from '../preview/preview.page';
 @Component({
   selector: 'app-document-upload',
   templateUrl: './document-upload.page.html',
   styleUrls: ['./document-upload.page.scss'],
 })
-export class DocumentUploadPage implements OnInit {
+export class DocumentUploadPage implements OnInit, OnDestroy {
   line = false;
   checkCrlv = false;
   checkIpva = false;
@@ -26,11 +28,15 @@ export class DocumentUploadPage implements OnInit {
   options;
   informacoesLogin;
   documentos = [];
+  timeout;
+  loading = false;
   constructor(
     private cameraService: CameraService,
     private atendimentoService: AtendimentoService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController,
+    private modal: ModalController
   ) {}
 
   ngOnInit(): void {
@@ -62,194 +68,223 @@ export class DocumentUploadPage implements OnInit {
     this.checkComp = true;
   }
 
-  newPhoto(tipoDocumentoId, nome, param) {
-    this.cameraService.requestPermission().then((item) => {
-      if (item.camera == 'granted') {
-        this.cameraService.getPhoto().then((foto) => {
-          // console.log(foto)
-          const fotoModel = {
-            tipo: 'image/jpeg',
-            base64: foto.dataUrl,
-            tipoDocumentoId: tipoDocumentoId,
-            tamanho: foto.exif.ImageLength,
-            nome: nome + '.jpg',
-          };
+  // newPhoto(tipoDocumentoId, nome, param) {
+  //   this.cameraService.requestPermission().then((item) => {
+  //     if (item.camera == 'granted') {
+  //       this.cameraService.getPhoto().then((foto) => {
+  //         // console.log(foto)
+  //         const fotoModel = {
+  //           tipo: 'image/jpeg',
+  //           base64: foto.dataUrl,
+  //           tipoDocumentoId: tipoDocumentoId,
+  //           tamanho: foto.exif.ImageLength,
+  //           nome: nome + '.jpg',
+  //         };
 
-          this.fotos.push(fotoModel);
+  //         this.fotos.push(fotoModel);
 
-          switch (param) {
-            case 'checkCrlv':
-              this.checkCrlv = true;
-              break;
+  //         switch (param) {
+  //           case 'checkCrlv':
+  //             this.checkCrlv = true;
+  //             break;
 
-            case 'checkIpva':
-              this.checkIpva = true;
-              break;
+  //           case 'checkIpva':
+  //             this.checkIpva = true;
+  //             break;
 
-            case 'checkMulta':
-              this.checkMulta = true;
-              break;
+  //           case 'checkMulta':
+  //             this.checkMulta = true;
+  //             break;
 
-            case 'checkLicen':
-              this.checkLicen = true;
-              break;
+  //           case 'checkLicen':
+  //             this.checkLicen = true;
+  //             break;
 
-            case 'checkComp':
-              this.checkComp = true;
-              break;
+  //           case 'checkComp':
+  //             this.checkComp = true;
+  //             break;
 
-            default:
-              break;
-          }
-        });
+  //           default:
+  //             break;
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+
+  async openCamera(tipoDocumentoId, nome, param) {
+    const modal = await this.modal.create({
+      component: PreviewPage,
+      cssClass: '',
+      animated: true,
+      componentProps: {
+        title: nome,
+      },
+    });
+    modal.onDidDismiss().then((resp) => {
+      if (resp !== null && resp.data) {
+        const fotoModel = {
+          tipo: 'image/jpeg',
+          base64: resp.data,
+          tipoDocumentoId: tipoDocumentoId,
+          tamanho: 0,
+          nome: nome + '.jpg',
+        };
+
+        this.addFoto(fotoModel, param);
       }
     });
+    return await modal.present();
+    // this.router.navigate(['/preview']);
   }
+
+  private addFoto(fotoModel, param) {
+    this.fotos.push(fotoModel);
+
+    switch (param) {
+      case 'checkCrlv':
+        this.checkCrlv = true;
+        break;
+
+      case 'checkIpva':
+        this.checkIpva = true;
+        break;
+
+      case 'checkMulta':
+        this.checkMulta = true;
+        break;
+
+      case 'checkLicen':
+        this.checkLicen = true;
+        break;
+
+      case 'checkComp':
+        this.checkComp = true;
+        break;
+
+      default:
+        break;
+    }
+  }
+
   save() {
+    if (
+      !this.fotos ||
+      this.fotos.length == 0 ||
+      this.fotos.length < this.documentos.length
+    ) {
+      this.toast('Necessario tirar foto de todos os documentos solicitados');
+      return false;
+    }
+
     this.store.dispatch(new SetDocumentUpload(this.fotos));
 
     const atendimento: any = this.store.selectSnapshot(AtendimentoState.all);
     const informacoesLogin = this.store.selectSnapshot(AuthState.all);
-    // const dataNacimentoPessoa =
-    // console.log(atendimento, informacoesLogin)
-    const atendimentoCompleto = {
-      responsavel:
-        atendimento?.tipoAtendimentoId == '1' || atendimento.tipoPessoaId != 2
-          ? null
-          : {
-              nome:
-                atendimento?.tipoAtendimentoId == '2'
-                  ? atendimento?.procuradorPf?.nome
-                  : atendimento?.empresa?.razaoSocial,
-              cpfCnpj:
-                atendimento?.tipoAtendimentoId == '2'
-                  ? ''
-                  : atendimento?.empresa?.cnpj,
-              cnh:
-                atendimento?.tipoAtendimentoId == '2'
-                  ? atendimento?.procuradorPf?.cnh
-                  : '',
-              dataNascimento:
-                atendimento?.tipoAtendimentoId == '2'
-                  ? moment(atendimento?.procuradorPf?.dataNascimento).format()
-                  : '',
-              telefone:
-                atendimento?.tipoAtendimentoId == '2'
-                  ? atendimento?.procuradorPf?.telefone
-                  : '',
-              email:
-                atendimento?.tipoAtendimentoId == '2'
-                  ? atendimento?.procuradorPf?.email
-                  : '',
-              tipoPessoaId: atendimento?.tipoPessoaId
-                ? atendimento?.tipoPessoaId
-                : '',
+
+    if (!atendimento || !informacoesLogin) {
+      this.toast(
+        'Houve um erro ao registrar as informações, por favor refaça o cadastro'
+      );
+      this.timeout = setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 3000);
+    }
+
+    if (atendimento) {
+      this.loading = true;
+      const atendimentoCompleto = {
+        responsavel: atendimento?.responsavel
+          ? {
+              nome: atendimento?.responsavel?.nome,
+              cpfCnpj: atendimento?.responsavel?.cpf,
+              cnh: atendimento?.responsavel?.cnh,
+              dataNascimento: moment(
+                atendimento?.responsavel?.dataNascimento
+              ).format(),
+              telefone: atendimento?.responsavel?.telefone,
+              email: atendimento?.responsavel?.email,
               endereco: {
-                logradouro: atendimento?.enderecoPJ?.rua
-                  ? atendimento?.enderecoPJ?.rua
-                  : '',
-                numero: atendimento?.enderecoPJ?.numero
-                  ? atendimento?.enderecoPJ?.numero
-                  : '',
-                complemento: atendimento?.enderecoPJ?.complemento
-                  ? atendimento?.enderecoPJ?.complemento
-                  : '',
-                bairro: atendimento?.enderecoPJ?.bairro
-                  ? atendimento?.enderecoPJ?.bairro
-                  : '',
-                cidade: atendimento?.enderecoPJ?.cidade
-                  ? atendimento?.enderecoPJ?.cidade
-                  : '',
-                estado: atendimento?.enderecoPJ?.estado
-                  ? atendimento?.enderecoPJ?.estado
-                  : '',
-                cep: atendimento?.enderecoPJ?.cep
-                  ? atendimento?.enderecoPJ?.cep
-                  : '',
+                logradouro: atendimento?.enderecoResponsavel?.rua,
+                numero: atendimento?.enderecoResponsavel?.numero,
+                complemento: atendimento?.enderecoResponsavel?.complemento,
+                bairro: atendimento?.enderecoResponsavel?.bairro,
+                cidade: atendimento?.enderecoResponsavel?.cidade,
+                estado: atendimento?.enderecoResponsavel?.estado,
+                cep: atendimento?.enderecoResponsavel?.cep,
               },
-            },
-      pessoa: {
-        nome: atendimento?.proprietarioPf?.nome
-          ? atendimento?.proprietarioPf?.nome
-          : '',
-        cpfCnpj: atendimento?.proprietarioPf?.cpf
-          ? atendimento?.proprietarioPf?.cpf
-          : '',
-        cnh: atendimento?.proprietarioPf?.cnh
-          ? atendimento?.proprietarioPf?.cnh
-          : '',
-        dataNascimento: atendimento?.proprietarioPf?.dataNascimento
-          ? moment(atendimento?.proprietarioPf?.dataNascimento).format()
-          : '',
-        telefone: atendimento?.proprietarioPf?.telefone
-          ? atendimento?.proprietarioPf?.telefone
-          : '',
-        email: atendimento?.proprietarioPf?.email
-          ? atendimento?.proprietarioPf?.email
-          : '',
-        tipoPessoaId: atendimento?.tipoPessoaId
-          ? atendimento?.tipoPessoaId
-          : '',
-        endereco: {
-          logradouro: atendimento?.enderecoPF?.rua
-            ? atendimento?.enderecoPF?.rua
-            : '',
-          numero: atendimento?.enderecoPF?.numero
-            ? atendimento?.enderecoPF?.numero
-            : '',
-          complemento: atendimento?.enderecoPF?.complemento
-            ? atendimento?.enderecoPF?.complemento
-            : '',
-          bairro: atendimento?.enderecoPF?.bairro
-            ? atendimento?.enderecoPF?.bairro
-            : '',
-          cidade: atendimento?.enderecoPF?.cidade
-            ? atendimento?.enderecoPF?.cidade
-            : '',
-          estado: atendimento?.enderecoPF?.estado
-            ? atendimento?.enderecoPF?.estado
-            : '',
-          cep: atendimento?.enderecoPF?.cep ? atendimento?.enderecoPF?.cep : '',
+            }
+          : null,
+        proprietario: {
+          tipoPessoaId: atendimento.tipoPessoaId,
+          nome: atendimento?.proprietario?.nome,
+          cpfCnpj: atendimento?.proprietario?.cpf,
+          cnh: atendimento?.proprietario?.cnh,
+          dataNascimento: atendimento?.proprietario?.dataNascimento
+            ? moment(atendimento?.proprietario?.dataNascimento).format()
+            : null,
+          telefone: atendimento?.proprietario?.telefone,
+          email: atendimento?.proprietario?.email,
+          endereco: {
+            logradouro: atendimento?.enderecoProprietario?.rua,
+            numero: atendimento?.enderecoProprietario?.numero,
+            complemento: atendimento?.enderecoProprietario?.complemento,
+            bairro: atendimento?.enderecoProprietario?.bairro,
+            cidade: atendimento?.enderecoProprietario?.cidade,
+            estado: atendimento?.enderecoProprietario?.estado,
+            cep: atendimento?.enderecoProprietario?.cep,
+          },
         },
-      },
-      tipoAtendimentoId: atendimento?.tipoAtendimentoId
-        ? atendimento?.tipoAtendimentoId
-        : '',
-      foto: {
-        nome: 'ReconhecimentoFacial.jpg',
-        tipo: atendimento?.fotoFacial?.tipo
-          ? atendimento?.fotoFacial?.tipo
-          : '',
-        tamanho: 0,
-        base64: atendimento?.fotoFacial?.base64
-          ? atendimento?.fotoFacial?.base64
-          : '',
-      },
-      terminalId: informacoesLogin?.terminalId
-        ? informacoesLogin?.terminalId
-        : '',
-      referencia: atendimento?.informacaoConsulta?.numeroProcesso
-        ? atendimento?.informacaoConsulta?.numeroProcesso
-        : '',
-      documentos: [],
-    };
-    this.fotos.forEach((foto) => {
-      let formatFoto = {
-        tipoDocumentoId: foto?.tipoDocumentoId ? foto?.tipoDocumentoId : '',
-        nome: foto?.nome ? foto?.nome : '',
-        tipo: foto?.tipo ? foto?.tipo : '',
-        tamanho: foto?.tamanho ? foto?.tamanho : '',
-        base64: foto?.base64 ? foto?.base64 : '',
+        tipoAtendimentoId: atendimento?.tipoAtendimentoId,
+        foto: {
+          nome: 'foto.jpg',
+          tipo: atendimento?.fotoFacial?.tipo,
+          tamanho: 0,
+          base64: atendimento?.fotoFacial?.base64,
+        },
+        terminalId: informacoesLogin?.terminalId,
+        documentos: this.fotos,
+        veiculo: {
+          identificadorProcesso:
+            atendimento.informacaoConsulta.identificadorProcesso,
+          numeroProcesso: atendimento.informacaoConsulta.numeroProcesso,
+          placa: atendimento.informacaoConsulta.veiculo.placa,
+        },
       };
-      atendimentoCompleto.documentos.push(formatFoto);
+
+      this.atendimentoService.insertAtendimento(atendimentoCompleto).subscribe(
+        (item: any) => {
+          this.loading = false;
+          const protocolo = item.data.protocolo;
+          this.store.dispatch(new SetProtocol(protocolo));
+          this.router.navigate(['/complete']);
+        },
+        (error) => {
+          this.loading = false;
+
+          if (error.error && error.error.Message) {
+            this.toast(error.error.Message);
+          } else {
+            this.toast(
+              'Houver um erro ao registrar o atendimento, tente novamente'
+            );
+          }
+        }
+      );
+    }
+  }
+
+  async toast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
     });
-    this.atendimentoService
-      .insertAtendimento(atendimentoCompleto)
-      .subscribe((item: any) => {
-        const protocolo = item.data.protocolo;
-        // console.log(atendimentoCompleto)
-        this.store.dispatch(new SetProtocol(protocolo));
-        this.router.navigate(['/complete']);
-      });
+    toast.present();
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 }

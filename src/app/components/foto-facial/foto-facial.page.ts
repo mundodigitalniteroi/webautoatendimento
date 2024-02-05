@@ -23,12 +23,13 @@ export class FotoFacialPage implements OnInit {
 
   ngOnInit(): void {
     this.options = this.store.selectSnapshot(AtendimentoState.all);
-    console.log(this.options);
+    // console.log(this.options);
   }
 
   documentUpload() {
     this.router.navigate(['/document-upload']);
   }
+
   tryAgain() {
     this.router.navigate(['/facial-recognition']);
   }

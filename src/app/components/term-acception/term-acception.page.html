@@ -1,24 +1,20 @@
-<ion-content [fullscreen]="true" >
+<ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
   <ion-grid class="ion-text-center ion-align-items-center">
-      <h1>TERMOS E CONDIÇÕES DE USO DO EBLONLINE</h1>
-      <p class="scrollable">Este documento (“Termos e Condições”) regula o uso da plataforma tecnológica de serviços interativos de leilões e vendas online denominada “Empresa Brasileira de Leilões Online ou EBL Online”, marca em processo de registro EBLONLINE.COM.BR pertencente a empresa WEBZI PESQUISA & INOVAÇÃO TECNOLÓGICA LTDA, CNPJ 37.552.169/0001-64.
-  
-        O usuário deverá ler atentamente este documento antes de realizar seu cadastro. Os usuários do EBL Online podem ser compradores, agentes de venda que atuam em nome próprio (vendedores) ou agentes de venda mandatados por vendedores para a venda de bens (Leiloeiros Oficiais, Leiloeiros Judiciais, Pregoeiros Administrativos, Leiloeiros Rurais, Corretores de Imóveis, Empresas Organizadoras de Leilão e Empresas Intermediadoras da Venda Direta) – “usuário”.
-        
-        Em caso de dúvidas, o usuário poderá entrar em contato por meio do chat e e-mail contato@eblonline.com.br (“Canais de Atendimento”).
-        
-        As informações de contato dos Canais de Atendimento também estão disponíveis no Site EBL Online.
-        
-        Ao aderir a estes Termos e Condições, o usuário aceita e concorda com todas as regras aqui estabelecidas, as quais constituem acordo integral com relação ao uso do Site EBL Online, dos demais produtos, serviços e lojas a ele relacionados, no que for aplicável.
-      </p>
-
-      <ion-list>
-        <ion-item>
-          <ion-label>Eu concordo com os termos e condições</ion-label>
-          <ion-checkbox slot="end" [(ngModel)]="value"></ion-checkbox>
-        </ion-item>
-      </ion-list>
-      <ion-button [routerLink]="['/public-search']" class="btn-search" [disabled]="!value">Continuar</ion-button>
-      <ion-button fill="outline" [routerLink]="['/home']">Voltar</ion-button>
-   </ion-grid>
-</ion-content>        
+    <h1>TERMOS PARA RETIRADA DO VEÍCULO</h1>
+    <p class="scrollable" [innerHTML]="termos" *ngIf="termos"></p>
+    <ion-list>
+      <ion-item>
+        <ion-label>Li os termos e aceito</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="value"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <ion-button
+      [routerLink]="['/public-search']"
+      class="btn-search"
+      [disabled]="!value"
+      >Continuar</ion-button
+    >
+    <ion-button fill="outline" [routerLink]="['/home']">Voltar</ion-button>
+  </ion-grid>
+</ion-content>

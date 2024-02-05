@@ -5,7 +5,7 @@ import { PublicSearchRoutingModule } from './public-search-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
-
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [PublicSearchPage],
@@ -14,8 +14,9 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
     IonicModule,
     FormsModule,
     PublicSearchRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToolbarModule,
   ],
-  providers: [ConsultaDebitoService]
+  providers: [ConsultaDebitoService],
 })
-export class PublicSearchModule { }
+export class PublicSearchModule {}

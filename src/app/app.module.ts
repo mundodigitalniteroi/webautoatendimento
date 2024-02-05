@@ -12,6 +12,7 @@ import { AuthState } from './state/auth/auth.state';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
 
 registerLocaleData(ptBr);
 @NgModule({
@@ -24,6 +25,7 @@ registerLocaleData(ptBr);
     IonicStorageModule.forRoot(),
     NgxsModule.forRoot([AtendimentoState, AuthState]),
     NgxsStoragePluginModule.forRoot(),
+    NgxsResetPluginModule.forRoot(),
     HttpClientModule,
   ],
   providers: [

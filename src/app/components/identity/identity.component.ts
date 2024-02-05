@@ -42,7 +42,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
       proprietario: this.fb.group({
         nome: [null, Validators.required],
         dataNascimento: [null, Validators.required],
-        cpfCnpj: [null, Validators.required],
+        cpf: [null, Validators.required],
         cnh: [null, Validators.required],
         telefone: [null],
         email: [null, Validators.email],
@@ -69,7 +69,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
         //PF
         if (tipo == 1) {
           this.form.removeControl('responsavel');
-          console.log(this.form);
+          // console.log(this.form);
           const prop = this.form.get('proprietario') as FormGroup;
           prop.reset();
           prop.get('cnh').setValidators(Validators.required);
@@ -146,6 +146,20 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getTipoPessoas();
+  }
+
+  proprietarioInvalid(campo: string) {
+    return (
+      !this.proprietario.get(campo).valid &&
+      (this.proprietario.get(campo).dirty || this.submitAttempt)
+    );
+  }
+
+  responsavelInvalid(campo: string) {
+    return (
+      !this.responsavel.get(campo).valid &&
+      (this.responsavel.get(campo).dirty || this.submitAttempt)
+    );
   }
 
   getTipoPessoas() {

@@ -30,10 +30,10 @@ ion-grid {
   flex-direction: column !important;
   height: 100%;
 }
-ion-img {
-  width: 100%;
-  height: 200px;
-}
+// ion-img {
+//   width: 100%;
+//   height: 200px;
+// }
 h1 {
   color: var(--primary, #031a2e);
   text-align: center;
@@ -90,6 +90,7 @@ ion-button {
   justify-content: center;
   align-items: center;
   background: #ebebeb80;
+  z-index: 999999999;
 }
 .lds-roller {
   display: inline-block;

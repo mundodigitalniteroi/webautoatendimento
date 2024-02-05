@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { AuthState } from 'src/app/state/auth/auth.state';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AtendimentoService {
-  private apiUrl = 'https://api.atendimento.gestordepatios.app.br/';
+  private apiUrl = environment.urlApiAtendimento;
   emitInformations: Subject<any> = new Subject<any>();
   closeMenu: Subject<any> = new Subject<any>();
   headers: HttpHeaders;
@@ -21,11 +22,13 @@ export class AtendimentoService {
   }
 
   getTipoPessoas() {
-    return this.http.get(this.apiUrl + `TipoPessoa`, { headers: this.headers });
+    return this.http.get(this.apiUrl + `/TipoPessoa`, {
+      headers: this.headers,
+    });
   }
 
   getTipoAtendimento() {
-    return this.http.get(this.apiUrl + `TipoAtendimento`, {
+    return this.http.get(this.apiUrl + `/TipoAtendimento`, {
       headers: this.headers,
     });
   }
@@ -33,13 +36,13 @@ export class AtendimentoService {
   getTiposDocumentos(tipoPessoaId, terminalId, tipoAtendimentoId) {
     return this.http.get(
       this.apiUrl +
-        `ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`,
+        `/ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`,
       { headers: this.headers }
     );
   }
 
   insertAtendimento(atendimento) {
-    return this.http.post(this.apiUrl + `Atendimento`, atendimento, {
+    return this.http.post(this.apiUrl + `/Atendimento`, atendimento, {
       headers: this.headers,
     });
   }

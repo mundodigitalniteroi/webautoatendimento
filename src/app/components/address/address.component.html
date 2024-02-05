@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
   <ion-row class="ion-justify-content-center">
     <ion-col size="12" class="ion-text-center">
       <h2>Cadastro</h2>
@@ -29,7 +30,7 @@
               formControlName="cep"
               [appIonMask]="{
                 mask: '99999-999',
-                blockedKeys: [',', '.', '+']
+                blockedKeys: [',', '.', '+', '-', ' ']
               }"
               maxlength="9"
             ></ion-input>
@@ -37,10 +38,7 @@
           <div class="error-message" *ngIf="proprietarioInvalid('cep')">
             CEP é obrigatorio
           </div>
-          <ion-item
-            counter="true"
-            [class.ion-item-invalid]="proprietarioInvalid('rua')"
-          >
+          <ion-item [class.ion-item-invalid]="proprietarioInvalid('rua')">
             <ion-label position="floating">Rua</ion-label>
             <ion-input formControlName="rua"></ion-input>
           </ion-item>
@@ -58,24 +56,18 @@
             Numero é obrigatorio
           </div>
 
-          <ion-item counter="true">
+          <ion-item>
             <ion-label position="floating">Complemento</ion-label>
             <ion-input formControlName="complemento"></ion-input>
           </ion-item>
-          <ion-item
-            counter="true"
-            [class.ion-item-invalid]="proprietarioInvalid('bairro')"
-          >
+          <ion-item [class.ion-item-invalid]="proprietarioInvalid('bairro')">
             <ion-label position="floating">Bairro</ion-label>
             <ion-input formControlName="bairro"></ion-input>
           </ion-item>
           <div class="error-message" *ngIf="proprietarioInvalid('bairro')">
             Bairro é obrigatorio
           </div>
-          <ion-item
-            counter="true"
-            [class.ion-item-invalid]="proprietarioInvalid('cidade')"
-          >
+          <ion-item [class.ion-item-invalid]="proprietarioInvalid('cidade')">
             <ion-label position="floating">Cidade</ion-label>
             <ion-input formControlName="cidade"></ion-input>
           </ion-item>
@@ -120,7 +112,7 @@
                 formControlName="cep"
                 [appIonMask]="{
                   mask: '99999-999',
-                  blockedKeys: [',', '.', '+']
+                  blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="9"
               ></ion-input>
@@ -128,10 +120,7 @@
             <div class="error-message" *ngIf="responsavelInvalid('cep')">
               CEP é obrigatorio
             </div>
-            <ion-item
-              counter="true"
-              [class.ion-item-invalid]="responsavelInvalid('rua')"
-            >
+            <ion-item [class.ion-item-invalid]="responsavelInvalid('rua')">
               <ion-label position="floating">Rua</ion-label>
               <ion-input formControlName="rua"></ion-input>
             </ion-item>
@@ -152,24 +141,18 @@
               Numero é obrigatorio
             </div>
 
-            <ion-item counter="true">
+            <ion-item>
               <ion-label position="floating">Complemento</ion-label>
               <ion-input formControlName="complemento"></ion-input>
             </ion-item>
-            <ion-item
-              counter="true"
-              [class.ion-item-invalid]="responsavelInvalid('bairro')"
-            >
+            <ion-item [class.ion-item-invalid]="responsavelInvalid('bairro')">
               <ion-label position="floating">Bairro</ion-label>
               <ion-input formControlName="bairro"></ion-input>
             </ion-item>
             <div class="error-message" *ngIf="responsavelInvalid('bairro')">
               Bairro é obrigatorio
             </div>
-            <ion-item
-              counter="true"
-              [class.ion-item-invalid]="responsavelInvalid('cidade')"
-            >
+            <ion-item [class.ion-item-invalid]="responsavelInvalid('cidade')">
               <ion-label position="floating">Cidade</ion-label>
               <ion-input formControlName="cidade"></ion-input>
             </ion-item>

@@ -15,7 +15,7 @@
       <ion-menu-button (click)="openMenu()"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-grid >
+  <ion-grid>
     <ion-row
       class="ion-align-items-center ion-justify-content-center row-center"
     >
@@ -29,7 +29,7 @@
       <ion-col
         size-lg="6"
         class="ion-align-items-center ion-justify-content-center col-center"
-        style="display: flex"
+        style="display: flex; flex: 2"
       >
         <h1 class="ion-text-center">Seja Bem-vindo</h1>
         <p class="ion-text-center">
@@ -41,18 +41,9 @@
         <ion-button (click)="goQuery()" class="btn-busca btn-consulta"
           >Consulta</ion-button
         >
-        <!-- <div *ngIf="image">
+        <div *ngIf="image">
           <img [src]="image" alt="" srcset="" />
         </div>
-        <ion-button
-          (click)="openCamera()"
-          color="primary"
-          expand="block"
-          fill="solid"
-          size="default"
-        >
-          Open Camera
-        </ion-button> -->
       </ion-col>
     </ion-row>
   </ion-grid>

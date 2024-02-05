@@ -35,7 +35,7 @@
     "br-mask": "0.0.10",
     "core-js": "^3.6.5",
     "moment": "^2.30.1",
-    "ngxs-reset-plugin": "^1.4.1",
+    "ngxs-reset-plugin": "^2.0.0",
     "rxjs": "^6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

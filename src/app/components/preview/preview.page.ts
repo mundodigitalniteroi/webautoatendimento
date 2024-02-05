@@ -4,8 +4,8 @@ import {
   CameraPreviewOptions,
   CameraPreviewPictureOptions,
 } from '@capacitor-community/camera-preview';
-import '@capacitor-community/camera-preview';
 import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.page.html',
@@ -14,6 +14,7 @@ import { ModalController } from '@ionic/angular';
 export class PreviewPage implements OnInit {
   image = null;
   cameraActive = false;
+  title;
   constructor(private modal: ModalController) {}
 
   ngOnInit() {
@@ -22,12 +23,15 @@ export class PreviewPage implements OnInit {
 
   launchCamera() {
     const cameraPreviewOptions: CameraPreviewOptions = {
-      position: 'front', // front or rear
-      parent: 'content', // the id on the ion-content
+      position: 'rear', // front or rear
+      parent: 'preview', // the id on the ion-content
       className: '',
       width: window.screen.width, //width of the camera display
-      height: window.screen.height - 200, //height of the camera
+      height: window.screen.height - 300, //height of the camera
       toBack: false,
+      y: 100,
+      lockAndroidOrientation: true,
+      disableExifHeaderStripping: true,
     };
     CameraPreview.start(cameraPreviewOptions);
     this.cameraActive = true;
@@ -35,7 +39,7 @@ export class PreviewPage implements OnInit {
 
   async takePicture() {
     const cameraPreviewPictureOptions: CameraPreviewPictureOptions = {
-      quality: 90,
+      quality: 75,
     };
     const result = await CameraPreview.capture(cameraPreviewPictureOptions);
     this.image = `data:image/jpeg;base64,${result.value}`;
@@ -45,9 +49,5 @@ export class PreviewPage implements OnInit {
   async stopCamera() {
     await CameraPreview.stop();
     this.modal.dismiss(this.image);
-  }
-
-  async flipCamera() {
-    await CameraPreview.flip();
   }
 }

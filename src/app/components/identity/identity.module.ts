@@ -6,6 +6,7 @@ import { IdentityComponent } from './identity.component';
 import { BrMaskerModule } from 'br-mask';
 import { IdenityRoutingModule } from './identity-routing.module';
 import { IonMaskModule } from 'src/app/directives/ion-mask.module';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [IdentityComponent],
@@ -17,6 +18,7 @@ import { IonMaskModule } from 'src/app/directives/ion-mask.module';
     ReactiveFormsModule,
     IdenityRoutingModule,
     IonMaskModule,
+    ToolbarModule,
   ],
 })
 export class IdentityModule {}

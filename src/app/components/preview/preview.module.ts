@@ -9,12 +9,8 @@ import { PreviewPageRoutingModule } from './preview-routing.module';
 import { PreviewPage } from './preview.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PreviewPageRoutingModule
-  ],
-  declarations: [PreviewPage]
+  imports: [CommonModule, FormsModule, IonicModule, PreviewPageRoutingModule],
+  declarations: [PreviewPage],
+  exports: [PreviewPage],
 })
 export class PreviewPageModule {}

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FacialRecognitionRoutingModule } from './facial-recognition-routing.module';
 import { FacialRecognitionPage } from './facial-recognition.page';
-
-
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [FacialRecognitionPage],
@@ -14,8 +12,9 @@ import { FacialRecognitionPage } from './facial-recognition.page';
     CommonModule,
     IonicModule,
     FormsModule,
-    FacialRecognitionRoutingModule
+    FacialRecognitionRoutingModule,
+    ToolbarModule,
   ],
-  providers:[]
+  providers: [],
 })
-export class FacialRecognitionModule { }
+export class FacialRecognitionModule {}

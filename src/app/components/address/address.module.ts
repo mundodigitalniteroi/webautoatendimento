@@ -6,6 +6,7 @@ import { BrMaskerModule } from 'br-mask';
 import { AddressComponent } from './address.component';
 import { AddressRoutingModule } from './adress-routing.module';
 import { IonMaskModule } from 'src/app/directives/ion-mask.module';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [AddressComponent],
@@ -17,6 +18,7 @@ import { IonMaskModule } from 'src/app/directives/ion-mask.module';
     ReactiveFormsModule,
     AddressRoutingModule,
     IonMaskModule,
+    ToolbarModule,
   ],
 })
 export class AddressModule {}

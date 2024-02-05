@@ -1,76 +1,154 @@
 <ion-content [fullscreen]="true">
-    <ion-grid class=" ion-align-items-center ion-justify-content-center">
-        <h1>Upload de documentos</h1>
-        <p>Envie os documentos abaixo</p>
-      
-        <ion-row *ngIf="documentos.length > 0" class=" ion-justify-content-start ion-align-items-center" (mouseup)="line = true">
-          
-                <ion-card  (click)=" newPhoto(documentos[0]?.tipoDocumentoId, documentos[0].descricao, 'checkCrlv')"  [ngClass]="{'border': line  }">
-                <ion-card-content class="info ">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/document-upload/crlv.png"></ion-img>
-                        <h3><b>{{documentos[0].descricao}}</b></h3>
-                    </ion-item>
-                    <div>
-                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkCrlv"></ion-img>
-                    </div>
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-        <ion-row *ngIf="documentos.length > 1" class="ion-justify-content-center " (mouseup)="line = true">
-            <ion-card  (click)=" newPhoto(documentos[1]?.tipoDocumentoId, documentos[1].descricao, 'checkIpva')"  [ngClass]="{'border': line  }">
-                <ion-card-content class="info">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img class="ipva-img" src="../../../assets/document-upload/Vector.jpg"></ion-img>
-                        <h3><b>{{documentos[1].descricao}}</b></h3>
-                    </ion-item>
-                    <div>
-                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkIpva"></ion-img>
-                    </div>
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-        <ion-row *ngIf="documentos.length > 2" class="ion-justify-content-center " (mouseup)="line = true" >
-            <ion-card  (click)=" newPhoto(documentos[2]?.tipoDocumentoId, documentos[2].descricao, 'checkMulta')"  [ngClass]="{'border': line  }"> 
-                <ion-card-content class="info">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/document-upload/nadaMul.png"></ion-img>
-                        <h3><b>{{documentos[2].descricao}}</b></h3>
-                    </ion-item>
-                    <div>
-                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkMulta"></ion-img>
-                    </div>
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-        <ion-row *ngIf="documentos.length > 3" class="ion-justify-content-center " (mouseup)="line = true">
-            <ion-card (click)=" newPhoto(documentos[3]?.tipoDocumentoId, documentos[3].descricao, 'checkLicen')"  [ngClass]="{'border': line  }">
-                <ion-card-content class="info">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/document-upload/nadaLice.png"></ion-img>
-                        <h3><b>{{documentos[3].descricao}}</b></h3>
-                    </ion-item>
-                    <div>
-                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkLicen"></ion-img>
-                    </div>
+  <app-toolbar></app-toolbar>
 
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-        <ion-row *ngIf="documentos.length > 4" class="ion-justify-content-center " (mouseup)="line = true">
-            <ion-card (click)=" newPhoto(documentos[4]?.tipoDocumentoId, documentos[4].descricao, 'checkComp')"  [ngClass]="{'border': line  }">
-                <ion-card-content class="info">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/document-upload/comp.png"></ion-img>
-                        <h3><b>{{documentos[4].descricao}}</b></h3>
-                    </ion-item>
-                    <div>
-                        <ion-img src="../../../assets/document-upload/ri_checkbox-circle-fill.png" *ngIf="checkComp" ></ion-img>
-                    </div>
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-        <ion-button (click)="save()" class="btn-enviar">Enviar</ion-button>
-        <ion-button fill="outline" [routerLink]="['/facial-recognition']">Voltar</ion-button>
-    </ion-grid>
+  <ion-grid class="ion-align-items-center ion-justify-content-center">
+    <h1>Foto dos documentos</h1>
+    <p>
+      Posicione os documentos solicitados, um de cada vez, na base traseira para
+      tirar a foto. <br />Clique no documento para abrir a câmera.
+    </p>
+
+    <ion-row
+      *ngIf="documentos.length > 0"
+      class="ion-justify-content-start ion-align-items-center"
+      (mouseup)="line = true"
+    >
+      <!-- <ion-card
+        (click)=" newPhoto(documentos[0]?.tipoDocumentoId, documentos[0].descricao, 'checkCrlv')"
+        [ngClass]="{'border': line  }"
+      > -->
+      <ion-card
+        (click)="openCamera(documentos[0]?.tipoDocumentoId, documentos[0].descricao, 'checkCrlv')"
+        [ngClass]="{ 'border': line  }"
+      >
+        <ion-card-content class="info">
+          <ion-item lines="none" class="ion-text-start">
+            <ion-img src="../../../assets/document-upload/crlv.png"></ion-img>
+            <h3><b>{{documentos[0].descricao}}</b></h3>
+          </ion-item>
+          <div>
+            <ion-img
+              src="../../../assets/document-upload/ri_checkbox-circle-fill.png"
+              *ngIf="checkCrlv"
+            ></ion-img>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row
+      *ngIf="documentos.length > 1"
+      class="ion-justify-content-center"
+      (mouseup)="line = true"
+    >
+      <ion-card
+        (click)=" openCamera(documentos[1]?.tipoDocumentoId, documentos[1].descricao, 'checkIpva')"
+        [ngClass]="{'border': line  }"
+      >
+        <ion-card-content class="info">
+          <ion-item lines="none" class="ion-text-start">
+            <ion-img
+              class="ipva-img"
+              src="../../../assets/document-upload/Vector.jpg"
+            ></ion-img>
+            <h3><b>{{documentos[1].descricao}}</b></h3>
+          </ion-item>
+          <div>
+            <ion-img
+              src="../../../assets/document-upload/ri_checkbox-circle-fill.png"
+              *ngIf="checkIpva"
+            ></ion-img>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row
+      *ngIf="documentos.length > 2"
+      class="ion-justify-content-center"
+      (mouseup)="line = true"
+    >
+      <ion-card
+        (click)="openCamera(documentos[2]?.tipoDocumentoId, documentos[2].descricao, 'checkMulta')"
+        [ngClass]="{'border': line  }"
+      >
+        <ion-card-content class="info">
+          <ion-item lines="none" class="ion-text-start">
+            <ion-img
+              src="../../../assets/document-upload/nadaMul.png"
+            ></ion-img>
+            <h3><b>{{documentos[2].descricao}}</b></h3>
+          </ion-item>
+          <div>
+            <ion-img
+              src="../../../assets/document-upload/ri_checkbox-circle-fill.png"
+              *ngIf="checkMulta"
+            ></ion-img>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row
+      *ngIf="documentos.length > 3"
+      class="ion-justify-content-center"
+      (mouseup)="line = true"
+    >
+      <ion-card
+        (click)="openCamera(documentos[3]?.tipoDocumentoId, documentos[3].descricao, 'checkLicen')"
+        [ngClass]="{'border': line  }"
+      >
+        <ion-card-content class="info">
+          <ion-item lines="none" class="ion-text-start">
+            <ion-img
+              src="../../../assets/document-upload/nadaLice.png"
+            ></ion-img>
+            <h3><b>{{documentos[3].descricao}}</b></h3>
+          </ion-item>
+          <div>
+            <ion-img
+              src="../../../assets/document-upload/ri_checkbox-circle-fill.png"
+              *ngIf="checkLicen"
+            ></ion-img>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row
+      *ngIf="documentos.length > 4"
+      class="ion-justify-content-center"
+      (mouseup)="line = true"
+    >
+      <ion-card
+        (click)="openCamera(documentos[4]?.tipoDocumentoId, documentos[4].descricao, 'checkComp')"
+        [ngClass]="{'border': line  }"
+      >
+        <ion-card-content class="info">
+          <ion-item lines="none" class="ion-text-start">
+            <ion-img src="../../../assets/document-upload/comp.png"></ion-img>
+            <h3><b>{{documentos[4].descricao}}</b></h3>
+          </ion-item>
+          <div>
+            <ion-img
+              src="../../../assets/document-upload/ri_checkbox-circle-fill.png"
+              *ngIf="checkComp"
+            ></ion-img>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-button (click)="save()" class="btn-enviar">Enviar</ion-button>
+    <ion-button fill="outline" [routerLink]="['/foto-facial']"
+      >Voltar</ion-button
+    >
+    <div class="loading" *ngIf="loading">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </ion-grid>
 </ion-content>

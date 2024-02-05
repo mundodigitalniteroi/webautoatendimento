@@ -16,7 +16,7 @@ export class IonMaskDirective {
     blockedKeys?: string[];
   } = { mask: '' };
 
-  constructor(private el: ElementRef, private ref: ChangeDetectorRef) {}
+  constructor(private el: ElementRef) {}
 
   @HostListener('input', ['$event'])
   onInput(event: any): void {
@@ -25,21 +25,19 @@ export class IonMaskDirective {
     let maskedValue: string = this.applyMask(value);
 
     this.el.nativeElement.value = maskedValue;
-
-    this.ref.detectChanges();
   }
 
-  // @HostListener('keydown', ['$event'])
-  // onKeyDown(event: any): void {
-  //   // Bloqueia teclas especificadas
-  //   if (
-  //     (this.maskConfig.blockedKeys &&
-  //       this.maskConfig.blockedKeys.includes(event.key)) ||
-  //     event.key == 'Unidentified'
-  //   ) {
-  //     event.preventDefault();
-  //   }
-  // }
+  @HostListener('beforeinput', ['$event'])
+  onKeyDown(event: any): void {
+    // console.log(event);
+    // Bloqueia teclas especificadas
+    if (
+      this.maskConfig.blockedKeys &&
+      this.maskConfig.blockedKeys.includes(event.data)
+    ) {
+      event.preventDefault();
+    }
+  }
 
   private applyMask(value: string): string {
     const mask: string = this.maskConfig.mask;
@@ -47,6 +45,8 @@ export class IonMaskDirective {
 
     let result: string = '';
     let maskIndex: number = 0;
+
+    if (mask.length == 0) return value;
 
     for (let i = 0; i < mask.length && maskIndex < value.length; i++) {
       if (mask[i] === placeholderChar) {

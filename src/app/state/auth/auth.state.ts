@@ -46,6 +46,7 @@ export class AuthState {
       terminalId: resp.payload.terminalId,
       usuarioDPId: resp.payload.usuarioDPId,
       token: resp.payload.token,
+      termos: resp.payload.termos,
     });
   }
 

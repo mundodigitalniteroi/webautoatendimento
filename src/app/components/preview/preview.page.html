@@ -1,15 +1,25 @@
-<ion-content id="content" [fullscreen]="true">
-  <div *ngIf="cameraActive">
-    <ion-button (click)="stopCamera()" expand="block" id="close">
-      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+<ion-content [fullscreen]="true" class="ion-align-items-center" id="preview">
+  <ion-toolbar mode="ios">
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+  <div class="controls">
+    <div style="width: 128px"></div>
+    <ion-button
+      (click)="takePicture()"
+      fill="clear"
+      class="button"
+      expand="block"
+    >
+      <ion-icon slot="icon-only" name="radio-button-on"></ion-icon>
     </ion-button>
-
-    <ion-button (click)="takePicture()" expand="block" id="capture">
-      <ion-icon slot="icon-only" name="camera"></ion-icon>
-    </ion-button>
-
-    <ion-button (click)="flipCamera()" expand="block" id="flip">
-      <ion-icon slot="icon-only" name="repeat"></ion-icon>
+    <ion-button
+      (click)="stopCamera()"
+      fill="clear"
+      class="button"
+      expand="block"
+      style="font-size: 1.5rem"
+    >
+      <ion-icon slot="icon-only" name="close"></ion-icon>
     </ion-button>
   </div>
 </ion-content>

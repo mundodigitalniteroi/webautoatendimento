@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Store } from '@ngxs/store';
 import { AuthState } from './state/auth/auth.state';
-import { AtendimentoService } from './services/atendimento/atendimento.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 @Component({
@@ -14,15 +13,14 @@ export class AppComponent implements OnInit {
   options;
   constructor(
     private store: Store,
-    private atendimentoService: AtendimentoService,
     private router: Router,
     private menu: MenuController
   ) {
     this.initializeApp();
   }
   ngOnInit(): void {
-    this.atendimentoService.emitInformations.subscribe((resp) => {
-      this.options = this.store.selectSnapshot(AuthState.all);
+    this.store.select(AuthState.all).subscribe((state) => {
+      this.options = state;
     });
   }
 

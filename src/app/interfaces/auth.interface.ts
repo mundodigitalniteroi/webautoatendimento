@@ -7,4 +7,5 @@ export interface AuthModel {
   terminalId: number;
   usuarioDPId: number;
   token: string;
+  termos: string;
 }

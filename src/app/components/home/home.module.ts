@@ -5,17 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
 import { HomeRoutingModule } from './home-routing.module';
 
-
-
 @NgModule({
-  
-  imports: [
-    CommonModule,
-    IonicModule,
-    FormsModule,
-    HomeRoutingModule
-    
-  ],
+  imports: [CommonModule, IonicModule, FormsModule, HomeRoutingModule],
   declarations: [HomePage],
 })
-export class HomeModule { }
+export class HomeModule {}

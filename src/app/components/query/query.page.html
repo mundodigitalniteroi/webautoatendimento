@@ -1,23 +1,26 @@
 <ion-content [fullscreen]="true" [formGroup]="form">
-    <ion-grid class="ion-text-center">
-        <div class=" verify" lines="none" >
-            <h1>Informe o protocolo</h1>
-          </div>
-      <ion-card>
-        <ion-card-content >
-            <ion-list>
-                <ion-item>
-                    <ion-input class="ion-text-center" formControlName="campo" ></ion-input>
-                </ion-item>
-            </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </ion-grid>
-    
-    <ion-row   class="col-btn">
-      <ion-button  (click)="consultarDebito()">Consultar</ion-button>
-    </ion-row>
-  </ion-content>
+  <ion-grid class="ion-text-center">
+    <div class="verify" lines="none">
+      <h1>Informe o protocolo</h1>
+    </div>
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-input
+              class="ion-text-center"
+              formControlName="campo"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+
+  <ion-row class="col-btn">
+    <ion-button (click)="consultarDebito()">Consultar</ion-button>
+  </ion-row>
+</ion-content>
 
 <!-- <ion-content [fullscreen]="true">
     <ion-grid [formGroup]="form">
@@ -30,14 +33,15 @@
             <ion-item class="ion-justify-content-start" >
                 <ion-input placeholder="Digite a placa ou GRV" formControlName="campo"></ion-input>
             </ion-item>
-            <ion-item counter="true">
+            <ion-item >
                 <ion-input placeholder="Digite o RENAVAM"></ion-input>
             </ion-item>
-            <ion-item counter="true" lines="none" class="ion-justify-content-start ion-align-items-center" >
+            <ion-item  lines="none" class="ion-justify-content-start ion-align-items-center" >
                 <!-- <ion-img src="../../../assets/public-search/dashicons_warning.png"></ion-img> -->
-                <!-- <p class="warning">Os dados estão incorretos, verifique novamente</p> -->
-            <!-- </ion-item>
+<!-- <p class="warning">Os dados estão incorretos, verifique novamente</p> -->
+<!-- </ion-item>
         </ion-list>
          <ion-button (click)="consultarDebito()" class="btn-search">Buscar</ion-button>
     </ion-grid>
-</ion-content> --> -->
+</ion-content> -->
+-->

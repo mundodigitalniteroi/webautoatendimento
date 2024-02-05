@@ -30,7 +30,6 @@ export class LoginPage implements OnInit {
     this.loading = true;
     this.authService.login(this.codigo, this.senha).subscribe(
       (info: any) => {
-        // console.log(info);
         this.loading = false;
         if (info.data) {
           this.store.dispatch(new Login(info.data));
@@ -40,7 +39,6 @@ export class LoginPage implements OnInit {
         }
       },
       (e) => {
-        console.log(e);
         this.loading = false;
         if (e.status == 400 && e.error) {
           this.toast(e.error.Message);

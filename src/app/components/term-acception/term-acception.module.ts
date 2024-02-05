@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { TermAcceptionPageRoutingModule } from './term-acception-routing.module';
 
 import { TermAcceptionPage } from './term-acception.page';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TermAcceptionPageRoutingModule
+    TermAcceptionPageRoutingModule,
+    ToolbarModule,
   ],
-  declarations: [TermAcceptionPage]
+  declarations: [TermAcceptionPage],
 })
 export class TermAcceptionPageModule {}

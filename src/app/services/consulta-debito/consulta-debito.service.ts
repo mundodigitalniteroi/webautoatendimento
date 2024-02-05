@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConsultaDebitoService {
-  private apiUrl ='https://debitos.gestordepatios.app.br/';
-  private apiConsultaUrl ='https://api.dev.autoatendimento.webzi.com.br/api/Faturamento/Simulacao';
-  constructor(
+  private apiConsultaUrl = environment.urlApiDP;
+  constructor(public http: HttpClient) {}
 
-    public http: HttpClient,
-    ) { }
-
-     getDebitos(termo: string) {
-      return this.http.get(this.apiUrl + `consultar?termo=${termo}`);
-    }
-
-    consultaVeiculo(payload){
-      return this.http.post(this.apiConsultaUrl, payload)
-    }
+  consultaVeiculo(payload) {
+    return this.http.post(
+      this.apiConsultaUrl + '/api/Faturamento/Simulacao',
+      payload
+    );
+  }
 }

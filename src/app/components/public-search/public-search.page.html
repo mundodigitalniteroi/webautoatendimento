@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
   <ion-grid [formGroup]="form">
     <ion-row class="ion-justify-content-center row-center">
       <h1>Busca de Veículo</h1>
@@ -7,20 +8,19 @@
       </p>
     </ion-row>
     <ion-list>
-      <ion-item class="ion-justify-content-start">
-        <ion-label position="floating">Placa</ion-label>
+      <ion-item class="ion-justify-content-start ion-text-center">
+        <!-- <ion-label position="stacked">Placa</ion-label> -->
         <ion-input
           (ionChange)="inputChangedPlaca($event)"
-          placeholder="Digite a placa do veiculo"
+          placeholder="Digite a placa"
           formControlName="placa"
           maxlength="7"
         ></ion-input>
       </ion-item>
-      <!-- <ion-item counter="true">
+      <!-- <ion-item >
         <ion-input placeholder="Digite o RENAVAM"></ion-input>
       </ion-item> -->
       <ion-item
-        counter="true"
         lines="none"
         class="ion-justify-content-start ion-align-items-center"
         *ngIf="error"
@@ -37,17 +37,17 @@
     <ion-button fill="outline" [routerLink]="['/term-acception']"
       >Voltar</ion-button
     >
-    <div class="loading" *ngIf="loading">
-      <div class="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
   </ion-grid>
+  <div class="loading" *ngIf="loading">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </ion-content>

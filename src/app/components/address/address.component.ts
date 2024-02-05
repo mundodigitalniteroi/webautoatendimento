@@ -79,13 +79,6 @@ export class AddressComponent implements OnInit {
     });
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes.saveFields) {
-  //     // // console.log(changes.saveFields);
-  //     this.save();
-  //   }
-  // }
-
   consultaCEP(param) {
     let cep;
     if (param == 'responsavel') {

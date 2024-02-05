@@ -1,4 +1,7 @@
 $font-family: Inter;
+ion-content {
+  --background: #f7f7f7;
+}
 .flex {
   flex-direction: column;
 }
@@ -6,9 +9,6 @@ $font-family: Inter;
   margin-top: 30px;
 }
 
-ion-grid {
-  height: 100%;
-}
 .row-center {
   width: 100%;
   flex-direction: column !important;
@@ -17,7 +17,6 @@ ion-grid {
   height: 50%;
 }
 .drive {
-  width: 90%;
   margin-top: 50px;
 }
 .drive-md {
@@ -33,7 +32,7 @@ p {
   @extend %margin-top;
   color: grey;
   width: 100%;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-family: $font-family;
 }
 .options {
@@ -56,12 +55,13 @@ p {
 }
 ion-button {
   width: 100%;
-  height: 60px;
+  height: 80px;
   margin-left: 10px;
   margin-right: 10px;
   --border-radius: 10px;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-family: $font-family;
+  margin-top: 30px;
   // --background: rgb(72, 135, 252);
 }
 section {
