@@ -195,6 +195,11 @@ const routes: Routes = [
         (m) => m.PreviewPageModule
       ),
   },
+  {
+    path: 'print',
+    loadChildren: () =>
+      import('./components/print/print.module').then((m) => m.PrintPageModule),
+  },
 
   // {
   //   path: '',

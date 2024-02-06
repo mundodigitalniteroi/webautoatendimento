@@ -37,4 +37,9 @@ export class AppComponent implements OnInit {
     this.menu.close();
     this.router.navigate(['/login']);
   }
+
+  print() {
+    this.menu.close();
+    this.router.navigate(['/print']);
+  }
 }

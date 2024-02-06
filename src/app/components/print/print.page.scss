@@ -1,0 +1,19 @@
+ion-card {
+  --background: #ffffff !important;
+}
+
+ion-button {
+  width: 100%;
+  height: 80px;
+  --border-radius: 10px;
+  font-size: 1.6rem;
+  font-family: Inter;
+  --background: rgb(72, 135, 252);
+  margin-top: 30px;
+}
+
+ion-list-header > ion-label {
+  color: var(--ion-color-accent) !important;
+  font-size: 17px;
+  font-weight: 500;
+}

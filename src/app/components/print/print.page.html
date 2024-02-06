@@ -1,0 +1,49 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title> Configuração de Impressora</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="listPrinter($event)" pullMax="{10}">
+    <ion-refresher-content
+      pullingText="Deslize para atualizar"
+      refreshingText="Atualizando Dispositivos..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-row>
+    <ion-col class="ion-padding ion-text-center">
+      <ion-text>
+        Selecione a impressora que deseja utilizar, somente os dispositivos
+        pareados aparecem nessa lista.
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <form [formGroup]="form">
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Dispositivos </ion-label>
+          </ion-list-header>
+          <ion-radio-group formControlName="printer" name="printer">
+            <ion-item
+              *ngFor="let item of bluetoothList"
+              (click)="selectPrinter(item.id)"
+            >
+              <ion-label>{{item.name}}</ion-label>
+              <ion-radio value="{{item.id}}"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-content>
+<ion-footer>
+  <ion-button (click)="savePrint()" *ngIf="selectedPrinter">Salvar</ion-button>
+</ion-footer>

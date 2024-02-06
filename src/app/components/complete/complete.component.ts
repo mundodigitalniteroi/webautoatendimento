@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { FinalizarAtendimento } from 'src/app/state/atendimento/atendimento.action';
+import { PrintService } from 'src/app/services/print/print.service';
 import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 
 @Component({
@@ -11,14 +11,15 @@ import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 export class CompleteComponent implements OnInit {
   options;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private print: PrintService) {
     this.options = this.store.selectSnapshot(AtendimentoState.all);
-    // // console.log(this.options)
+    this.imprimir();
   }
 
   ngOnInit(): void {}
 
   imprimir() {
-    this.store.dispatch(new FinalizarAtendimento({}));
+    const protocolo = this.options.protocolo;
+    this.print.printProtocolo(protocolo);
   }
 }
