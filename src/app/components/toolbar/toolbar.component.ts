@@ -15,7 +15,6 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {}
 
   cancel() {
-    console.log('entrou aqui');
     this.store.dispatch(new StateClear(AuthState));
     this.router.navigate(['/home']);
   }
