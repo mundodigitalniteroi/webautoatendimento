@@ -80,13 +80,27 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="10"
+                data
               ></ion-input>
             </ion-item>
             <div
               class="error-message"
-              *ngIf="proprietarioInvalid('dataNascimento')"
+              *ngIf="
+                proprietario.controls.dataNascimento.errors &&
+                proprietario.controls.dataNascimento.errors.required &&
+                (proprietario.controls.dataNascimento.dirty || submitAttempt)
+              "
             >
               Data de nascimento é obrigatória
+            </div>
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.dataNascimento.hasError('data') &&
+                submitAttempt
+              "
+            >
+              Data inválida
             </div>
           </ng-template>
 
@@ -104,10 +118,27 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="14"
+                appCpfCnpjValidate
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="proprietarioInvalid('cpf')">
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cpf.errors &&
+                proprietario.controls.cpf.errors.required &&
+                (proprietario.controls.cpf.dirty || submitAttempt)
+              "
+            >
               CPF é obrigatório
+            </div>
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cpf.hasError('digit') &&
+                (proprietario.controls.cpf.dirty || submitAttempt)
+              "
+            >
+              CPF inválido
             </div>
           </ng-template>
 
@@ -126,10 +157,27 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="19"
+                appCpfCnpjValidate
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="proprietarioInvalid('cpf')">
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cpf.errors &&
+                proprietario.controls.cpf.errors.required &&
+                (proprietario.controls.cpf.dirty || submitAttempt)
+              "
+            >
               CNPJ é obrigatório
+            </div>
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cpf.hasError('digit') &&
+                (proprietario.controls.cpf.dirty || submitAttempt)
+              "
+            >
+              CNPJ inválido
             </div>
           </ng-template>
 
@@ -146,10 +194,24 @@
                   mask: '',
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
+                cnh
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="proprietarioInvalid('cnh')">
-              CNH é obrigatória
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cnh.errors &&
+                proprietario.controls.cnh.errors.required &&
+                (proprietario.controls.cnh.dirty || submitAttempt)
+              "
+            >
+              CNH obrigatório
+            </div>
+            <div
+              class="error-message"
+              *ngIf="proprietario.controls.cnh.hasError('cnh') && submitAttempt"
+            >
+              CNH inválido
             </div>
           </ng-template>
 
@@ -163,8 +225,18 @@
                 blockedKeys: [',', '.', '+', '-', ' ']
               }"
               maxlength="15"
+              celular
             ></ion-input>
           </ion-item>
+          <div
+            class="error-message"
+            *ngIf="
+              proprietario.controls.telefone.hasError('celular') &&
+              submitAttempt
+            "
+          >
+            Celular inválido
+          </div>
 
           <ion-item
             [class.ion-item-invalid]="
@@ -189,9 +261,10 @@
 
         <ng-template
           [ngIf]="
-            (state$ | async).tipoAtendimento == 'procurador' ||
-            (isPessoaJuridica &&
-              (state$ | async).tipoAtendimento == 'proprietario')
+            form.controls.responsavel &&
+            ((state$ | async).tipoAtendimento == 'procurador' ||
+              (isPessoaJuridica &&
+                (state$ | async).tipoAtendimento == 'proprietario'))
           "
         >
           <ion-row class="ion-justify-content-start" style="margin-top: 15px">
@@ -230,13 +303,27 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="10"
+                data
               ></ion-input>
             </ion-item>
             <div
               class="error-message"
-              *ngIf="responsavelInvalid('dataNascimento')"
+              *ngIf="
+                responsavel.controls.dataNascimento.errors &&
+                responsavel.controls.dataNascimento.errors.required &&
+                (responsavel.controls.dataNascimento.dirty || submitAttempt)
+              "
             >
-              Data de nascimento obrigatória
+              Data de nascimento é obrigatória
+            </div>
+            <div
+              class="error-message"
+              *ngIf="
+                responsavel.controls.dataNascimento.hasError('data') &&
+                submitAttempt
+              "
+            >
+              Data inválida
             </div>
 
             <ion-item
@@ -252,10 +339,27 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="14"
+                appCpfCnpjValidate
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavelInvalid('cpf')">
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cpf.errors &&
+                proprietario.controls.cpf.errors.required &&
+                (proprietario.controls.cpf.dirty || submitAttempt)
+              "
+            >
               CPF obrigatório
+            </div>
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cpf.hasError('digit') &&
+                (proprietario.controls.cpf.dirty || submitAttempt)
+              "
+            >
+              CPF inválido
             </div>
 
             <ion-item [class.ion-item-invalid]="responsavelInvalid('cnh')">
@@ -267,10 +371,24 @@
                   mask: '',
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
+                cnh
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavelInvalid('cnh')">
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cnh.errors &&
+                proprietario.controls.cnh.errors.required &&
+                (proprietario.controls.cnh.dirty || submitAttempt)
+              "
+            >
               CNH obrigatório
+            </div>
+            <div
+              class="error-message"
+              *ngIf="proprietario.controls.cnh.hasError('cnh') && submitAttempt"
+            >
+              CNH inválido
             </div>
 
             <ion-item
@@ -286,10 +404,17 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="15"
+                celular
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavelInvalid('telefone')">
-              Telefone obrigatório
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.telefone.hasError('celular') &&
+                submitAttempt
+              "
+            >
+              Celular inválido
             </div>
 
             <ion-item

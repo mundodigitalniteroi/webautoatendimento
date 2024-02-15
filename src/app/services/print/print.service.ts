@@ -73,7 +73,7 @@ export class PrintService {
     });
   }
 
-  printData(data: Uint8Array) {
+  printData(data: any) {
     this.storage.get('printer').then((p) => {
       this.connectToBluetoothPrinter(p).subscribe(
         (_) => {

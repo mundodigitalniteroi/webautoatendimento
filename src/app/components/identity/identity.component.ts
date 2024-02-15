@@ -14,8 +14,12 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { AtendimentoModel } from 'src/app/interfaces/atendimento.interface';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
+import { CpfCnpjValidator } from 'src/app/directives/cpf/cpf-cnpj.validator';
 import { SetIdentity } from 'src/app/state/atendimento/atendimento.action';
 import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
+import { CnhValidator } from 'src/app/directives/cnh/cnh.directive';
+import { CelularValidator } from 'src/app/directives/celular/celular.directive';
+import { DataValidator } from 'src/app/directives/data/data.directive';
 
 @Component({
   selector: 'app-identity',
@@ -39,22 +43,8 @@ export class IdentityComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       tipoAtendimentoId: [null, Validators.required],
       tipoPessoaId: [null, Validators.required],
-      proprietario: this.fb.group({
-        nome: [null, Validators.required],
-        dataNascimento: [null, Validators.required],
-        cpf: [null, Validators.required],
-        cnh: [null, Validators.required],
-        telefone: [null],
-        email: [null, Validators.email],
-      }),
-      responsavel: this.fb.group({
-        nome: [null, Validators.required],
-        dataNascimento: [null, Validators.required],
-        cpf: [null, Validators.required],
-        cnh: [null, Validators.required],
-        telefone: [null],
-        email: [null, Validators.email],
-      }),
+      proprietario: this.createFormGroupPessoa(),
+      responsavel: this.createFormGroupPessoa(),
     });
 
     this.form.controls.tipoPessoaId.valueChanges.subscribe((tipo) => {
@@ -64,6 +54,9 @@ export class IdentityComponent implements OnInit, OnDestroy {
       this.form
         .get('tipoAtendimentoId')
         .setValue(atendimento.tipoAtendimentoId);
+
+      this.resetFormProprietario(tipo);
+
       //Proprietario
       if (atendimento.tipoAtendimento == 'proprietario') {
         //PF
@@ -79,58 +72,57 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
         //PJ
         if (tipo == 2) {
-          const prop = this.form.get('proprietario') as FormGroup;
-          prop.reset();
-          prop.get('cnh').clearValidators();
-          prop.get('cnh').updateValueAndValidity();
-          prop.get('dataNascimento').clearValidators();
-          prop.get('dataNascimento').updateValueAndValidity();
-          this.form.addControl(
-            'responsavel',
-            this.fb.group({
-              nome: [null, Validators.required],
-              dataNascimento: [null, Validators.required],
-              cpf: [null, Validators.required],
-              cnh: [null, Validators.required],
-              telefone: [null],
-              email: [null, Validators.email],
-            })
-          );
+          this.form.addControl('responsavel', this.createFormGroupPessoa());
           this.form.updateValueAndValidity();
         }
       } else if (atendimento.tipoAtendimento == 'procurador') {
         //PJ
-        if (tipo == 2) {
-          const prop = this.form.get('proprietario') as FormGroup;
-          prop.reset();
-          prop.get('cnh').clearValidators();
-          prop.get('cnh').updateValueAndValidity();
-          prop.get('dataNascimento').clearValidators();
-          prop.get('dataNascimento').updateValueAndValidity();
-        } else {
-          const prop = this.form.get('proprietario') as FormGroup;
-          prop.reset();
-          prop.get('cnh').setValidators(Validators.required);
-          prop.get('cnh').updateValueAndValidity();
-          prop.get('dataNascimento').setValidators(Validators.required);
-          prop.get('dataNascimento').updateValueAndValidity();
-        }
-
         if (!this.form.get('responsavel')) {
-          this.form.addControl(
-            'responsavel',
-            this.fb.group({
-              nome: [null, Validators.required],
-              dataNascimento: [null, Validators.required],
-              cpf: [null, Validators.required],
-              cnh: [null, Validators.required],
-              telefone: [null],
-              email: [null, Validators.email],
-            })
-          );
+          this.form.addControl('responsavel', this.createFormGroupPessoa());
           this.form.updateValueAndValidity();
         }
       }
+    });
+  }
+
+  resetFormProprietario(tipo) {
+    if (tipo == 2) {
+      const prop = this.form.get('proprietario') as FormGroup;
+      prop.reset({
+        cpf: '',
+        cnh: '',
+      });
+      prop.get('cnh').clearValidators();
+      prop.get('cnh').updateValueAndValidity();
+      prop.get('dataNascimento').clearValidators();
+      prop.get('dataNascimento').updateValueAndValidity();
+    } else {
+      const prop = this.form.get('proprietario') as FormGroup;
+      prop.reset({
+        cpf: '',
+        cnh: '',
+      });
+      prop
+        .get('cnh')
+        .setValidators([<any>Validators.required, <any>CnhValidator.validate]);
+      prop.get('cnh').updateValueAndValidity();
+      prop
+        .get('dataNascimento')
+        .setValidators([<any>Validators.required, <any>DataValidator.validate]);
+      prop.get('dataNascimento').updateValueAndValidity();
+    }
+  }
+  createFormGroupPessoa() {
+    return this.fb.group({
+      nome: ['', Validators.required],
+      dataNascimento: [
+        '',
+        [<any>Validators.required, <any>DataValidator.validate],
+      ],
+      cpf: ['', [Validators.required, CpfCnpjValidator.validate]],
+      cnh: ['', [<any>Validators.required, <any>CnhValidator.validate]],
+      telefone: ['', [<any>CelularValidator.validate]],
+      email: ['', Validators.email],
     });
   }
 
@@ -175,7 +167,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   save() {
     this.submitAttempt = true;
-
+    console.log(this.form);
     if (this.form.valid) {
       const formValue = this.form?.getRawValue();
 

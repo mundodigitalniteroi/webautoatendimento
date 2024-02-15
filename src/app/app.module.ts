@@ -15,6 +15,8 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
 import { ConsultaState } from './state/consulta/consulta.state';
 
+import { environment } from 'src/environments/environment';
+import { APP_BASE_HREF } from '@angular/common';
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +26,9 @@ registerLocaleData(ptBr);
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    NgxsModule.forRoot([AtendimentoState, AuthState, ConsultaState]),
+    NgxsModule.forRoot([AtendimentoState, AuthState, ConsultaState], {
+      developmentMode: !environment.production,
+    }),
     NgxsStoragePluginModule.forRoot(),
     NgxsResetPluginModule.forRoot(),
     HttpClientModule,
@@ -33,6 +37,7 @@ registerLocaleData(ptBr);
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
+    { provide: APP_BASE_HREF, useValue: '/' },
   ],
   bootstrap: [AppComponent],
 })

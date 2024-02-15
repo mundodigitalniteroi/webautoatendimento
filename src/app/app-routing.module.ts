@@ -200,6 +200,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/print/print.module').then((m) => m.PrintPageModule),
   },
+  {
+    path: 'protocol',
+    loadChildren: () =>
+      import('./components/protocol/protocol.module').then(
+        (m) => m.ProtocolModule
+      ),
+  },
 
   // {
   //   path: '',

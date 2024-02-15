@@ -46,4 +46,10 @@ export class AtendimentoService {
       headers: this.headers,
     });
   }
+
+  gerarProtocoloAtendimento() {
+    return this.http.post(this.apiUrl + `/Atendimento/GerarProtocolo`, null, {
+      headers: this.headers,
+    });
+  }
 }
