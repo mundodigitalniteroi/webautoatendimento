@@ -8,32 +8,32 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-img src="../../../../assets/pix/qrcode.png"></ion-img>
-                <p class="ion-text-center expiration">Expira hoje às 23:59 </p>
+                <ion-img [src]="'data:image/jpeg;base64,'+ optionsConsulta?.informacaoPixEstatico?.qrCode"></ion-img>
+                <!-- <p class="ion-text-center expiration">Expira hoje às 23:59 </p> -->
             </ion-col>
         </ion-row>
         <ion-row class=" row-title value ion-justify-content-start ion-align-items-center">
             <ion-col>
                 <h2>Valor</h2>
-                <p><b>R$ 420,00</b></p>
+                <p><b>{{valorTotal}}</b></p>
             </ion-col>
         </ion-row>
         <ion-row class=" row-title detalhe ion-justify-content-start ion-align-items-center">
             <ion-col size="12">
                 <h1><b>Detalhes da cobrança</b> </h1>
-                <h2>Pix Copia e Cola</h2>
+                <h2>Chave PIX</h2>
             </ion-col>
             <ion-col size="12">
-                <p >00020126580014br.gov.bcb.pix01365b57b366-afa4-4df6-be39-e753c55f554e5204000053039865406420.005802BR5925Ygor Nunes Ferreira Nobre6002NA62070503***6304F4B7</p>
-                <ion-img  src="../../../../assets/pix/copiaecola.png"></ion-img>
+                <p ><b>{{optionsConsulta?.informacaoPixEstatico?.chave}}</b></p>
+                <!-- <ion-img  src="../../../../assets/pix/copiaecola.png"></ion-img> -->
             </ion-col>
 
         </ion-row>
         
 </ion-grid>
     <ion-row class="row-buttons ion-justify-content-center">
-        <ion-button  [routerLink]="['/payment-confirmed']" >Compartilhar Qr Code</ion-button>
-        <ion-button  fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
+        <ion-button  [routerLink]="['/payment-confirmed']" >Enviar por email</ion-button>
+        <ion-button  fill="outline" class="back" [routerLink]="['/payment']">Fechar</ion-button>
     </ion-row>
         
 </ion-content>

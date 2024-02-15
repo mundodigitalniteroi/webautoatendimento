@@ -29,7 +29,6 @@ export class IonMaskDirective {
 
   @HostListener('beforeinput', ['$event'])
   onKeyDown(event: any): void {
-    // console.log(event);
     // Bloqueia teclas especificadas
     if (
       this.maskConfig.blockedKeys &&

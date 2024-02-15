@@ -69,7 +69,6 @@ export class IdentityComponent implements OnInit, OnDestroy {
         //PF
         if (tipo == 1) {
           this.form.removeControl('responsavel');
-          // console.log(this.form);
           const prop = this.form.get('proprietario') as FormGroup;
           prop.reset();
           prop.get('cnh').setValidators(Validators.required);

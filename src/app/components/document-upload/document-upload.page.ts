@@ -44,10 +44,8 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
   }
 
   getTiposDocumentos() {
-    // console.log('1');
     this.options = this.store.selectSnapshot(AtendimentoState.all);
     this.informacoesLogin = this.store.selectSnapshot(AuthState.all);
-    // console.log(this.options, this.informacoesLogin)
     this.atendimentoService
       .getTiposDocumentos(
         this.options?.tipoPessoaId,
@@ -55,7 +53,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
         this.options?.tipoAtendimentoId
       )
       .subscribe((resp: any) => {
-        // console.log(resp)
         this.documentos = resp.data;
       });
   }
@@ -72,7 +69,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
   //   this.cameraService.requestPermission().then((item) => {
   //     if (item.camera == 'granted') {
   //       this.cameraService.getPhoto().then((foto) => {
-  //         // console.log(foto)
   //         const fotoModel = {
   //           tipo: 'image/jpeg',
   //           base64: foto.dataUrl,

@@ -20,7 +20,6 @@ export class StepsPage implements OnInit {
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
-    // // console.log(this.options)
   }
 
   changeStep() {
@@ -51,7 +50,6 @@ export class StepsPage implements OnInit {
   }
 
   // receiveFormValue(event){
-  //   // console.log(event);
   //   this.form = event.form.valid;
   //   let formValues = event.form.value;
   //   event.tipoPessoa = "procurador"
@@ -67,7 +65,6 @@ export class StepsPage implements OnInit {
   //     if(formValues.campo == 'PJ' && event.tipoPessoa == "proprietario"){
   //       this.form = formValues.cnpj ?  true : false;
   //       this.form = formValues.razaoSocial ?  true : false;
-  //       // console.log(this.form)
   //     }
 
   //     if(formValues.campo == 'PF' && event.tipoPessoa == "procurador"){

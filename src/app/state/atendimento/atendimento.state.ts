@@ -71,8 +71,6 @@ export class AtendimentoState {
 
   @Action(SetIdentity)
   setIdentity(ctx: StateContext<AtendimentoModel>, payload) {
-    //console.log(payload.payload.proprietarioPf.nomeProp);
-    // payload
     const state = ctx.getState;
     ctx.patchState({
       ...state,
@@ -95,7 +93,6 @@ export class AtendimentoState {
   @Action(SetFacialRocgnition)
   setFacialRocgnition(ctx: StateContext<AtendimentoModel>, payload) {
     const state = ctx.getState;
-    // console.log(payload)
     ctx.patchState({
       ...state,
       fotoFacial: {
@@ -109,7 +106,6 @@ export class AtendimentoState {
   @Action(SetDocumentUpload)
   setDocumentUpload(ctx: StateContext<AtendimentoModel>, payload) {
     const state = ctx.getState;
-    // console.log(payload)
     ctx.patchState({
       ...state,
       documentos: payload.payload,
@@ -119,7 +115,6 @@ export class AtendimentoState {
   @Action(SetProtocol)
   setProtocol(ctx: StateContext<AtendimentoModel>, payload) {
     const state = ctx.getState;
-    // console.log(payload)
     ctx.patchState({
       ...state,
       protocolo: payload.payload,

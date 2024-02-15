@@ -35,7 +35,6 @@ export class HowLiberationPage implements OnInit {
 
   getTipoAtendimento() {
     this.atendimentoService.getTipoAtendimento().subscribe((item: any) => {
-      // // console.log(item);
       this.tiposAtendimentos = item.data;
     });
   }
@@ -47,7 +46,6 @@ export class HowLiberationPage implements OnInit {
     };
     this.store.dispatch(new SetTipoAtendimento(payload));
 
-    // // console.log(payload)
     this.router.navigate(['/identity']);
   }
 }

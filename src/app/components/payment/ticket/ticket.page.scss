@@ -6,7 +6,7 @@ ion-content{
 ion-grid {
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 140vw;
 }
 .row-title {
   width: 98%;
@@ -16,18 +16,18 @@ h1 {
     color: rgb(22, 127, 247);
     font-family: $font-family;
     font-weight: 700;
-    font-size: 1.4rem;
+    font-size: 2rem;
   }
   p {
     margin-top: 0%;
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: $font-family;
   }
 .detalhe{
     display: flex;
     p{
         width: 80%;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
     ion-img {
         margin-left: 10%;
@@ -41,7 +41,7 @@ h1 {
     height: 60px;
     margin-top: 30px;
     --border-radius: 10px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-family: $font-family;
   }
 ion-row:nth-child(1){
@@ -82,11 +82,11 @@ ion-card {
   }
   @media(min-width:768px){
     ion-grid{
-      width: 50%;
+      width: 90%;
     }
     .row-buttons{
       ion-button{
-        width: 50%;
+        width: 98%;
       }
     }
   }

@@ -15,7 +15,6 @@ export class TermAcceptionPage implements OnInit {
 
   ngOnInit() {
     this.store.select(AuthState.all).subscribe((state: any) => {
-      console.log(state);
       this.termos = this._sanitizer.bypassSecurityTrustHtml(state.termos);
     });
   }

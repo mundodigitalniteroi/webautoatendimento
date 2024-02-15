@@ -24,7 +24,6 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.options = this.store.selectSnapshot(AuthState.all);
-    // console.log(this.options)
   }
   goPublicSearch() {
     this.router.navigate(['/term-acception']);

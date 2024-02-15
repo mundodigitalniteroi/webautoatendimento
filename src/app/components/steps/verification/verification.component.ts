@@ -12,7 +12,6 @@ export class VerificationComponent implements OnInit {
 
   constructor(private store: Store) {
     this.options = this.store.selectSnapshot(AtendimentoState.all);
-    // // console.log(this.options)
   }
 
   ngOnInit(): void {}

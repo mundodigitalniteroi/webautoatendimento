@@ -13,6 +13,7 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
+import { ConsultaState } from './state/consulta/consulta.state';
 
 registerLocaleData(ptBr);
 @NgModule({
@@ -23,7 +24,7 @@ registerLocaleData(ptBr);
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    NgxsModule.forRoot([AtendimentoState, AuthState]),
+    NgxsModule.forRoot([AtendimentoState, AuthState, ConsultaState]),
     NgxsStoragePluginModule.forRoot(),
     NgxsResetPluginModule.forRoot(),
     HttpClientModule,

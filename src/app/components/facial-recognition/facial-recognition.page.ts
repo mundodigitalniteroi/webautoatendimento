@@ -39,7 +39,6 @@ export class FacialRecognitionPage implements OnInit, OnDestroy {
   //           tamanho: foto.exif.ImageLength,
   //         };
   //         this.fotos.push(fotoModel);
-  //         // console.log(this.fotos)
   //         this.store.dispatch(new SetFacialRocgnition(this.fotos[0]));
   //         this.router.navigate(['/foto-facial']);
   //       });
