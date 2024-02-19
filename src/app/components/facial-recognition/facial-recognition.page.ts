@@ -66,7 +66,7 @@ export class FacialRecognitionPage implements OnInit, OnDestroy {
 
   async takePicture() {
     const cameraPreviewPictureOptions: CameraPreviewPictureOptions = {
-      quality: 90,
+      quality: 85,
     };
     const result = await CameraPreview.capture(cameraPreviewPictureOptions);
     const fotoModel = {

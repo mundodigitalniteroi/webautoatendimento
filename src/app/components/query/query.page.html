@@ -1,9 +1,10 @@
 <ion-content [fullscreen]="true">
+  <app-toolbar></app-toolbar>
   <ion-grid [formGroup]="form">
     <ion-row class="ion-justify-content-center row-center">
-      <h1>Consulta de Veículo</h1>
+      <h1>Pagamento</h1>
       <p class="ion-text-center">
-        Digite a placa do seu veículo ou o protocolo para iniciar a consulta
+        Digite a placa ou protocolo para efetuar o pagamento
       </p>
     </ion-row>
     <ion-list>
@@ -11,7 +12,7 @@
         <!-- <ion-label position="stacked">Placa</ion-label> -->
         <ion-input
           (ionChange)="inputChangedPlaca($event)"
-          placeholder="Digite a placa ou o protocolo"
+          placeholder="placa ou protocolo"
           formControlName="placa"
           maxlength="7"
         ></ion-input>
@@ -33,9 +34,7 @@
     <ion-button (click)="consultarDebito()" class="btn-search"
       >Buscar</ion-button
     >
-    <ion-button fill="outline" [routerLink]="['/home']"
-      >Voltar</ion-button
-    >
+    <ion-button fill="outline" [routerLink]="['/home']">Voltar</ion-button>
   </ion-grid>
   <div class="loading" *ngIf="loading">
     <div class="lds-roller">

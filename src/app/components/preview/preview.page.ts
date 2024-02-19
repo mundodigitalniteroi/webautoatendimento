@@ -31,7 +31,8 @@ export class PreviewPage implements OnInit {
       toBack: false,
       y: 100,
       lockAndroidOrientation: true,
-      disableExifHeaderStripping: true,
+      disableExifHeaderStripping: false,
+      enableZoom: true,
     };
     CameraPreview.start(cameraPreviewOptions);
     this.cameraActive = true;
@@ -39,7 +40,7 @@ export class PreviewPage implements OnInit {
 
   async takePicture() {
     const cameraPreviewPictureOptions: CameraPreviewPictureOptions = {
-      quality: 75,
+      quality: 85,
     };
     const result = await CameraPreview.capture(cameraPreviewPictureOptions);
     this.image = `data:image/jpeg;base64,${result.value}`;

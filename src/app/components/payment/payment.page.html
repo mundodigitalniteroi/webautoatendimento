@@ -1,14 +1,14 @@
 <ion-content [fullscreen]="true">
-    <ion-grid class=" ion-align-items-center">
-        <ion-row class=" row-title ion-justify-content-start ion-align-items-center">
-            <ion-col>
-                <h1>Pagamento</h1>
-                <p>Escolha a forma de pagamento</p>
-            </ion-col>
-            
-        </ion-row>
-        
-        <!-- <ion-row class=" ion-justify-content-start ion-align-items-center" (mouseup)="line = true">
+  <app-toolbar></app-toolbar>
+  <ion-grid class="ion-align-items-center">
+    <ion-row class="row-title ion-justify-content-start ion-align-items-center">
+      <ion-col>
+        <h1>Pagamento</h1>
+        <p>Escolha a forma de pagamento</p>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row class=" ion-justify-content-start ion-align-items-center" (mouseup)="line = true">
              <ion-card (click)="takePhoto()"> 
                 <ion-card >
                 <ion-card-content class="info " (click)="goPayment('card')">
@@ -19,27 +19,28 @@
                 </ion-card-content>
             </ion-card>
         </ion-row> -->
-        <ion-row class="ion-justify-content-center ">
-            <ion-card >
-                <ion-card-content class="info" (click)="goPayment('pix')">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/payment/pix.png"></ion-img>
-                        <h3><b>Pix</b></h3>
-                    </ion-item>
-
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-        <ion-row class="ion-justify-content-center ">
+    <ion-row class="ion-justify-content-center">
+      <ion-card>
+        <ion-card-content class="info" (click)="goPayment('pix')">
+          <ion-item lines="none" class="ion-text-start">
+            <ion-img src="../../../assets/payment/pix.png" width="40"></ion-img>
+            <h3><b>Pix</b></h3>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <!-- <ion-row class="ion-justify-content-center ">
             <ion-card> 
                 <ion-card-content class="info" (click)="goPayment('ticket')">
                     <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/payment/boleto.png"></ion-img>
+                        <ion-img src="../../../assets/payment/boleto.png" width="40"></ion-img>
                         <h3><b>Boleto</b></h3>
                     </ion-item>
                 </ion-card-content>
             </ion-card>
-        </ion-row>
-        <ion-button fill="outline"  [routerLink]="['/process-information']">Voltar</ion-button>
-    </ion-grid>
+        </ion-row> -->
+    <ion-button fill="outline" [routerLink]="['/process-information']"
+      >Voltar</ion-button
+    >
+  </ion-grid>
 </ion-content>

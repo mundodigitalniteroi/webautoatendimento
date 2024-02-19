@@ -5,7 +5,7 @@ import { QueryRoutingModule } from './query-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
-
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [QueryPage],
@@ -14,8 +14,9 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
     IonicModule,
     FormsModule,
     QueryRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToolbarModule,
   ],
-  providers: [ConsultaDebitoService]
+  providers: [ConsultaDebitoService],
 })
-export class QueryModule { }
+export class QueryModule {}

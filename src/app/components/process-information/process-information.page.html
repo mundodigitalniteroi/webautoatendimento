@@ -1,4 +1,5 @@
 <ion-content fullscreen class="ion-justify-content-center">
+  <app-toolbar></app-toolbar>
 
   <ion-row class="ion-justify-content-center">
     <h2>Informações do processo</h2>
@@ -51,25 +52,27 @@
           </ion-row>
           <ng-template [ngIf]="informations">
             <ion-row
-            *ngFor="let debito of  informations.faturamento.listagemServico"
-          >
-            <ion-col size="5">
-              <p>{{debito.nomeServico}}</p>
-            </ion-col>
-            <ion-col size="2" class="ion-text-right">
-              <p>{{debito.valorTipoServico | currency}}</p>
-            </ion-col>
-            <ion-col size="2" class="ion-text-right">
-              <p>{{debito.quantidadeServico}}</p>
-            </ion-col>
-            <ion-col size="3" class="ion-text-right">
-              <p>{{debito.valorFaturado | currency}}</p>
-            </ion-col>
-          </ion-row>
+              *ngFor="let debito of  informations.faturamento.listagemServico"
+            >
+              <ion-col size="5">
+                <p>{{debito.nomeServico}}</p>
+              </ion-col>
+              <ion-col size="2" class="ion-text-right">
+                <p>{{debito.valorTipoServico | currency}}</p>
+              </ion-col>
+              <ion-col size="2" class="ion-text-right">
+                <p>{{debito.quantidadeServico}}</p>
+              </ion-col>
+              <ion-col size="3" class="ion-text-right">
+                <p>{{debito.valorFaturado | currency}}</p>
+              </ion-col>
+            </ion-row>
           </ng-template>
-          
 
-          <ion-row class="border ion-text-start ion-align-items-center" *ngIf="informations">
+          <ion-row
+            class="border ion-text-start ion-align-items-center"
+            *ngIf="informations"
+          >
             <ion-col size="6">
               <h4 class="result">TOTAL À PAGAR</h4>
             </ion-col>
@@ -97,12 +100,10 @@
   </ion-row>
   <ion-row class="ion-justify-content-center">
     <ion-button class="next" [routerLink]="['/payment']"
-      >Liberar veículo</ion-button
+      >EFETUAR PAGAMENTO</ion-button
     >
   </ion-row>
   <ion-row class="ion-justify-content-center">
-    <ion-button fill="outline" [routerLink]="['/query']"
-      >Voltar</ion-button
-    >
+    <ion-button fill="outline" [routerLink]="['/query']">Voltar</ion-button>
   </ion-row>
 </ion-content>

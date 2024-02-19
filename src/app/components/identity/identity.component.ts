@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -167,7 +158,6 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   save() {
     this.submitAttempt = true;
-    console.log(this.form);
     if (this.form.valid) {
       const formValue = this.form?.getRawValue();
 
