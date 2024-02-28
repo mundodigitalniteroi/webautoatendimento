@@ -3,20 +3,30 @@
 
   <ion-grid class="ion-align-items-center ion-justify-content-center">
     <h1>Foto dos documentos</h1>
-    <p>
-      Posicione os documentos solicitados, um de cada vez, na base traseira para
-      tirar a foto. <br />Clique no documento para abrir a câmera.
-    </p>
+    <p>Posicione os documentos solicitados, um de cada vez, na base traseira para tirar a foto. <br />Clique no documento para abrir a câmera.</p>
+    <ion-row *ngFor="let documento of documentos">
+      <ion-col size="12">
+        <ion-card (click)="openCamera(documento, documento.descricao)">
+          <ion-item lines="none">
+            <!-- <ion-img src="../../../assets/document-upload/crlv.png"></ion-img> -->
+            <ion-label>{{documento.descricao}}</ion-label>
+            <ion-icon name="checkmark-circle" color="success" *ngIf="documento.check" slot="end" size="large"></ion-icon>
+            <ion-spinner name="bubbles" slot="end" *ngIf="documento.isUploading" size="large"></ion-spinner>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
 
-    <ion-row
+    <!-- <ion-row *ngFor="let documento of documentos" class="ion-justify-content-start ion-align-items-center">
+      <ion-card (click)="openCamera(documento, documento.descricao)">
+        <ion-card-content class="info"> </ion-card-content>
+      </ion-card>
+    </ion-row> -->
+
+    <!-- <ion-row
       *ngIf="documentos.length > 0"
       class="ion-justify-content-start ion-align-items-center"
-      (mouseup)="line = true"
     >
-      <!-- <ion-card
-        (click)=" newPhoto(documentos[0]?.tipoDocumentoId, documentos[0].descricao, 'checkCrlv')"
-        [ngClass]="{'border': line  }"
-      > -->
       <ion-card
         (click)="openCamera(documentos[0]?.tipoDocumentoId, documentos[0].descricao, 'checkCrlv')"
         [ngClass]="{ 'border': line  }"
@@ -133,11 +143,9 @@
           </div>
         </ion-card-content>
       </ion-card>
-    </ion-row>
+    </ion-row> -->
     <ion-button (click)="save()" class="btn-enviar">Enviar</ion-button>
-    <ion-button fill="outline" [routerLink]="['/foto-facial']"
-      >Voltar</ion-button
-    >
+    <ion-button fill="outline" [routerLink]="['/foto-facial']">Voltar</ion-button>
     <div class="loading" *ngIf="loading">
       <div class="lds-roller">
         <div></div>

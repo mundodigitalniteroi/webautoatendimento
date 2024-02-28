@@ -3,12 +3,20 @@
   <ion-grid class="ion-text-center ion-align-items-center">
     <h1 style="margin-top: 90px">Veja como ficou a sua foto</h1>
     <p>Ficou boa? clique em enviar <br />ou você pode tirar outra</p>
-    <ion-img class="person" [src]="options?.fotoFacial?.base64"></ion-img>
-    <ion-button (click)="documentUpload()" class="btn-enviar"
-      >Enviar</ion-button
-    >
-    <ion-button fill="outline" [routerLink]="['/facial-recognition']"
-      >Tirar outra foto</ion-button
-    >
+    <ion-img class="person" [src]="foto"></ion-img>
+    <ion-button (click)="fotoUpload()" class="btn-enviar">Enviar</ion-button>
+    <ion-button fill="outline" [routerLink]="['/facial-recognition']">Tirar outra foto</ion-button>
   </ion-grid>
+  <div class="loading" *ngIf="loading">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </ion-content>

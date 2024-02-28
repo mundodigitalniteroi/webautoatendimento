@@ -15,6 +15,7 @@ import {
   SetIdentity,
   SetInformations,
   SetProtocol,
+  SetFotoId,
 } from './atendimento.action';
 import { StateReset } from 'ngxs-reset-plugin';
 
@@ -24,12 +25,7 @@ import { StateReset } from 'ngxs-reset-plugin';
 })
 @Injectable()
 export class AtendimentoState {
-  constructor(
-    public storage: Storage,
-    private store: Store,
-    private router: Router,
-    private zone: NgZone
-  ) {}
+  constructor(public storage: Storage, private store: Store, private router: Router, private zone: NgZone) {}
 
   @Selector()
   static all(state: AtendimentoModel) {
@@ -118,6 +114,15 @@ export class AtendimentoState {
     ctx.patchState({
       ...state,
       protocolo: payload.payload,
+    });
+  }
+
+  @Action(SetFotoId)
+  setFotoId(ctx: StateContext<AtendimentoModel>, payload) {
+    const state = ctx.getState;
+    ctx.patchState({
+      ...state,
+      fotoId: payload.fotoId,
     });
   }
 

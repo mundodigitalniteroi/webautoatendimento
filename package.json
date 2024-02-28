@@ -36,6 +36,7 @@
     "@ngxs/storage-plugin": "^3.8.2",
     "@ngxs/store": "^3.7.2",
     "br-mask": "0.0.10",
+    "capacitor-document-scanner": "^2.0.0",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova.plugins.diagnostic": "^7.1.4",
     "core-js": "^3.6.5",

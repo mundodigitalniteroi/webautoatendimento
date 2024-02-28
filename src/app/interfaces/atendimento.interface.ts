@@ -12,6 +12,7 @@ export interface AtendimentoModel {
     base64: string;
     tamanho: string;
   };
+  fotoId: number;
   documentos: [];
   protocolo: string;
 }

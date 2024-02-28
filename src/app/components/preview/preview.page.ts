@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  CameraPreview,
-  CameraPreviewOptions,
-  CameraPreviewPictureOptions,
-} from '@capacitor-community/camera-preview';
 import { ModalController } from '@ionic/angular';
+import { DocumentScanner, ResponseType } from 'capacitor-document-scanner';
 
 @Component({
   selector: 'app-preview',
@@ -13,42 +9,28 @@ import { ModalController } from '@ionic/angular';
 })
 export class PreviewPage implements OnInit {
   image = null;
-  cameraActive = false;
   title;
+  change = false;
+  tipoDocumentoId;
   constructor(private modal: ModalController) {}
 
   ngOnInit() {
-    this.launchCamera();
+    console.log(this.image);
+    if (!this.image) {
+      this.launchCamera();
+    }
   }
 
-  launchCamera() {
-    const cameraPreviewOptions: CameraPreviewOptions = {
-      position: 'rear', // front or rear
-      parent: 'preview', // the id on the ion-content
-      className: '',
-      width: window.screen.width, //width of the camera display
-      height: window.screen.height - 300, //height of the camera
-      toBack: false,
-      y: 100,
-      lockAndroidOrientation: true,
-      disableExifHeaderStripping: false,
-      enableZoom: true,
-    };
-    CameraPreview.start(cameraPreviewOptions);
-    this.cameraActive = true;
-  }
-
-  async takePicture() {
-    const cameraPreviewPictureOptions: CameraPreviewPictureOptions = {
-      quality: 85,
-    };
-    const result = await CameraPreview.capture(cameraPreviewPictureOptions);
-    this.image = `data:image/jpeg;base64,${result.value}`;
-    this.stopCamera();
+  async launchCamera() {
+    const { scannedImages } = await DocumentScanner.scanDocument({
+      maxNumDocuments: 1,
+      responseType: ResponseType.Base64,
+    });
+    this.change = true;
+    this.image = scannedImages[0];
   }
 
   async stopCamera() {
-    await CameraPreview.stop();
-    this.modal.dismiss(this.image);
+    this.modal.dismiss({ base64: this.image, change: this.change, tipoDocumentoId: this.tipoDocumentoId });
   }
 }

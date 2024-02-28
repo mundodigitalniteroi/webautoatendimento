@@ -4,11 +4,7 @@ import { Store } from '@ngxs/store';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
 import { CameraService } from 'src/app/services/camera/camera.service';
 import { SetFacialRocgnition } from 'src/app/state/atendimento/atendimento.action';
-import {
-  CameraPreview,
-  CameraPreviewOptions,
-  CameraPreviewPictureOptions,
-} from '@capacitor-community/camera-preview';
+import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from '@capacitor-community/camera-preview';
 
 @Component({
   selector: 'app-facial-recognition',
@@ -17,11 +13,7 @@ import {
 })
 export class FacialRecognitionPage implements OnInit, OnDestroy {
   fotos = [];
-  constructor(
-    private cameraService: CameraService,
-    private store: Store,
-    private router: Router
-  ) {}
+  constructor(private cameraService: CameraService, private store: Store, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -71,7 +63,7 @@ export class FacialRecognitionPage implements OnInit, OnDestroy {
     const result = await CameraPreview.capture(cameraPreviewPictureOptions);
     const fotoModel = {
       tipo: 'image/jpeg',
-      base64: `data:image/jpeg;base64,${result.value}`,
+      base64: result.value,
       tamanho: 0,
     };
     this.store.dispatch(new SetFacialRocgnition(fotoModel));

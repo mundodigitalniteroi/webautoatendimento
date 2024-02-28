@@ -35,8 +35,7 @@ export class AtendimentoService {
 
   getTiposDocumentos(tipoPessoaId, terminalId, tipoAtendimentoId) {
     return this.http.get(
-      this.apiUrl +
-        `/ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`,
+      this.apiUrl + `/ChecklistDocumento/tiposDocumento?tipoPessoaId=${tipoPessoaId}&terminalId=${terminalId}&tipoAtendimentoId=${tipoAtendimentoId}`,
       { headers: this.headers }
     );
   }
@@ -49,6 +48,23 @@ export class AtendimentoService {
 
   gerarProtocoloAtendimento() {
     return this.http.post(this.apiUrl + `/Atendimento/GerarProtocolo`, null, {
+      headers: this.headers,
+    });
+  }
+
+  uploadArquivo(arquivo, acesso = 'PUBLICO' || 'PRIVADO', diretorio = undefined) {
+    const formData = new FormData();
+    formData.append('arquivo', arquivo);
+
+    if (acesso) {
+      formData.append('acesso', acesso);
+    }
+
+    if (diretorio) {
+      formData.append('diretorio', diretorio);
+    }
+    this.headers.append('Content-Type', 'multipart/form-data');
+    return this.http.post(this.apiUrl + `/arquivo/upload`, formData, {
       headers: this.headers,
     });
   }

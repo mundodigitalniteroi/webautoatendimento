@@ -1,25 +1,9 @@
-<ion-content [fullscreen]="true" class="ion-align-items-center" id="preview">
-  <ion-toolbar mode="ios">
-    <ion-title>{{title}}</ion-title>
-  </ion-toolbar>
-  <div class="controls">
-    <div style="width: 128px"></div>
-    <ion-button
-      (click)="takePicture()"
-      fill="clear"
-      class="button"
-      expand="block"
-    >
-      <ion-icon slot="icon-only" name="radio-button-on"></ion-icon>
-    </ion-button>
-    <ion-button
-      (click)="stopCamera()"
-      fill="clear"
-      class="button"
-      expand="block"
-      style="font-size: 1.5rem"
-    >
-      <ion-icon slot="icon-only" name="close"></ion-icon>
-    </ion-button>
-  </div>
+<ion-content [fullscreen]="true" *ngIf="image">
+  <ion-grid class="ion-text-center ion-align-items-center">
+    <h1 style="margin-top: 90px">Veja como ficou documento</h1>
+    <p>{{title}}</p>
+    <ion-img class="person" [src]="'data:image/jpeg;base64,' + image"></ion-img>
+    <ion-button (click)="stopCamera()" class="btn-enviar">Enviar</ion-button>
+    <ion-button fill="outline" (click)="launchCamera()">Tirar outra foto</ion-button>
+  </ion-grid>
 </ion-content>

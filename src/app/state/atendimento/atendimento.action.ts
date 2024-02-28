@@ -37,6 +37,11 @@ export class SetProtocol {
   constructor(public payload: any) {}
 }
 
+export class SetFotoId {
+  static readonly type = 'Armazena a fotoId';
+  constructor(public fotoId: number) {}
+}
+
 export class FinalizarAtendimento {
   static readonly type = 'Finalizar Atendimento';
   constructor(public payload: any) {}

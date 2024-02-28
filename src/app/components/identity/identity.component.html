@@ -6,7 +6,7 @@
     </ion-col>
   </ion-row>
   <ion-card *ngIf="this.form && state$ | async">
-    <ion-card-header>
+    <ion-card-header (click)="carregarDadosTeste()">
       <ion-card-title>Cadastro Pessoal</ion-card-title>
       <ion-card-subtitle
         >Por favor preencha os campos corretamente</ion-card-subtitle
@@ -371,7 +371,6 @@
                   mask: '',
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
-                cnh
               ></ion-input>
             </ion-item>
             <div
@@ -384,13 +383,6 @@
             >
               CNH obrigatório
             </div>
-            <div
-              class="error-message"
-              *ngIf="proprietario.controls.cnh.hasError('cnh') && submitAttempt"
-            >
-              CNH inválido
-            </div>
-
             <ion-item
               class="ion-justify-content-start"
               [class.ion-item-invalid]="responsavelInvalid('telefone')"

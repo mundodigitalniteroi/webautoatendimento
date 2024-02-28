@@ -11,6 +11,7 @@ import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import { CnhValidator } from 'src/app/directives/cnh/cnh.directive';
 import { CelularValidator } from 'src/app/directives/celular/celular.directive';
 import { DataValidator } from 'src/app/directives/data/data.directive';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-identity',
@@ -25,12 +26,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
   sub: Subscription[] = [];
   tipoPessoas = [];
   submitAttempt = false;
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private atendimentoService: AtendimentoService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private store: Store, private atendimentoService: AtendimentoService, private router: Router) {
     this.form = this.fb.group({
       tipoAtendimentoId: [null, Validators.required],
       tipoPessoaId: [null, Validators.required],
@@ -42,9 +38,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
       this.isPessoaFisica = tipo == 1;
       this.isPessoaJuridica = tipo == 2;
       const atendimento = this.store.selectSnapshot(AtendimentoState.all);
-      this.form
-        .get('tipoAtendimentoId')
-        .setValue(atendimento.tipoAtendimentoId);
+      this.form.get('tipoAtendimentoId').setValue(atendimento.tipoAtendimentoId);
 
       this.resetFormProprietario(tipo);
 
@@ -93,25 +87,18 @@ export class IdentityComponent implements OnInit, OnDestroy {
         cpf: '',
         cnh: '',
       });
-      prop
-        .get('cnh')
-        .setValidators([<any>Validators.required, <any>CnhValidator.validate]);
+      prop.get('cnh').setValidators([Validators.required]);
       prop.get('cnh').updateValueAndValidity();
-      prop
-        .get('dataNascimento')
-        .setValidators([<any>Validators.required, <any>DataValidator.validate]);
+      prop.get('dataNascimento').setValidators([<any>Validators.required, <any>DataValidator.validate]);
       prop.get('dataNascimento').updateValueAndValidity();
     }
   }
   createFormGroupPessoa() {
     return this.fb.group({
       nome: ['', Validators.required],
-      dataNascimento: [
-        '',
-        [<any>Validators.required, <any>DataValidator.validate],
-      ],
+      dataNascimento: ['', [<any>Validators.required, <any>DataValidator.validate]],
       cpf: ['', [Validators.required, CpfCnpjValidator.validate]],
-      cnh: ['', [<any>Validators.required, <any>CnhValidator.validate]],
+      cnh: ['', [Validators.required]],
       telefone: ['', [<any>CelularValidator.validate]],
       email: ['', Validators.email],
     });
@@ -131,26 +118,18 @@ export class IdentityComponent implements OnInit, OnDestroy {
   }
 
   proprietarioInvalid(campo: string) {
-    return (
-      !this.proprietario.get(campo).valid &&
-      (this.proprietario.get(campo).dirty || this.submitAttempt)
-    );
+    return !this.proprietario.get(campo).valid && (this.proprietario.get(campo).dirty || this.submitAttempt);
   }
 
   responsavelInvalid(campo: string) {
-    return (
-      !this.responsavel.get(campo).valid &&
-      (this.responsavel.get(campo).dirty || this.submitAttempt)
-    );
+    return !this.responsavel.get(campo).valid && (this.responsavel.get(campo).dirty || this.submitAttempt);
   }
 
   getTipoPessoas() {
     this.sub.push(
       this.atendimentoService.getTipoPessoas().subscribe((item: any) => {
         this.tipoPessoas = item.data;
-        const getPessoa = this.tipoPessoas.find(
-          (pess) => pess.descricao == 'PF'
-        );
+        const getPessoa = this.tipoPessoas.find((pess) => pess.descricao == 'PF');
         this.form.get('tipoPessoaId').patchValue(getPessoa.tipoPessoaId);
       })
     );
@@ -168,23 +147,38 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   inputChanged(event: any) {
     // Remove caracteres não numéricos
-    const inputValue = event.target.value.replace(/\D/g, '');
+    if (event.target.value) {
+      const inputValue = event.target.value.replace(/\D/g, '');
 
-    // Atualiza o valor do campo de entrada
-    event.target.value = inputValue;
+      // Atualiza o valor do campo de entrada
+      event.target.value = inputValue;
+    }
   }
 
   inputChangedName(event: any) {
-    const input = event.target.value;
-    // Remove caracteres não alfabéticos
-    const inputValue = event.target.value.replace(/[^a-zA-Z\s]+/g, '');
+    if (event.target.value) {
+      const input = event.target.value;
+      // Remove caracteres não alfabéticos
+      const inputValue = event.target.value.replace(/[^a-zA-Z\s]+/g, '');
 
-    // Atualiza o valor do campo de entrada
-    event.target.value = inputValue;
+      // Atualiza o valor do campo de entrada
+      event.target.value = inputValue;
+    }
   }
 
   voltar() {
     this.router.navigate(['/how-liberation']);
+  }
+
+  carregarDadosTeste() {
+    this.proprietario.patchValue({
+      nome: 'Nathan Calebe Juan Rodrigues',
+      dataNascimento: '16/02/1954',
+      cpf: '115.708.371-47',
+      cnh: '81679967355',
+      telefone: '(68) 98241-8385',
+      email: 'nathan_rodrigues@brws.com.br',
+    });
   }
 
   ngOnDestroy(): void {

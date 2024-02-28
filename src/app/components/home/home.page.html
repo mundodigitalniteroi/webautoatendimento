@@ -42,9 +42,12 @@
         <ion-button [routerLink]="['/protocol']" class="btn-busca btn-consulta"
           >Atendimento no Guichê</ion-button
         >
+        <!-- <ion-button class="btn-busca btn-consulta" (click)="scanDocument()"
+          >Scan Document</ion-button
+        >
         <div *ngIf="image">
-          <img [src]="image" alt="" srcset="" />
-        </div>
+          <ion-img class="person" [src]="image"></ion-img>
+        </div> -->
       </ion-col>
     </ion-row>
   </ion-grid>

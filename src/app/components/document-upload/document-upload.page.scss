@@ -48,37 +48,39 @@ ion-row {
   width: 98%;
 }
 ion-card {
-  width: 98%;
-  height: 90px;
   border-radius: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 2px;
   b {
-    color: black;
+    color: rgb(34, 34, 34);
   }
   ion-card-content {
     height: 100%;
   }
 }
-ion-card:hover {
-  border: 1px solid blue !important;
-}
-h3 {
+
+ion-label {
   font-size: 1.5rem !important;
   font-family: $font-family;
+  font-weight: 500;
 }
+
 ion-item {
-  ion-img {
-    width: 10vw;
-    margin-right: 4vw;
-  }
-  .ipva-img {
-    width: 8vw;
-  }
+  height: 90px;
+  display: flex;
+  align-items: center;
 }
-ion-item::part(native) {
-  padding-left: 0%;
-}
+// ion-item {
+//   ion-img {
+//     width: 10vw;
+//     margin-right: 4vw;
+//   }
+//   .ipva-img {
+//     width: 8vw;
+//   }
+// }
+// ion-item::part(native) {
+//   padding-left: 0%;
+// }
 .info {
   display: flex;
   align-items: center;

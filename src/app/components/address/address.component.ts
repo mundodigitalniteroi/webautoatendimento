@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -25,12 +19,7 @@ export class AddressComponent implements OnInit {
   @Select(AtendimentoState.all) state$: Observable<AtendimentoModel>;
   submitAttempt = false;
 
-  constructor(
-    private cepService: ConsultaCepService,
-    private fb: FormBuilder,
-    private store: Store,
-    private router: Router
-  ) {}
+  constructor(private cepService: ConsultaCepService, private fb: FormBuilder, private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     //this.options = this.store.selectSnapshot(AtendimentoState.all);
@@ -59,10 +48,7 @@ export class AddressComponent implements OnInit {
   ionViewWillEnter() {
     this.submitAttempt = false;
     this.state$.subscribe((state) => {
-      if (
-        state.tipoAtendimento == 'procurador' ||
-        (state.tipoAtendimento == 'proprietario' && state.tipoPessoaId == 2)
-      ) {
+      if (state.tipoAtendimento == 'procurador' || (state.tipoAtendimento == 'proprietario' && state.tipoPessoaId == 2)) {
         this.form.addControl(
           'enderecoResponsavel',
           this.fb.group({
@@ -88,9 +74,7 @@ export class AddressComponent implements OnInit {
     }
 
     if (cep != null && cep !== '' && cep.length == 9) {
-      this.cepService
-        .consultaCEP(cep)
-        .subscribe((dados) => this.populaDadosForm(dados, param));
+      this.cepService.consultaCEP(cep).subscribe((dados) => this.populaDadosForm(dados, param));
     }
   }
 
@@ -124,33 +108,42 @@ export class AddressComponent implements OnInit {
   }
 
   proprietarioInvalid(campo: string) {
-    return (
-      !this.enderecoProprietario.get(campo).valid &&
-      (this.enderecoProprietario.get(campo).dirty || this.submitAttempt)
-    );
+    return !this.enderecoProprietario.get(campo).valid && (this.enderecoProprietario.get(campo).dirty || this.submitAttempt);
   }
 
   responsavelInvalid(campo: string) {
-    return (
-      !this.enderecoResponsavel.get(campo).valid &&
-      (this.enderecoResponsavel.get(campo).dirty || this.submitAttempt)
-    );
+    return !this.enderecoResponsavel.get(campo).valid && (this.enderecoResponsavel.get(campo).dirty || this.submitAttempt);
   }
 
   inputChanged(event: any) {
-    // Remove caracteres não numéricos
-    const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
+    if (event.target.value) {
+      // Remove caracteres não numéricos
+      const inputValue = event.target.value.replace(/[^0-9.|\-\/()]/g, '');
 
-    // Atualiza o valor do campo de entrada
-    event.target.value = inputValue;
+      // Atualiza o valor do campo de entrada
+      event.target.value = inputValue;
+    }
   }
 
   inputChangedCep(event: any) {
-    // Remove caracteres não numéricos
-    const inputValue = event.target.value.replace(/\D/g, '');
+    if (event.target.value) {
+      // Remove caracteres não numéricos
+      const inputValue = event.target.value.replace(/\D/g, '');
 
-    // Atualiza o valor do campo de entrada
-    event.target.value = inputValue;
+      // Atualiza o valor do campo de entrada
+      event.target.value = inputValue;
+    }
+  }
+
+  carregarDadosTeste() {
+    this.enderecoProprietario.patchValue({
+      rua: 'Rua Joaquim Salles Lima',
+      cep: '24755-230',
+      numero: '378',
+      bairro: 'Tribobó',
+      cidade: 'São Gonçalo',
+      estado: 'RJ',
+    });
   }
 
   voltar() {
