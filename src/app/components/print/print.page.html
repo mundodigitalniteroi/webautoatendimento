@@ -9,18 +9,11 @@
 
 <ion-content fullscreen>
   <ion-refresher slot="fixed" (ionRefresh)="listPrinter($event)" pullMax="{10}">
-    <ion-refresher-content
-      pullingText="Deslize para atualizar"
-      refreshingText="Atualizando Dispositivos..."
-    >
-    </ion-refresher-content>
+    <ion-refresher-content pullingText="Deslize para atualizar" refreshingText="Atualizando Dispositivos..."> </ion-refresher-content>
   </ion-refresher>
   <ion-row>
     <ion-col class="ion-padding ion-text-center">
-      <ion-text>
-        Selecione a impressora que deseja utilizar, somente os dispositivos
-        pareados aparecem nessa lista.
-      </ion-text>
+      <ion-text> Selecione a impressora que deseja utilizar, somente os dispositivos pareados aparecem nessa lista. </ion-text>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -31,10 +24,7 @@
             <ion-label> Dispositivos </ion-label>
           </ion-list-header>
           <ion-radio-group formControlName="printer" name="printer">
-            <ion-item
-              *ngFor="let item of bluetoothList"
-              (click)="selectPrinter(item.id)"
-            >
+            <ion-item *ngFor="let item of bluetoothList" (click)="selectPrinter(item.id)">
               <ion-label>{{item.name}}</ion-label>
               <ion-radio value="{{item.id}}"></ion-radio>
             </ion-item>
@@ -45,5 +35,9 @@
   </ion-row>
 </ion-content>
 <ion-footer>
+  <ion-item>
+    <ion-label>Usar Guilhotina</ion-label>
+    <ion-checkbox mode="ios" slot="end" color="success" [(ngModel)]="usarGuilhotina"></ion-checkbox>
+  </ion-item>
   <ion-button (click)="savePrint()" *ngIf="selectedPrinter">Salvar</ion-button>
 </ion-footer>

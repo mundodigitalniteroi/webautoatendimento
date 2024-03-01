@@ -75,7 +75,7 @@ export class PrintService {
 
   printData(data: any) {
     this.storage.get('printer').then((p) => {
-      this.connectToBluetoothPrinter(p).subscribe(
+      this.connectToBluetoothPrinter(p.printer).subscribe(
         (_) => {
           this.btSerial.write(data).then(
             (_) => {
@@ -93,7 +93,8 @@ export class PrintService {
     });
   }
 
-  printProtocolo(protocolo) {
+  async printProtocolo(protocolo) {
+    const printer = await this.storage.get('printer');
     const encoder = new EscPosEncoder();
     const img = new Image();
     img.src = '/assets/login/logo_patiosg_320.png';
@@ -132,6 +133,10 @@ export class PrintService {
         .newline()
         .newline()
         .newline();
+
+      if (printer.usarGuilhotina) {
+        encoder.cut('partial');
+      }
 
       this.printData(encoder.encode());
     };

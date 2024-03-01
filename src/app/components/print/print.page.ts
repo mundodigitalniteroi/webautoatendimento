@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PrintService } from '../../services/print/print.service';
 import { Storage } from '@ionic/storage';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -15,11 +15,12 @@ export class PrintPage implements OnInit {
   selectedPrinter: any;
   result;
   form: FormGroup;
-
+  usarGuilhotina: false;
   constructor(
     private print: PrintService,
     private storage: Storage,
     private toastController: ToastController,
+    private alert: AlertController,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -32,8 +33,10 @@ export class PrintPage implements OnInit {
 
   ionViewWillEnter() {
     this.storage.get('printer').then((p) => {
-      this.form.controls.printer.setValue(p);
-      this.selectedPrinter = p;
+      console.log(p);
+      this.form.controls.printer.setValue(p.printer);
+      this.selectedPrinter = p.printer;
+      this.usarGuilhotina = p.usarGuilhotina;
     });
     this.print
       .hasPermission()
@@ -63,8 +66,22 @@ export class PrintPage implements OnInit {
 
   //This will print
   savePrint() {
-    this.storage.set('printer', this.selectedPrinter);
-    this.toast('Impressora Configurada!');
+    const printer = {
+      printer: this.selectedPrinter,
+      usarGuilhotina: this.usarGuilhotina,
+    };
+    this.storage.set('printer', printer);
+    this.presentAlert('Impressora Configurada!');
+  }
+
+  async presentAlert(message) {
+    const alert = await this.alert.create({
+      header: 'Sucesso',
+      message: `${message}`,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 
   async toast(message: string) {
