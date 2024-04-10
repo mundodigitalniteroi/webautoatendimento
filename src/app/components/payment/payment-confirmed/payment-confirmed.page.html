@@ -1,16 +1,18 @@
 <ion-content [fullscreen]="true">
-  <ion-grid class=" ion-align-items-center ion-justify-content-center">
-      <ion-row class=" row-title ion-justify-content-start ion-align-items-end">
-          <ion-col class="ion-text-center ion-justify-content-center">
-            <ion-img src="../../../../assets/payment-confirmed/check.png"></ion-img>
-              <h1><b>Pagamento confirmado!</b></h1>
-              <p>Agende a retirada do veículo ou frete.</p>
-          </ion-col>
-      </ion-row>
-      <ion-row class=" row-button ion-justify-content-start ion-align-items-center">
-        <ion-col class="ion-text-center">
-          <ion-button fill="clear" [routerLink]="['/schedule-shipping']">Agendar retirada ou frete</ion-button>
-        </ion-col>
+  <app-toolbar></app-toolbar>
+
+  <ion-grid class="ion-align-items-center ion-justify-content-center">
+    <ion-row class="row-title ion-justify-content-start ion-align-items-end">
+      <ion-col class="ion-text-center ion-justify-content-center">
+        <ion-img src="../../../../assets/payment-confirmed/check.png"></ion-img>
+        <h1><b>Pagamento confirmado!</b></h1>
+        <p>Imprima sua guia de liberação para retirar o seu veículo!</p>
+      </ion-col>
     </ion-row>
-</ion-grid>
+    <ion-row class="row-button ion-justify-content-start ion-align-items-center">
+      <ion-col class="ion-text-center">
+        <ion-button fill="clear">Imprimir Guia de Liberação</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

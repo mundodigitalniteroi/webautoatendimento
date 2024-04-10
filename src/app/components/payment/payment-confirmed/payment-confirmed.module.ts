@@ -7,14 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { PaymentConfirmedPageRoutingModule } from './payment-confirmed-routing.module';
 
 import { PaymentConfirmedPage } from './payment-confirmed.page';
+import { ToolbarModule } from '../../toolbar/toolbar.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PaymentConfirmedPageRoutingModule
-  ],
-  declarations: [PaymentConfirmedPage]
+  imports: [CommonModule, FormsModule, IonicModule, PaymentConfirmedPageRoutingModule, ToolbarModule],
+  declarations: [PaymentConfirmedPage],
 })
 export class PaymentConfirmedPageModule {}

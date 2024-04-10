@@ -46,6 +46,16 @@ export class AtendimentoService {
     });
   }
 
+  confirmarPagamento(atendimentoId) {
+    return this.http.post(
+      this.apiUrl + `/Atendimento/ConfirmarPagamento`,
+      { atendimentoId: atendimentoId },
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   gerarProtocoloAtendimento() {
     return this.http.post(this.apiUrl + `/Atendimento/GerarProtocolo`, null, {
       headers: this.headers,

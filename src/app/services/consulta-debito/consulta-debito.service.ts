@@ -19,55 +19,97 @@ export class ConsultaDebitoService {
     });
   }
 
-  consultaVeiculo(payload) {
-    return this.http.post(
-      this.apiConsultaUrl + '/api/Faturamento/Simulacao',
-      payload
-    );
+  consultaVeiculo(identificadoFaturamento) {
+    return this.http.get(this.apiConsultaUrl + `/api/Faturamento/Consultar?identificadorFaturamento=${identificadoFaturamento}`, {
+      headers: this.headers,
+    });
   }
   consultaDebito(payload) {
-    if(payload.length == 7){
-      return this.http.get(
-        this.apiDebitourl + `/atendimento/consulta?placa=${payload}`, {
-          headers: this.headers,
-        }
-      );
-    }else{
-      return this.http.get(
-        this.apiDebitourl + `/atendimento/consulta?protocolo=${payload}`, {
-          headers: this.headers,
-        }
-      );
-    }
-    
-  }
-  alterarBoleto(indentifadorFaturamento, identificadorUsuario){
-    return this.http.get(
-      this.apiConsultaUrl + `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${1}`, {
+    if (payload.length == 7) {
+      return this.http.get(this.apiDebitourl + `/atendimento/consulta?placa=${payload}`, {
         headers: this.headers,
-      }
-    );
+      });
+    } else {
+      return this.http.get(this.apiDebitourl + `/atendimento/consulta?protocolo=${payload}`, {
+        headers: this.headers,
+      });
+    }
   }
-  alterarPixEstatico(indentifadorFaturamento, identificadorUsuario){
+  alterarBoleto(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
-      this.apiConsultaUrl + `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${14}`, {
+      this.apiConsultaUrl +
+        `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${1}`,
+      {
         headers: this.headers,
       }
     );
   }
 
-  gerarBoleto(indentifadorFaturamento, identificadorUsuario){
+  alterarPixEstatico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
-      this.apiConsultaUrl + `/api/banco/gerarboleto?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`, {
+      this.apiConsultaUrl +
+        `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${14}`,
+      {
         headers: this.headers,
       }
     );
   }
-  gerarPixEstatico(indentifadorFaturamento, identificadorUsuario){
+
+  alterarPixDinamico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
-      this.apiConsultaUrl + `/api/banco/GerarPixEstatico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`, {
+      this.apiConsultaUrl +
+        `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${17}`,
+      {
         headers: this.headers,
       }
     );
+  }
+
+  gerarBoleto(indentifadorFaturamento, identificadorUsuario) {
+    return this.http.get(
+      this.apiConsultaUrl + `/api/banco/gerarboleto?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+  gerarPixEstatico(indentifadorFaturamento, identificadorUsuario) {
+    return this.http.get(
+      this.apiConsultaUrl +
+        `/api/banco/GerarPixEstatico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  gerarPixDinamico(indentifadorFaturamento, identificadorUsuario) {
+    return this.http.get(
+      this.apiConsultaUrl +
+        `/api/banco/GerarPixDinamico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  consultarPixDinamico(indentifadorFaturamento, identificadorUsuario) {
+    return this.http.get(
+      this.apiConsultaUrl +
+        `/api/banco/ConsultarPixDinamico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  confirmarPagamento(indentifadorFaturamento, identificadorUsuario) {
+    const body = {
+      identificadorUsuario: identificadorUsuario,
+      identificadorFaturamento: indentifadorFaturamento,
+    };
+    return this.http.post(this.apiConsultaUrl + `/api/pagamento/ConfirmarPagamento`, body, {
+      headers: this.headers,
+    });
   }
 }

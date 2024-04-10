@@ -39,24 +39,27 @@ export class QueryPage implements OnInit {
     this.loading = true;
     this.error = false;
     this.msgError = '';
-    
+
     this.consultaDebitoService.consultaDebito(this.form.value.placa).subscribe(
       (deb: any) => {
         this.loading = false;
-        this.store.dispatch(new SetInformacoesConsulta(deb.data));
-        this.router.navigate(['/process-information']);
+
+        if (deb.data.statusId == 5) {
+          this.store.dispatch(new SetInformacoesConsulta(deb.data));
+          this.router.navigate(['/process-information']);
+        } else if (deb.data.statusId == 6) {
+          this.router.navigate(['/payment-confirmed']);
+        } else {
+          this.msgError = 'Pagamento do Atendimento ainda não foi liberado!';
+        }
       },
       (erro) => {
         this.error = true;
         this.loading = false;
-        if (
-          erro.error &&
-          erro.error.mensagem.avisosImpeditivos.includes('Processo inexistente')
-        ) {
+        if (erro.error && erro.error.mensagem.avisosImpeditivos.includes('Processo inexistente')) {
           this.msgError = 'Veículo não encontrado neste pátio ou protocolo inexistente';
         } else {
-          this.msgError =
-            'Houve um erro na busca do veículo, por favor tente novamente';
+          this.msgError = 'Houve um erro na busca do veículo, por favor tente novamente';
         }
       }
     );
@@ -79,14 +82,14 @@ export class QueryPage implements OnInit {
     toast.present();
   }
   // consultarDebito() {
-    // this.consultaDebitoService.consultaVeiculo().subscribe(deb => {
-    //   const payload = {
-    //     informacaoConsulta:deb
-    //   }
-    // })
+  // this.consultaDebitoService.consultaVeiculo().subscribe(deb => {
+  //   const payload = {
+  //     informacaoConsulta:deb
+  //   }
+  // })
   // }
 
   // goProcessInformation() {
-    // this.router.navigate(['/process-informations'])
+  // this.router.navigate(['/process-informations'])
   // }
 }
