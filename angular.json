@@ -14,11 +14,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "moment",
-              "moment-timezone",
-              "@mineminemine/esc-pos-encoder-ionic"
-            ],
+            "allowedCommonJsDependencies": ["moment", "moment-timezone", "@mineminemine/esc-pos-encoder-ionic", "js-brasil"],
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -143,11 +139,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
             "exclude": ["**/node_modules/**"]
           }
         },

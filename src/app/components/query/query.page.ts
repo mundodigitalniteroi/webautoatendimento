@@ -44,12 +44,19 @@ export class QueryPage implements OnInit {
       (deb: any) => {
         this.loading = false;
 
+        if (!deb.data) {
+          this.error = true;
+          this.msgError = 'Veículo não encontrado neste pátio ou protocolo inexistente';
+          return false;
+        }
+
         if (deb.data.statusId == 5) {
           this.store.dispatch(new SetInformacoesConsulta(deb.data));
           this.router.navigate(['/process-information']);
         } else if (deb.data.statusId == 6) {
           this.router.navigate(['/payment-confirmed']);
         } else {
+          this.error = true;
           this.msgError = 'Pagamento do Atendimento ainda não foi liberado!';
         }
       },

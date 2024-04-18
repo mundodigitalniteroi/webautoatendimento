@@ -16,38 +16,16 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-grid>
-    <ion-row
-      class="ion-align-items-center ion-justify-content-center row-center"
-    >
-      <ion-col
-        size-lg="6"
-        class="ion-align-items-end ion-justify-content-center"
-        style="display: flex"
-      >
+    <ion-row class="ion-align-items-center ion-justify-content-center row-center">
+      <ion-col size-lg="6" class="ion-align-items-end ion-justify-content-center" style="display: flex">
         <ion-img src="../../../assets/home/reboque.png"></ion-img>
       </ion-col>
-      <ion-col
-        size-lg="6"
-        class="ion-align-items-center ion-justify-content-center col-center"
-        style="display: flex; flex: 2"
-      >
+      <ion-col size-lg="6" class="ion-align-items-center ion-justify-content-center col-center" style="display: flex; flex: 2">
         <h1 class="ion-text-center">Seja Bem-vindo</h1>
         <p class="ion-text-center">Escolha a opção desejada abaixo</p>
-        <ion-button (click)="goPublicSearch()" class="btn-busca"
-          >Iniciar Auto Atendimento</ion-button
-        >
-        <ion-button (click)="goQuery()" class="btn-busca" color="warning"
-          >Pagamento</ion-button
-        >
-        <ion-button [routerLink]="['/protocol']" class="btn-busca btn-consulta"
-          >Atendimento no Guichê</ion-button
-        >
-        <!-- <ion-button class="btn-busca btn-consulta" (click)="scanDocument()"
-          >Scan Document</ion-button
-        >
-        <div *ngIf="image">
-          <ion-img class="person" [src]="image"></ion-img>
-        </div> -->
+        <ion-button (click)="goPublicSearch()" class="btn-busca">Iniciar Auto Atendimento</ion-button>
+        <ion-button (click)="goQuery()" class="btn-busca" color="warning">Pagamento</ion-button>
+        <ion-button [routerLink]="['/protocol']" class="btn-busca btn-consulta">Atendimento no Guichê</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

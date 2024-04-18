@@ -11,8 +11,20 @@
     </ion-row>
     <ion-row class="row-button ion-justify-content-start ion-align-items-center">
       <ion-col class="ion-text-center">
-        <ion-button fill="clear">Imprimir Guia de Liberação</ion-button>
+        <ion-button fill="clear" (click)="imprimirGuia()">Imprimir Guia de Liberação</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <div class="loading" *ngIf="imprimindo">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </ion-content>

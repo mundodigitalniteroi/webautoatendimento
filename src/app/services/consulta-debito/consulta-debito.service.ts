@@ -19,11 +19,27 @@ export class ConsultaDebitoService {
     });
   }
 
+  guiaLiberacao(identificadorProcesso) {
+    return this.http.get(
+      this.apiConsultaUrl + `/api/Liberacao/GuiaAutorizacaoRetiradaVeiculo?IdentificadorProcesso=${identificadorProcesso}&identificadorUsuario=1`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   consultaVeiculo(identificadoFaturamento) {
     return this.http.get(this.apiConsultaUrl + `/api/Faturamento/Consultar?identificadorFaturamento=${identificadoFaturamento}`, {
       headers: this.headers,
     });
   }
+
+  simularVeiculo(payload) {
+    return this.http.post(this.apiConsultaUrl + `/api/Faturamento/Simulacao`, payload, {
+      headers: this.headers,
+    });
+  }
+
   consultaDebito(payload) {
     if (payload.length == 7) {
       return this.http.get(this.apiDebitourl + `/atendimento/consulta?placa=${payload}`, {

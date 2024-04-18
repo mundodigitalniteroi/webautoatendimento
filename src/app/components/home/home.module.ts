@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
 import { HomeRoutingModule } from './home-routing.module';
-// import { DocumentScanner } from '@ionic-native/document-scanner/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 @NgModule({

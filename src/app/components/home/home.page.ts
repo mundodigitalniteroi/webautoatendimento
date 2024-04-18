@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController, ModalController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { AtendimentoService } from '../../services/atendimento/atendimento.service';
@@ -22,8 +22,6 @@ export class HomePage implements OnInit {
     private store: Store,
     private menu: MenuController,
     private atendimentoService: AtendimentoService,
-    private modal: ModalController,
-    //private scan: DocumentScanner,
     private diagnostic: Diagnostic
   ) {
     this.hasPermission();

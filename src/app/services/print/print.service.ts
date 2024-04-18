@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { Util } from '../util/util.service';
 
 @Injectable({
   providedIn: 'root',
@@ -142,6 +143,109 @@ export class PrintService {
     };
   }
 
+  async printGuiaLiberacao(dados: any) {
+    const printer = await this.storage.get('printer');
+    const encoder = new EscPosEncoder();
+
+    encoder
+      .initialize()
+      .align('left')
+      .size('normal')
+      .newline()
+      .width(1)
+      .height(1)
+      .line(Util.removeAccent(dados.clienteNome))
+      .line(Util.removeAccent(dados.clienteEndereco))
+      .line('______________________________________________')
+      .newline()
+      .align('center')
+      .width(2)
+      .height(2)
+      .bold()
+      .line('GUIA DE AUTORIZACAO PARA RETIRADA DE VEICULO')
+      .newline()
+      .bold(false)
+      .width(1)
+      .height(1)
+      .align('left')
+      .newline()
+      .line('PROCESSO: ' + dados.numeroProcesso)
+      .line('TIPO DE PROCESSO: ' + Util.removeAccent(dados.dadosTipoProcesso))
+      .line('REBOQUE: ' + dados.dadosReboque)
+      .line('DATA/HORA DE ENTRADA: ' + dados.dadosDataEntrada + ' ' + dados.dadosHoraEntrada)
+      .line('PERMANENCIA: ' + dados.dadosPermanencia)
+      .line('AUTORIZADO A SAIDA EM: ' + dados.dadosAutorizadaRetiradaVeiculoEm)
+      .newline()
+      .bold(true)
+      .line('DADOS DA LIBERACAO')
+      .bold(false)
+      .line('FORMA DE LIBERACAO: ' + dados.atendimentoFormaLiberacao)
+      .line('NOME: ' + Util.removeAccent(dados.atendimentoFormaLiberacaoNome))
+      .line('CNH: ' + dados.atendimentoFormaLiberacaoCNH)
+      .line('CPF: ' + dados.atendimentoFormaLiberacaoCpfPlaca)
+      .newline()
+      .bold(true)
+      .line('DADOS DA VEICULO')
+      .bold(false)
+      .line('MARCA/MODELO: ' + dados.veiculoMarcaModelo)
+      .line('PLACA: ' + dados.veiculoPlaca)
+      .line('RENAVAM: ' + dados.veiculoRenavam)
+      .line('CHASSI: ' + dados.veiculoChassi)
+      .line('COR: ' + dados.veiculoCor)
+      .bold(true)
+      .line('SETOR: ' + Util.removeAccent(dados.grvEstacionamentoSetor))
+      .line('VAGA: ' + Util.removeAccent(dados.grvEstacionamentoNumeroVaga))
+      .line('CHAVE NO CLAVICULARIO: ' + Util.removeAccent(dados.grvNumeroChave))
+      .bold(false)
+      .newline()
+      .newline()
+      .line(Util.removeAccent(dados.textoApresentacao))
+      .newline()
+      .align('center')
+      .qrcode(dados.qrCodeString)
+      .newline()
+      .line('______________________________________________')
+      .newline()
+      .newline()
+      .line('DECLARACAO DE RETIRADA DE VEICULO')
+      .newline()
+      .newline()
+      .align('left')
+      .line(Util.removeAccent(dados.textoDeclaracaoRetirada1))
+      .newline()
+      .line(Util.removeAccent(dados.textoDeclaracaoRetirada2))
+      .newline()
+      .newline()
+      .bold(true)
+      .line('LACRES')
+      .bold(false)
+      .line(dados.listagemLacre.join(', '))
+      .newline()
+      .newline()
+      .align('center')
+      .line('______________________________________________')
+      .line(Util.removeAccent(dados.proprietarioProcurador.replace('Proprietário/Procurador:', '')))
+      .line(dados.proprietarioCpf)
+      .newline()
+      .newline()
+      .line('______________________________________________')
+      .line('Responsavel pela entrega (por extenso).')
+      .newline()
+      .newline()
+      .newline()
+      .newline()
+      .newline()
+      .newline()
+      .newline()
+      .newline()
+      .newline();
+
+    if (printer && printer.usarGuilhotina) {
+      encoder.cut('partial');
+    }
+    this.printData(encoder.encode());
+  }
+
   async toast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -163,8 +267,4 @@ export class PrintService {
 
     return result;
   }
-
-  // formatCurrency(value) {
-  //   return this.decimalPipe.transform(value, '1.2-2', 'pt-br');
-  // }
 }

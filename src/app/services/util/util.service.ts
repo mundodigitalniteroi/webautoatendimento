@@ -15,4 +15,8 @@ export class Util {
     const blob = new Blob([int8Array], { type: type });
     return blob;
   }
+
+  static removeAccent(string) {
+    return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 }

@@ -46,7 +46,7 @@ export class PublicSearchPage implements OnInit {
       identificadorUsuario: this.options.usuarioDPId,
       placa: this.form.value.placa,
     };
-    this.consultaDebitoService.consultaVeiculo(payload).subscribe(
+    this.consultaDebitoService.simularVeiculo(payload).subscribe(
       (deb) => {
         this.loading = false;
         const payload = {
@@ -58,14 +58,10 @@ export class PublicSearchPage implements OnInit {
       (erro) => {
         this.error = true;
         this.loading = false;
-        if (
-          erro.error &&
-          erro.error.mensagem.avisosImpeditivos.includes('Processo inexistente')
-        ) {
+        if (erro.error && erro.error.mensagem.avisosImpeditivos.includes('Processo inexistente')) {
           this.msgError = 'Veículo não encontrado neste pátio';
         } else {
-          this.msgError =
-            'Houve um erro na busca do veículo, por favor tente novamente';
+          this.msgError = 'Houve um erro na busca do veículo, por favor tente novamente';
         }
       }
     );
