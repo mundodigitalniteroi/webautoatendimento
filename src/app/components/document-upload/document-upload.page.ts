@@ -92,7 +92,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
-    // this.router.navigate(['/preview']);
   }
 
   uploadFoto(fotoModel, doc) {
@@ -107,31 +106,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
   private addFoto(fotoModel, doc) {
     this.fotos.push(fotoModel);
     this.uploadFoto(fotoModel, doc);
-
-    // switch (param) {
-    //   case 'checkCrlv':
-    //     this.checkCrlv = true;
-    //     break;
-
-    //   case 'checkIpva':
-    //     this.checkIpva = true;
-    //     break;
-
-    //   case 'checkMulta':
-    //     this.checkMulta = true;
-    //     break;
-
-    //   case 'checkLicen':
-    //     this.checkLicen = true;
-    //     break;
-
-    //   case 'checkComp':
-    //     this.checkComp = true;
-    //     break;
-
-    //   default:
-    //     break;
-    // }
   }
 
   save() {
@@ -151,8 +125,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
         this.router.navigate(['/home']);
       }, 3000);
     }
-
-    //console.log(atendimento);
 
     if (atendimento) {
       this.loading = true;
@@ -199,12 +171,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
           },
         },
         tipoAtendimentoId: atendimento?.tipoAtendimentoId,
-        // foto: {
-        //   nome: 'foto.jpg',
-        //   tipo: atendimento?.fotoFacial?.tipo,
-        //   tamanho: 0,
-        //   base64: atendimento?.fotoFacial?.base64,
-        // },
         fotoId: atendimento.fotoId,
         terminalId: informacoesLogin?.terminalId,
         documentos: this.fotos.map((data) => ({ tipoDocumentoId: data.tipoDocumentoId, arquivoId: data.arquivoId })),
@@ -216,8 +182,6 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
           marcaModelo: atendimento.informacaoConsulta.veiculo.marcaModelo.marcaModelo,
         },
       };
-
-      // console.log(atendimentoCompleto);
 
       this.atendimentoService.insertAtendimento(atendimentoCompleto).subscribe(
         (item: any) => {
