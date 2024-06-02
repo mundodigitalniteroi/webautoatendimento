@@ -11,15 +11,10 @@ import { Login } from 'src/app/state/auth/auth.action';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  codigo: string = 'M7W2JT';
-  senha: string = '123';
+  codigo: string = '';
+  senha: string = '';
   loading = false;
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private store: Store,
-    private toastController: ToastController
-  ) {}
+  constructor(private router: Router, private authService: AuthService, private store: Store, private toastController: ToastController) {}
 
   ngOnInit(): void {}
   goHome() {

@@ -3,7 +3,10 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Store } from '@ngxs/store';
 import { AuthState } from './state/auth/auth.state';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { AlertController, MenuController, Platform } from '@ionic/angular';
+import { Location } from '@angular/common';
+import { App } from '@capacitor/app';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,9 +17,21 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store,
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private platform: Platform,
+    private _location: Location,
+    public alertController: AlertController
   ) {
     this.initializeApp();
+    this.platform.backButton.subscribeWithPriority(-1, (processNextHandler) => {
+      if (this._location.isCurrentPathEqualTo('/home')) {
+        this.showExitConfirm();
+        processNextHandler();
+        return;
+      } else {
+        this._location.back();
+      }
+    });
   }
   ngOnInit(): void {
     this.store.select(AuthState.all).subscribe((state) => {
@@ -41,5 +56,29 @@ export class AppComponent implements OnInit {
   print() {
     this.menu.close();
     this.router.navigate(['/print']);
+  }
+
+  showExitConfirm() {
+    this.alertController
+      .create({
+        header: 'Atenção',
+        message: 'Deseja fechar o app?',
+        backdropDismiss: false,
+        buttons: [
+          {
+            text: 'Não',
+            role: 'cancel',
+          },
+          {
+            text: 'Sim',
+            handler: () => {
+              App.exitApp();
+            },
+          },
+        ],
+      })
+      .then((alert) => {
+        alert.present();
+      });
   }
 }

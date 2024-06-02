@@ -30,7 +30,7 @@ export class QueryPage implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      placa: ['LBK5H09', Validators.required],
+      placa: ['', Validators.required],
     });
     this.options = this.store.selectSnapshot(AuthState.all);
   }

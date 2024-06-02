@@ -212,6 +212,8 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
           identificadorProcesso: atendimento.informacaoConsulta.identificadorProcesso,
           numeroProcesso: atendimento.informacaoConsulta.numeroProcesso,
           placa: atendimento.informacaoConsulta.veiculo.placa,
+          chassi: atendimento.informacaoConsulta.veiculo.chassi,
+          marcaModelo: atendimento.informacaoConsulta.veiculo.marcaModelo.marcaModelo,
         },
       };
 

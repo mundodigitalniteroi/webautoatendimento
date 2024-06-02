@@ -29,7 +29,7 @@ export class PublicSearchPage implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      placa: ['KUM3752', Validators.required],
+      placa: ['', Validators.required],
     });
     this.options = this.store.selectSnapshot(AuthState.all);
   }
