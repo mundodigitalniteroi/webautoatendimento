@@ -180,6 +180,7 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
           placa: atendimento.informacaoConsulta.veiculo.placa,
           chassi: atendimento.informacaoConsulta.veiculo.chassi,
           marcaModelo: atendimento.informacaoConsulta.veiculo.marcaModelo.marcaModelo,
+          renavam: atendimento.informacaoConsulta.veiculo.renavam,
         },
       };
 

@@ -108,11 +108,15 @@ export class AddressComponent implements OnInit {
   }
 
   proprietarioInvalid(campo: string) {
-    return !this.enderecoProprietario.get(campo).valid && (this.enderecoProprietario.get(campo).dirty || this.submitAttempt);
+    return (
+      this.enderecoProprietario && !this.enderecoProprietario.get(campo).valid && (this.enderecoProprietario.get(campo).dirty || this.submitAttempt)
+    );
   }
 
   responsavelInvalid(campo: string) {
-    return !this.enderecoResponsavel.get(campo).valid && (this.enderecoResponsavel.get(campo).dirty || this.submitAttempt);
+    return (
+      this.enderecoResponsavel && !this.enderecoResponsavel.get(campo).valid && (this.enderecoResponsavel.get(campo).dirty || this.submitAttempt)
+    );
   }
 
   inputChanged(event: any) {

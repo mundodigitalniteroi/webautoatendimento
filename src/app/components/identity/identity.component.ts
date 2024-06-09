@@ -39,6 +39,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
       this.isPessoaJuridica = tipo == 2;
       const atendimento = this.store.selectSnapshot(AtendimentoState.all);
       this.form.get('tipoAtendimentoId').setValue(atendimento.tipoAtendimentoId);
+      console.log(atendimento.tipoAtendimento);
 
       this.resetFormProprietario(tipo);
 
@@ -47,14 +48,8 @@ export class IdentityComponent implements OnInit, OnDestroy {
         //PF
         if (tipo == 1) {
           this.form.removeControl('responsavel');
-          const prop = this.form.get('proprietario') as FormGroup;
-          prop.reset();
-          prop.get('cnh').setValidators(Validators.required);
-          prop.get('cnh').updateValueAndValidity();
-          prop.get('dataNascimento').setValidators(Validators.required);
-          prop.get('dataNascimento').updateValueAndValidity();
+          this.form.updateValueAndValidity();
         }
-
         //PJ
         if (tipo == 2) {
           this.form.addControl('responsavel', this.createFormGroupPessoa());
@@ -77,8 +72,6 @@ export class IdentityComponent implements OnInit, OnDestroy {
         cpf: '',
         cnh: '',
       });
-      prop.get('cnh').clearValidators();
-      prop.get('cnh').updateValueAndValidity();
       prop.get('dataNascimento').clearValidators();
       prop.get('dataNascimento').updateValueAndValidity();
     } else {
@@ -87,18 +80,17 @@ export class IdentityComponent implements OnInit, OnDestroy {
         cpf: '',
         cnh: '',
       });
-      prop.get('cnh').setValidators([Validators.required]);
-      prop.get('cnh').updateValueAndValidity();
       prop.get('dataNascimento').setValidators([<any>Validators.required, <any>DataValidator.validate]);
       prop.get('dataNascimento').updateValueAndValidity();
     }
   }
+
   createFormGroupPessoa() {
     return this.fb.group({
       nome: ['', Validators.required],
       dataNascimento: ['', [<any>Validators.required, <any>DataValidator.validate]],
       cpf: ['', [Validators.required, CpfCnpjValidator.validate]],
-      cnh: ['', [Validators.required]],
+      cnh: ['', [<any>CnhValidator.validate]],
       telefone: ['', [<any>CelularValidator.validate]],
       email: ['', Validators.email],
     });
@@ -137,6 +129,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   save() {
     this.submitAttempt = true;
+    console.log(this.form);
     if (this.form.valid) {
       const formValue = this.form?.getRawValue();
 
