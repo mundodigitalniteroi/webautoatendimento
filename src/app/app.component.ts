@@ -29,7 +29,8 @@ export class AppComponent implements OnInit {
         processNextHandler();
         return;
       } else {
-        this._location.back();
+        return;
+        //this._location.back();
       }
     });
   }
