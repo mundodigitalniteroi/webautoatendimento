@@ -17,6 +17,7 @@ import { ConsultaState } from './state/consulta/consulta.state';
 
 import { environment } from 'src/environments/environment';
 import { APP_BASE_HREF } from '@angular/common';
+import { SumUp } from "@awesome-cordova-plugins/sum-up/ngx";
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ registerLocaleData(ptBr);
     HttpClientModule,
   ],
   providers: [
+    SumUp,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
