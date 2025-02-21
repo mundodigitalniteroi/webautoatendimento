@@ -1,0 +1,13 @@
+{
+  "application_type": "android",
+  "client_id": "cc_classic_TXgxVZQ0soAIJ7PRY92ce99ZbTjEL",
+  "client_secret": "cc_sk_classic_NxfIFzfr0MN9SC0NntRtOl3MTkVLuxvAuFZXrvMrC6R3YTdfTb",
+  "cors_uris": [
+    ""
+  ],
+  "id": "CCCQ9EHCY",
+  "name": "webziautoatendimento",
+  "redirect_uris": [
+    "http://localhost:4200/home"
+  ]
+}

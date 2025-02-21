@@ -1,0 +1,13 @@
+{
+  "application_type": "web",
+  "client_id": "cc_classic_qx9TXhtxSf1lj5Vs1JyOTUzCXlrkn",
+  "client_secret": "cc_sk_classic_uPd1asxGU68h2swgk8nVEFHIE4OaLqUNf7EskGWg8o8jrqCDEw",
+  "cors_uris": [
+    ""
+  ],
+  "id": "CCCQ9EY2D",
+  "name": "webziautoatendimentoweb",
+  "redirect_uris": [
+    "http://localhost:4200/home"
+  ]
+}
