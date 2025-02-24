@@ -19,7 +19,7 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.3.1"
 }
-
+apply from: "../../node_modules/cordova-sumup-plugin/src/android/build.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

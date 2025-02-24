@@ -42,6 +42,7 @@
     "br-mask": "0.0.10",
     "capacitor-document-scanner": "^2.0.0",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
+    "cordova-sumup-plugin": "^2.0.0",
     "cordova.plugins.diagnostic": "^7.1.4",
     "core-js": "^3.6.5",
     "js-brasil": "^2.6.1",

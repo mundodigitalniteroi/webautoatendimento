@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/services/javax.annotation.processing.Processor', 'META-INF/LICENSE', 'META-INF/NOTICE']
+        }
+    }
+    namespace 'br.com.patiosg.autoatendimento'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "br.com.patiosg.autoatendimento"
