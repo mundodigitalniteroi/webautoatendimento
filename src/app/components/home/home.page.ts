@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { AtendimentoService } from '../../services/atendimento/atendimento.service';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
-import { SumUp, SumUpKeys } from '@ionic-native/sum-up/ngx';
+import { SumUp } from '@awesome-cordova-plugins/sum-up/ngx';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +17,9 @@ export class HomePage implements OnInit {
   image;
   permissions = [this.diagnostic.permission.CAMERA, 'READ_MEDIA_IMAGES'];
   public sumupResult: any = {};
-  private access_token: string = "at_classic_X0IvZCeAXlJh1zwzcZ6rIpI7EvMCCJ6iVdQzoU1iir7I6bl20MBDY";
-  affiliateKey: string = "sup_afk_rvvWPzlqPXnfK1TLliCxWNSQxSrMVV8j";
-  private refresh_token: string = "rt_classic_s3e1mZCzmk1iPnOaz4Rv0mV5A9ZXMuugYsov3yyYuh992HnlVOn4s";
+  private access_token: string = 'at_classic_X0IvZCeAXlJh1zwzcZ6rIpI7EvMCCJ6iVdQzoU1iir7I6bl20MBDY';
+  affiliateKey: string = 'sup_afk_rvvWPzlqPXnfK1TLliCxWNSQxSrMVV8j';
+  private refresh_token: string = 'rt_classic_s3e1mZCzmk1iPnOaz4Rv0mV5A9ZXMuugYsov3yyYuh992HnlVOn4s';
 
   //scanOptions: DocumentScannerOptions;
   constructor(
@@ -51,8 +51,8 @@ export class HomePage implements OnInit {
 
   async login(): Promise<void> {
     try {
-      this.sumupResult = await this.sumUp.login({accessToken: '',affiliateKey: this.affiliateKey});
-      console.log("sumupResult",this.sumupResult);
+      this.sumupResult = await this.sumUp.login({ accessToken: '', affiliateKey: this.affiliateKey });
+      console.log('sumupResult', this.sumupResult);
     } catch (e) {
       this.sumupResult = e;
     }

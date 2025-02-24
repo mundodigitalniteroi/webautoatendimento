@@ -17,7 +17,7 @@ import { ConsultaState } from './state/consulta/consulta.state';
 
 import { environment } from 'src/environments/environment';
 import { APP_BASE_HREF } from '@angular/common';
-import { SumUp } from '@ionic-native/sum-up/ngx';
+import { SumUp } from '@awesome-cordova-plugins/sum-up/ngx';
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [AppComponent],

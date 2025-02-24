@@ -4,4 +4,5 @@
     <string name="title_activity_main">Auto Atendimento</string>
     <string name="package_name">br.com.patiosg.autoatendimento</string>
     <string name="custom_url_scheme">br.com.patiosg.autoatendimento</string>
+    <string name="SUMUP_API_KEY"></string>
 </resources>

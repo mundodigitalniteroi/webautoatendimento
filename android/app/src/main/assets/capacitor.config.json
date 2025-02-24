@@ -2,5 +2,10 @@
 	"appId": "br.com.patiosg.autoatendimento",
 	"appName": "Auto Atendimento",
 	"bundledWebRuntime": false,
-	"webDir": "www"
+	"webDir": "www",
+	"cordova": {
+		"preferences": {
+			"SUMUP_API_KEY": ""
+		}
+	}
 }
