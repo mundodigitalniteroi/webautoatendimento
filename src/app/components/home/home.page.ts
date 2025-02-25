@@ -58,6 +58,46 @@ export class HomePage implements OnInit {
     }
   }
 
+  async prepare(): Promise<void> {
+    try {
+      this.sumupResult = await this.sumUp.prepare();
+      console.log('sumupResult', this.sumupResult);
+    } catch (e) {
+      this.sumupResult = e;
+    }
+  }
+
+  async setup(): Promise<void> {
+    try {
+      this.sumupResult = await this.sumUp.prepare();
+      console.log('sumupResult', this.sumupResult);
+    } catch (e) {
+      console.log('sumupResultError', this.sumupResult);
+      this.sumupResult = e;
+    }
+  }
+
+
+
+  async settings(): Promise<void> {
+    try {
+      this.sumupResult = await this.sumUp.getSettings();
+      console.log('sumupResult', this.sumupResult);
+    } catch (e) {
+      this.sumupResult = e;
+    }
+  }
+
+  async pay(): Promise<void> {
+    try {
+      this.sumupResult = await this.sumUp.pay(10.01, 'Title', 'BRL');
+      console.log('sumupResult', this.sumupResult);
+    } catch (e) {
+      console.log('sumupResult', this.sumupResult);
+      this.sumupResult = e;
+    }
+  }
+
   hasPermission(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.diagnostic
