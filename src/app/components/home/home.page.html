@@ -24,14 +24,19 @@
         <h1 class="ion-text-center">Seja Bem-vindo</h1>
         <p class="ion-text-center">Escolha a opção desejada abaixo</p>
         <ion-button (click)="goPublicSearch()" class="btn-busca">Iniciar Auto Atendimento</ion-button>
-        <ion-button (click)="login()" class="btn-busca">Testar login</ion-button>
-        <ion-button (click)="pay()" class="btn-busca" color="warning">Testa Pagamento</ion-button>
-        <ion-button (click)="prepare()" class="btn-busca" color="warning">Teste Preparar</ion-button>
-        <ion-button (click)="setup()" class="btn-busca" color="warning">Teste Setup</ion-button>
-        <ion-button (click)="settings()" class="btn-busca" color="warning">Teste Settings</ion-button>
         <ion-button (click)="goQuery()" class="btn-busca" color="warning">Pagamento</ion-button>
         <ion-button [routerLink]="['/protocol']" class="btn-busca btn-consulta">Atendimento no Guichê</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <div class="custom-modal" *ngIf="modalPairingCode">
+    <div class="modal-content">
+      <h2>Digite o Código de Pareamento</h2>
+      <ion-item>
+        <ion-label position="floating">Pairing Code</ion-label>
+        <ion-input [(ngModel)]="pairingCode" type="text" placeholder="Ex.: DRZOCD0ZR"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="confirmPairingCode()" [disabled]="!pairingCode">Confirmar</ion-button>
+    </div>
+  </div>
 </ion-content>

@@ -22,49 +22,6 @@
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row class="input" size="12">
-            <ion-col size="12">
-                <p>Nome:</p>
-            </ion-col>
-            <ion-col>
-                <ion-item size="12" lines="none">
-                    <ion-input type="text" class="input-name" placeholder="Nome"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row class="input" size="12">
-            <ion-col size="12">
-                <p>Número:</p>
-            </ion-col>
-            <ion-col>
-                <ion-item size="12" lines="none">
-                    <ion-input type="text" class="input-name" placeholder="0000 0000 0000 0000"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row class="input-group" size="12">
-            <ion-col size="6">
-                <ion-col size="12">
-                    <p>Validade:</p>
-                </ion-col>
-                <ion-col>
-                    <ion-item size="12" lines="none">
-                        <ion-datetime displayFormat="MM/YY" placeholder="MM/AA"></ion-datetime>
-                    </ion-item>
-                </ion-col>
-            </ion-col>
-            <ion-col size="6">
-                <ion-col size="12">
-                    <p>CVC:</p>
-                </ion-col>
-                <ion-col>
-                    <ion-item size="12" lines="none">
-                        <ion-input type="password" placeholder="***" maxlength="3" minlength="1"></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-col>
-
-        </ion-row>
         <ng-template [ngIf]="credit == true">
             <ion-row class="all-width" >
                 <ion-col class="legend-parcelas" size="12">
@@ -72,7 +29,7 @@
                     <p>Você pode parcelar seu pagamento em até 12x no crédito</p>
                 </ion-col>
             </ion-row>
-            <ion-row  class="all-width" *ngFor="let item of parcelas" >
+            <ion-row  class="all-width" [class.selected]="item === parcelaSelecionada" *ngFor="let item of parcelas" (click)="selecionarParcela(item)">
                 <ion-col class="parcelas" size="9">
                     <h4><b>{{item.numeroParcelas}} {{item.valor}}</b></h4>
                     <p>Valor total: {{item.valorTotal}}</p>
@@ -81,7 +38,7 @@
                     <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
                 </ion-col>
             </ion-row>
-        <ion-button *ngIf="credit == true"   [routerLink]="['/payment-confirmed']" >Pagar</ion-button>
+        <ion-button *ngIf="credit == true" (click)="pay()" >Pagar</ion-button>
         <ion-button *ngIf="credit == true" fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
         </ng-template>
         <ng-template [ngIf]="debito == true">
@@ -100,7 +57,7 @@
                     <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
                 </ion-col>
             </ion-row>
-        <ion-button *ngIf="debito == true"   [routerLink]="['/payment-confirmed']" >Pagar</ion-button>
+        <ion-button *ngIf="debito == true" (click)="pay()" >Pagar</ion-button>
         <ion-button *ngIf="debito == true" fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
         </ng-template>
         

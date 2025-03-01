@@ -6,6 +6,12 @@ ion-grid {
 .row-title {
   width: 98%;
 }
+.selected {
+  background-color: #e0e0e0; /* Cor de fundo cinza claro para destacar */
+  /* Opcional: adiciona mais estilos para destacar */
+  border: 1px solid #3880ff; /* Borda azul opcional */
+  color: #000; /* Garante que o texto permaneça legível */
+}
 h1 {
   margin-top: 15%;
   color: rgb(22, 127, 247);

@@ -5,7 +5,8 @@ import { Store } from '@ngxs/store';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { AtendimentoService } from '../../services/atendimento/atendimento.service';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
-import { SumUp } from '@awesome-cordova-plugins/sum-up/ngx';
+import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +18,9 @@ export class HomePage implements OnInit {
   image;
   permissions = [this.diagnostic.permission.CAMERA, 'READ_MEDIA_IMAGES'];
   public sumupResult: any = {};
-  private access_token: string = 'at_classic_X0IvZCeAXlJh1zwzcZ6rIpI7EvMCCJ6iVdQzoU1iir7I6bl20MBDY';
-  affiliateKey: string = 'sup_afk_rvvWPzlqPXnfK1TLliCxWNSQxSrMVV8j';
-  private refresh_token: string = 'rt_classic_s3e1mZCzmk1iPnOaz4Rv0mV5A9ZXMuugYsov3yyYuh992HnlVOn4s';
+  authCode: string | null = null;
+  modalPairingCode: boolean = false;
+  pairingCode: string = '';
 
   //scanOptions: DocumentScannerOptions;
   constructor(
@@ -28,19 +29,34 @@ export class HomePage implements OnInit {
     private menu: MenuController,
     private atendimentoService: AtendimentoService,
     private diagnostic: Diagnostic,
-    private sumUp: SumUp
+    private sumupIntegracaoService: SumupIntegracaoService
   ) {
     this.hasPermission();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    App.addListener('appUrlOpen', (event) => {
+      const url = new URL(event.url);
+
+      // Verifica se o deep link é o esperado
+      console.log("Url", url)
+      if (url.host === 'callback' && url.protocol === 'sumupmobile:') {
+        this.authCode = url.searchParams.get('code');
+        const responseToken = this.sumupIntegracaoService.createToken({ grant_type: 'authorization_code', code: this.authCode })
+        localStorage.setItem('authModel', JSON.stringify(responseToken));
+        this.router.navigate(['/home']);
+      }
+    })
     this.options = this.store.selectSnapshot(AuthState.all);
   }
+
+
   goPublicSearch() {
     this.router.navigate(['/term-acception']);
   }
-  goQuery() {
-    this.router.navigate(['/query']);
+  async goQuery() {
+    await this.login()
+
   }
   fecharMenu() {
     this.menu.close();
@@ -49,54 +65,43 @@ export class HomePage implements OnInit {
     this.atendimentoService.emitInformations.next(true);
   }
 
-  async login(): Promise<void> {
+  async login() {
     try {
-      this.sumupResult = await this.sumUp.login({ accessToken: '', affiliateKey: this.affiliateKey });
-      console.log('sumupResult', this.sumupResult);
-    } catch (e) {
-      this.sumupResult = e;
+      // Se authModel não existe, inicia o fluxo de autorização
+      if (!localStorage.getItem('authModel')) {
+        this.sumupIntegracaoService.authorize();
+      }
+
+      // Se reader_id não existe, abre o modal
+      if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id')=== undefined) {
+        if (!this.modalPairingCode) {
+          this.modalPairingCode = true; // Abre o modal
+        }
+
+        // Após o modal ser confirmado, usa o pairingCode se disponível
+        if (this.pairingCode) {
+          const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode });
+          localStorage.setItem('reader_id', responseReader.id);
+          this.modalPairingCode = false; // Fecha o modal
+        } else {
+          throw new Error('Pairing code não foi fornecido');
+        }
+      }
+
+      // Após tudo configurado, navega para payment-card
+      this.router.navigate(['/query']);
+    } catch (error) {
+      console.error('Erro no login:', error);
     }
   }
 
-  async prepare(): Promise<void> {
-    try {
-      this.sumupResult = await this.sumUp.prepare();
-      console.log('sumupResult', this.sumupResult);
-    } catch (e) {
-      this.sumupResult = e;
-    }
-  }
-
-  async setup(): Promise<void> {
-    try {
-      this.sumupResult = await this.sumUp.prepare();
-      console.log('sumupResult', this.sumupResult);
-    } catch (e) {
-      console.log('sumupResultError', this.sumupResult);
-      this.sumupResult = e;
+  async confirmPairingCode() {
+    if (this.pairingCode) {
+      this.login(); // Chama login() para prosseguir com o pairingCode preenchido
     }
   }
 
 
-
-  async settings(): Promise<void> {
-    try {
-      this.sumupResult = await this.sumUp.getSettings();
-      console.log('sumupResult', this.sumupResult);
-    } catch (e) {
-      this.sumupResult = e;
-    }
-  }
-
-  async pay(): Promise<void> {
-    try {
-      this.sumupResult = await this.sumUp.pay(10.01, 'Title', 'BRL');
-      console.log('sumupResult', this.sumupResult);
-    } catch (e) {
-      console.log('sumupResult', this.sumupResult);
-      this.sumupResult = e;
-    }
-  }
 
   hasPermission(): Promise<any> {
     return new Promise((resolve, reject) => {
