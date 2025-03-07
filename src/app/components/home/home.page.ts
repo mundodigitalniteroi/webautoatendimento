@@ -89,7 +89,7 @@ export class HomePage implements OnInit {
       }
 
       // Após tudo configurado, navega para payment-card
-      this.router.navigate(['/query']);
+      this.router.navigate(['/payment-card']);
     } catch (error) {
       console.error('Erro no login:', error);
     }

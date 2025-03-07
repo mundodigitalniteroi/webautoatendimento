@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { Store } from '@ngxs/store';
+import { env } from 'process';
+import { Observable } from 'rxjs';
+import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +13,7 @@ import { Store } from '@ngxs/store';
 export class ConsultaDebitoService {
   private apiConsultaUrl = environment.urlApiDP;
   private apiDebitourl = environment.urlApiAtendimento;
+  private apiWebziPay = environment.urlApiWebziPay;
   headers: HttpHeaders;
   constructor(public http: HttpClient, private store: Store) {
     this.store.select(AuthState.token).subscribe((t) => {
@@ -59,6 +63,14 @@ export class ConsultaDebitoService {
         headers: this.headers,
       }
     );
+  }
+
+  consultarParcelamento(valor:number,op:number) : Observable<PlanoParcelamento[]>{
+    return this.http.get<PlanoParcelamento[]>(this.apiWebziPay+`/api/Simulacao?valor=${valor}&op=${op}`,{
+      headers: {
+        'Authorization':`Bearer ${token}` 
+      }
+    })
   }
 
   alterarPixEstatico(indentifadorFaturamento, identificadorUsuario) {

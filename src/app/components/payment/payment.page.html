@@ -8,39 +8,40 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class=" ion-justify-content-start ion-align-items-center" (mouseup)="line = true">
-             <ion-card > 
-                <ion-card >
-                <ion-card-content class="info " (click)="goPayment('card')">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/payment/cartao.png"></ion-img>
-                        <h3><b>Cartão</b></h3>
-                    </ion-item>
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-card>
-        <ion-card-content class="info" (click)="goPayment('pix')">
-          <ion-item lines="none" class="ion-text-start">
-            <ion-img src="../../../assets/payment/pix.png" width="40"></ion-img>
-            <h3><b>Pix</b></h3>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-    </ion-row>
-    <!-- <ion-row class="ion-justify-content-center ">
-            <ion-card> 
-                <ion-card-content class="info" (click)="goPayment('ticket')">
-                    <ion-item lines="none" class="ion-text-start">
-                        <ion-img src="../../../assets/payment/boleto.png" width="40"></ion-img>
-                        <h3><b>Boleto</b></h3>
-                    </ion-item>
-                </ion-card-content>
-            </ion-card>
-        </ion-row> -->
-    <ion-button fill="outline" [routerLink]="['/process-information']"
-      >Voltar</ion-button
-    >
-  </ion-grid>
-</ion-content>
+    <ion-row class=" ion-justify-content-start ion-align-items-center"
+      (mouseup)="line = true">
+        <ion-card>
+          <ion-card-content class="info " (click)="goPayment('card')">
+            <ion-item lines="none" class="ion-text-start">
+              <ion-img src="../../../assets/payment/cartao.png"></ion-img>
+              <h3><b>Cartão</b></h3>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-card>
+          <ion-card-content class="info" (click)="goPayment('pix')">
+            <ion-item lines="none" class="ion-text-start">
+              <ion-img src="../../../assets/payment/pix.png"
+                width="40"></ion-img>
+              <h3><b>Pix</b></h3>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <!-- <ion-row class="ion-justify-content-center ">
+        <ion-card>
+          <ion-card-content class="info" (click)="goPayment('ticket')">
+            <ion-item lines="none" class="ion-text-start">
+              <ion-img src="../../../assets/payment/boleto.png"
+                width="40"></ion-img>
+              <h3><b>Boleto</b></h3>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-row> -->
+      <ion-button fill="outline"
+        [routerLink]="['/process-information']">Voltar</ion-button>
+    </ion-grid>
+  </ion-content>

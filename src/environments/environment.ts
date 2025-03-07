@@ -2,6 +2,7 @@ export const environment = {
   production: false,
   urlApiAtendimento: 'https://localhost:7228',
   urlApiDP: 'https://localhost:7093',
+  urlApiWebziPay:'https://localhost:5001',
   urlApiSumup: 'https://api.sumup.com',
   merchantCode: 'MDEUZAGC',
   clientId: 'cc_classic_kWwcKzywkLEZcOM9yEOpSrExMnnQl',

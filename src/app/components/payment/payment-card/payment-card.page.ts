@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { CreateCheckoutRequest } from 'src/app/interfaces/sumup.interface';
 import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
+import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 
 interface Parcela {
   numeroParcelas: string;
@@ -17,8 +19,6 @@ interface Parcela {
 
 
 export class PaymentCardPage implements OnInit {
-
-
   credit = false;
   debito = false;
   data: CreateCheckoutRequest;
@@ -38,7 +38,11 @@ export class PaymentCardPage implements OnInit {
       { numeroParcelas: '1x', valor: 'R$ 410,00', valorTotal: 'R$ 410,00' },
     ]
 
-  constructor(private sumupIntegracaoService: SumupIntegracaoService) { }
+  constructor(private store: Store,private sumupIntegracaoService: SumupIntegracaoService) { }
+
+  ngOnInit(): void {
+    const informacaoDebito = this.store.selectSnapshot(state => state.consulta.informacaoDebito);
+  }
 
   parcelaSelecionada: Parcela = null; // Armazena o item selecionado
 
@@ -57,7 +61,8 @@ export class PaymentCardPage implements OnInit {
         },
         installments: Number(this.parcelaSelecionada.numeroParcelas.replace('x', '')),
         card_type: 'credit',
-        description: 'Pagamento'
+        description: 'Pagamento',
+        return_url: 'https://4f29-2804-d41-ab26-9900-f462-4f16-6010-6b29.ngrok-free.app/webhook'
       }
     }
     else if (this.debito) {
@@ -68,14 +73,17 @@ export class PaymentCardPage implements OnInit {
           minor_unit: 2
         },
         card_type: 'debit',
-        description: 'Pagamento'
+        description: 'Pagamento',
+        return_url:'https://4f29-2804-d41-ab26-9900-f462-4f16-6010-6b29.ngrok-free.app/webhook'
       }
     }
     const response = await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'))
+    if(response.data.client_transaction_id){
+
+    }
   }
 
-  ngOnInit(): void {
-  }
+  
   cardSelected(type) {
     if (type == 'credito') { this.credit = true; this.debito = false; }
     if (type == 'debito') { this.debito = true; this.credit = false; }

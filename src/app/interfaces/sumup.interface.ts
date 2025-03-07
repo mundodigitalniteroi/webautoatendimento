@@ -7,15 +7,11 @@ export interface CreateCheckoutRequest {
     installments?: number;
     card_type?: 'credit' | 'debit'
     description?: string;
+    return_url:string;
 }
 
 export interface CreateCheckoutResponse {
-    checkout_reference: string;
-    amount: number;
-    currency: string;
-    merchant_code: string;
-    status: string;
-    date: string;
+    data: {client_transaction_id:string}
 }
 
 export interface CreateReaderRequest {
