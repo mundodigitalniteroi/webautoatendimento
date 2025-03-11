@@ -7,6 +7,7 @@ import { AtendimentoService } from '../../services/atendimento/atendimento.servi
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
 import { App } from '@capacitor/app';
+import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class HomePage implements OnInit {
     private store: Store,
     private menu: MenuController,
     private atendimentoService: AtendimentoService,
+    private consultaDebitoService: ConsultaDebitoService,
     private diagnostic: Diagnostic,
     private sumupIntegracaoService: SumupIntegracaoService
   ) {
@@ -73,7 +75,7 @@ export class HomePage implements OnInit {
       }
 
       // Se reader_id não existe, abre o modal
-      if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id')=== undefined) {
+      if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
         if (!this.modalPairingCode) {
           this.modalPairingCode = true; // Abre o modal
         }
@@ -88,8 +90,20 @@ export class HomePage implements OnInit {
         }
       }
 
+      this.consultaDebitoService.loginWebziPay().subscribe(
+        token => {
+          console.log("authToken",token)
+          localStorage.setItem('authTokenParcelas', token);
+          // Use o token aqui
+        },
+        error => {
+          console.error('Erro ao fazer login:', error);
+        }
+      );
+
+
       // Após tudo configurado, navega para payment-card
-      this.router.navigate(['/payment-card']);
+      this.router.navigate(['/query']);
     } catch (error) {
       console.error('Erro no login:', error);
     }

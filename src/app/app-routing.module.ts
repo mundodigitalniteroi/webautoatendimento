@@ -46,6 +46,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'payment-wait',
+    loadChildren: () =>
+      import('./components/payment/payment-wait/payment-wait.module').then(
+        (m) => m.PaymentWaitPageModule
+      ),
+  },
+  {
     path: 'address',
     loadChildren: () =>
       import('./components/address/address.module').then(

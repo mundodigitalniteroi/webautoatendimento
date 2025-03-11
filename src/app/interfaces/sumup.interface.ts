@@ -7,7 +7,7 @@ export interface CreateCheckoutRequest {
     installments?: number;
     card_type?: 'credit' | 'debit'
     description?: string;
-    return_url:string;
+    return_url?:string;
 }
 
 export interface CreateCheckoutResponse {

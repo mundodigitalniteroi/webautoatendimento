@@ -29,10 +29,10 @@
                     <p>Você pode parcelar seu pagamento em até 12x no crédito</p>
                 </ion-col>
             </ion-row>
-            <ion-row  class="all-width" [class.selected]="item === parcelaSelecionada" *ngFor="let item of parcelas" (click)="selecionarParcela(item)">
+            <ion-row  class="all-width" [class.selected]="item === parcelaSelecionada" *ngFor="let item of parcelamentoDados" (click)="selecionarParcela(item)">
                 <ion-col class="parcelas" size="9">
-                    <h4><b>{{item.numeroParcelas}} {{item.valor}}</b></h4>
-                    <p>Valor total: {{item.valorTotal}}</p>
+                    <h4><b>{{item.parcela}}x {{item.valorMensal | currency}}</b></h4>
+                    <p>Valor total: {{item.valorTotal | currency}}</p>
                 </ion-col>
                 <ion-col class="check ion-justify-content-end ion-align-items-center " size="3">
                     <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
@@ -48,10 +48,10 @@
                     <p>Você pode parcelar seu pagamento em até 12x no crédito</p>
                 </ion-col>
             </ion-row>
-            <ion-row  class="all-width"  >
+            <ion-row  class="all-width selected"  >
                 <ion-col class="parcelas" size="9">
-                    <h4><b>{{parcelas[11].numeroParcelas}} {{parcelas[11].valor}}</b></h4>
-                    <p>Valor total: {{parcelas[11].valorTotal}}</p>
+                    <h4><b>{{parcelamentoDados[11].parcela}}x {{parcelamentoDados[11].valorMensal | currency}}</b></h4>
+                    <p>Valor total: {{parcelamentoDados[11].valorTotal | currency}}</p>
                 </ion-col>
                 <ion-col class="check ion-justify-content-end ion-align-items-center " size="3">
                     <ion-img src="../../../../assets/payment-card/check.png"></ion-img>

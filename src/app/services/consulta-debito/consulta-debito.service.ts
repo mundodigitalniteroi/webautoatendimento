@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { Store } from '@ngxs/store';
-import { env } from 'process';
 import { Observable } from 'rxjs';
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -58,17 +58,25 @@ export class ConsultaDebitoService {
   alterarBoleto(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
-        `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${1}`,
+      `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${1}`,
       {
         headers: this.headers,
       }
     );
   }
 
-  consultarParcelamento(valor:number,op:number) : Observable<PlanoParcelamento[]>{
-    return this.http.get<PlanoParcelamento[]>(this.apiWebziPay+`/api/Simulacao?valor=${valor}&op=${op}`,{
+  loginWebziPay() {
+    const requestBody = { login: 'eblonline', senha: '83XW8Rfr', provider: 'ApiService' };
+    return this.http.post(`${this.apiWebziPay}/api/Usuario/login`, requestBody)
+      .pipe(
+        map((response: any) => response.token) // Extrai o token da resposta
+      );
+  }
+
+  consultarParcelamento(valor: number, op: number,token:string): Observable<PlanoParcelamento[]> {
+    return this.http.get<PlanoParcelamento[]>(this.apiWebziPay + `/api/Simulacao?valor=${valor}&op=${op}`, {
       headers: {
-        'Authorization':`Bearer ${token}` 
+        'Authorization': `Bearer ${token}`
       }
     })
   }
@@ -76,7 +84,7 @@ export class ConsultaDebitoService {
   alterarPixEstatico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
-        `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${14}`,
+      `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${14}`,
       {
         headers: this.headers,
       }
@@ -86,7 +94,7 @@ export class ConsultaDebitoService {
   alterarPixDinamico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
-        `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${17}`,
+      `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${17}`,
       {
         headers: this.headers,
       }
@@ -104,7 +112,7 @@ export class ConsultaDebitoService {
   gerarPixEstatico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
-        `/api/banco/GerarPixEstatico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      `/api/banco/GerarPixEstatico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
       {
         headers: this.headers,
       }
@@ -114,7 +122,7 @@ export class ConsultaDebitoService {
   gerarPixDinamico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
-        `/api/banco/GerarPixDinamico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      `/api/banco/GerarPixDinamico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
       {
         headers: this.headers,
       }
@@ -124,7 +132,7 @@ export class ConsultaDebitoService {
   consultarPixDinamico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
-        `/api/banco/ConsultarPixDinamico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
+      `/api/banco/ConsultarPixDinamico?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,
       {
         headers: this.headers,
       }
