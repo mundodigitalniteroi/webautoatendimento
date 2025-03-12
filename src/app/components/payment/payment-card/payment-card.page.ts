@@ -6,6 +6,7 @@ import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 
 interface Parcela {
   numeroParcelas: string;
@@ -25,6 +26,7 @@ export class PaymentCardPage implements OnInit {
   data: CreateCheckoutRequest;
   informacaoDebito: any;
   parcelamentoDados: PlanoParcelamento[] = []
+  returnUrlPayment =  environment.urlReturnPayment;
   
 
   constructor(
@@ -60,7 +62,8 @@ export class PaymentCardPage implements OnInit {
         },
         installments: this.parcelaSelecionada.parcela,
         card_type: 'credit',
-        description: 'Pagamento'
+        description: 'Pagamento',
+        return_url: this.returnUrlPayment
       }
     }
     else if (this.debito) {
@@ -73,6 +76,7 @@ export class PaymentCardPage implements OnInit {
         },
         card_type: 'debit',
         description: 'Pagamento',
+        return_url: this.returnUrlPayment
       }
     }
     this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));

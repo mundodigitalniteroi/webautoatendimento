@@ -36,14 +36,13 @@ app.use(express.json());
 
 // Endpoint do webhook (return_url)
 app.post('/webhook', (req, res) => {
-  const { client_transaction_id, status, transaction_id } = req.body;
-  console.log('Webhook recebido:', { client_transaction_id, status, transaction_id });
+  const body = req.body;
+  console.log('Webhook recebido:', body);
 
   // Envia a notificação ao cliente conectado via WebSocket
   const client = clients.get(client_transaction_id);
   if (client && client.readyState === WebSocket.OPEN) {
-    client.send(JSON.stringify({ client_transaction_id, status, transaction_id }));
-    clients.delete(client_transaction_id); // Remove o cliente após enviar a notificação
+    client.send(JSON.stringify(body));
   } else {
     console.log('Nenhum cliente encontrado para client_transaction_id:', client_transaction_id);
   }
