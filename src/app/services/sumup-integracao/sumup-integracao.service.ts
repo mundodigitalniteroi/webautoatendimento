@@ -127,7 +127,7 @@ export class SumupIntegracaoService {
   }
 
   // POST /v0.1/merchants/{merchant_code}/readers/{reader_code}/checkout
-  async createCheckout(request: CreateCheckoutRequest, reader_code: string): Promise<CreateCheckoutResponse> {
+  async createCheckout(request: CreateCheckoutRequest, reader_code: string) {
     const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers/${reader_code}/checkout`;
     console.log('URL:', url);
   
@@ -136,36 +136,11 @@ export class SumupIntegracaoService {
       body: JSON.stringify(request),
     });
     const clientTransactionId = initialResponse.data.client_transaction_id; // Pega o client_transaction_id
+    localStorage.setItem('client_transaction_id', clientTransactionId);
     console.log('Checkout iniciado com client_transaction_id:', clientTransactionId);
   
-    // Integração com WebSocket
-    return new Promise((resolve, reject) => {
-      const ws = new WebSocket('ws://localhost:8080'); // Ajuste para sua URL WebSocket
-  
-      ws.onopen = () => {
-        console.log('Conectado ao WebSocket');
-        ws.send(JSON.stringify({ client_transaction_id: clientTransactionId })); // Envia o client_transaction_id
-      };
-  
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log('Resposta do WebSocket:', data);
-        if (data.client_transaction_id === clientTransactionId && data.status === 'SUCCESSFUL') {
-          ws.close();
-          resolve({ ...initialResponse, status: data.status, transaction_id: data.transaction_id });
-        }
-      };
-  
-      ws.onerror = (error) => {
-        console.error('Erro no WebSocket:', error);
-        ws.close();
-        reject(new Error('Erro na conexão WebSocket'));
-      };
-  
-      ws.onclose = () => {
-        console.log('WebSocket fechado');
-      };
-    });
+    // Integração com WebSocke
+    
   }
 
   // POST /v0.1/merchants/{merchant_code}/readers

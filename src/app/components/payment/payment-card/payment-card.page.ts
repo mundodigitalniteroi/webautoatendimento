@@ -7,6 +7,7 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { App } from '@capacitor/app';
 
 interface Parcela {
   numeroParcelas: string;
@@ -27,6 +28,7 @@ export class PaymentCardPage implements OnInit {
   informacaoDebito: any;
   parcelamentoDados: PlanoParcelamento[] = []
   returnUrlPayment =  environment.urlReturnPayment;
+  websocket: WebSocket;
   
 
   constructor(
@@ -43,6 +45,14 @@ export class PaymentCardPage implements OnInit {
     .consultarParcelamento(this.informacaoDebito.faturamento.valorFaturado, 1, localStorage.getItem('authTokenParcelas'))
     .subscribe((parcelas)=>{
       this.parcelamentoDados = parcelas;
+    })
+
+    App.addListener('appUrlOpen', (event) => {
+      const url = new URL(event.url);
+      console.log("Url", url)
+      if (url.host === 'payment-callback' && url.protocol === 'sumupmobile:') {
+        this.router.navigate(['/payment-confirmed']);
+      }
     })
   }
 
@@ -63,7 +73,7 @@ export class PaymentCardPage implements OnInit {
         installments: this.parcelaSelecionada.parcela,
         card_type: 'credit',
         description: 'Pagamento',
-        return_url: this.returnUrlPayment
+        return_url: `${this.returnUrlPayment}/webhook`
       }
     }
     else if (this.debito) {
@@ -76,17 +86,15 @@ export class PaymentCardPage implements OnInit {
         },
         card_type: 'debit',
         description: 'Pagamento',
-        return_url: this.returnUrlPayment
+        return_url: `${this.returnUrlPayment}/webhook`
       }
     }
-    this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
-    this.router.navigate(['/payment-wait'], { 
-      state: { 
-        parcelaSelecionada: this.parcelaSelecionada,
-        tipoPagamento: this.credit ? 'Crédito' : 'Débito'
-      } 
-    });
+    await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
+    
+    this.router.navigate(['/payment-wait']);
   }
+
+ 
 
 
   cardSelected(type) {

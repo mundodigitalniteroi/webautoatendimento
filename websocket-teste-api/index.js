@@ -13,10 +13,14 @@ wss.on('connection', (ws) => {
   console.log('Cliente conectado ao WebSocket');
 
   ws.on('message', (message) => {
-    const data = JSON.parse(message);
-    if (data.client_transaction_id) {
-      clients.set(data.client_transaction_id, ws); // Associa o cliente ao client_transaction_id
-      console.log(`Cliente registrado para client_transaction_id: ${data.client_transaction_id}`);
+    try {
+      const data = JSON.parse(message);
+      if (data.payload && data.payload.client_transaction_id) {
+        clients.set(data.payload.client_transaction_id, ws); // Associa o cliente ao client_transaction_id
+        console.log(`Cliente registrado para client_transaction_id: ${data.payload.client_transaction_id}`);
+      }
+    } catch (error) {
+      console.error('Erro ao processar mensagem do cliente:', error);
     }
   });
 
@@ -43,19 +47,37 @@ app.post('/webhook', (req, res) => {
 
   // Armazena o corpo completo do webhook
   values.push(body);
+  
+  // Verifica se há um clientTransactionId no payload
+  // if (payload && payload.clientTransactionId) {
+  //   const clientWs = clients.get(payload.clientTransactionId);
+    
+  //   if (clientWs && clientWs.readyState === WebSocket.OPEN) {
+  //     // Envia a notificação para o cliente específico
+  //     clientWs.send(JSON.stringify({
+  //       type: 'payment_update',
+  //       payload: {
+  //         clientTransactionId: payload.clientTransactionId,
+  //         status: payload.status,
+  //         message: payload.message || ''
+  //       }
+  //     }));
+  //     console.log(`Notificação enviada para o cliente com ID: ${payload.client_transaction_id}`);
+  //   } else {
+  //     console.log(`Cliente com ID ${payload.client_transaction_id} não encontrado ou desconectado`);
+  //   }
+  // }
 
-  // Envia a notificação ao cliente conectado via WebSocket
-  const clientTransactionId = payload.client_transaction_id;
-  const client = clients.get(clientTransactionId);
-  if (client && client.readyState === WebSocket.OPEN) {
-    client.send(JSON.stringify(body)); // Envia o corpo completo do webhook
-    console.log(`Notificação enviada para client_transaction_id: ${clientTransactionId}`);
+  if(payload && payload.status === 'successful') {
+    const deeplinkUrl = `sumupmobile://payment-callback`;
+    console.log(`Redirecionando para deeplink: ${deeplinkUrl}`);
+    
+    // Responde com um redirecionamento para o deeplink
+    res.redirect(deeplinkUrl);
   } else {
-    console.log('Nenhum cliente encontrado para client_transaction_id:', clientTransactionId);
+    // Responde com status 200 para confirmar recebimento
+    res.status(200).json({ message: 'Webhook recebido com sucesso' });
   }
-
-  // Responde ao webhook com status 200
-  res.status(200).send({ message: 'Webhook recebido com sucesso' });
 });
 
 // Endpoint GET para recuperar todos os webhooks

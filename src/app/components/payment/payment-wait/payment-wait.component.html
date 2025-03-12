@@ -1,25 +1,7 @@
 <div class="payment-confirmation">
-  <h1>Para continuar faça o pagamento no leitor!</h1>
+  <h1>Insira o cartão no leitor e aguarde a confirmação do pagamento!</h1>
   
-  <div class="payment-details">
-    <h2>Detalhes do Pagamento</h2>
-    <div class="detail-item">
-      <span>Forma de Pagamento:</span>
-      <span>{{ tipoPagamento }}</span>
-    </div>
-    <div class="detail-item">
-      <span>Valor da Parcela:</span>
-      <span>R$ {{ parcelaSelecionada?.valorMensal?.toFixed(2) }}</span>
-    </div>
-    <div class="detail-item" *ngIf="tipoPagamento === 'Crédito'">
-      <span>Número de Parcelas:</span>
-      <span>{{ parcelaSelecionada?.parcela }}x</span>
-    </div>
-    <div class="detail-item">
-      <span>Valor Total:</span>
-      <span>R$ {{ parcelaSelecionada?.valorTotal?.toFixed(2) }}</span>
-    </div>
-  </div>
+  <div class="loader"></div>
 
   <button (click)="goToHome()">Voltar para a página inicial</button>
 </div>
