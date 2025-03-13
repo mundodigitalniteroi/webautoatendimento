@@ -1,4 +1,10 @@
 <ion-content [fullscreen]="true">
+    <!-- Loading overlay -->
+    <div class="loading-overlay" *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+        <p class="loading-text">Insira o cartão no leitor!</p>
+    </div>
+
     <ion-grid class=" ion-align-items-center ion-justify-content-center">
         <ion-row class=" row-title ion-justify-content-start ion-align-items-center">
             <ion-col>
@@ -38,8 +44,10 @@
                     <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
                 </ion-col>
             </ion-row>
-        <ion-button *ngIf="credit == true" (click)="pay()" >Pagar</ion-button>
-        <ion-button *ngIf="credit == true" fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
+        <ion-button *ngIf="credit == true" (click)="pay()" [disabled]="isLoading || !parcelaSelecionada">
+            {{ isLoading ? 'Processando...' : 'Pagar' }}
+        </ion-button>
+        <ion-button *ngIf="credit == true" fill="outline" class="back" [routerLink]="['/payment']" [disabled]="isLoading">Voltar</ion-button>
         </ng-template>
         <ng-template [ngIf]="debito == true">
             <ion-row class="all-width" >
@@ -57,12 +65,14 @@
                     <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
                 </ion-col>
             </ion-row>
-        <ion-button *ngIf="debito == true" (click)="pay()" >Pagar</ion-button>
-        <ion-button *ngIf="debito == true" fill="outline" class="back" [routerLink]="['/payment']">Voltar</ion-button>
+        <ion-button *ngIf="debito == true" (click)="pay()" [disabled]="isLoading">
+            {{ isLoading ? 'Processando...' : 'Pagar' }}
+        </ion-button>
+        <ion-button *ngIf="debito == true" fill="outline" class="back" [routerLink]="['/payment']" [disabled]="isLoading">Voltar</ion-button>
         </ng-template>
         
         
         
-        <ion-button fill="outline" [routerLink]="['/payment']" *ngIf="credit == false && debito == false">Voltar</ion-button>
+        <ion-button fill="outline" [routerLink]="['/payment']" *ngIf="credit == false && debito == false" [disabled]="isLoading">Voltar</ion-button>
     </ion-grid>
 </ion-content>

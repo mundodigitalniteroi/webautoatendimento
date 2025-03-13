@@ -29,6 +29,7 @@ export class PaymentCardPage implements OnInit {
   parcelamentoDados: PlanoParcelamento[] = []
   returnUrlPayment =  environment.urlReturnPayment;
   websocket: WebSocket;
+  isLoading = false;
   
 
   constructor(
@@ -63,6 +64,8 @@ export class PaymentCardPage implements OnInit {
   }
 
   async pay() {
+    this.isLoading = true;
+    
     if (this.credit) {
       this.data = {
         total_amount: {
@@ -89,9 +92,20 @@ export class PaymentCardPage implements OnInit {
         return_url: `${this.returnUrlPayment}/webhook`
       }
     }
-    await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
     
-    this.router.navigate(['/payment-wait']);
+    try {
+      const response = await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
+      
+      if (response && response.currentStatus === "SUCCESSFUL") {
+        this.router.navigate(['/payment-confirmed']);
+      } else {
+        console.log('Payment status:', response?.currentStatus);
+      }
+    } catch (error) {
+      console.error('Error during payment:', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
  

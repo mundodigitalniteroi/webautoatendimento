@@ -22,7 +22,7 @@ export class SumupIntegracaoService {
   private clientSecret = environment.clientSecret;
   private redirectUri = environment.redirectUri;
   private merchantCode = environment.merchantCode;
-
+  private urlReturnPayment = environment.urlReturnPayment;
   constructor(private inAppBrowser: InAppBrowser) {}
 
   // Obtém o token de autorização do localStorage
@@ -126,6 +126,8 @@ export class SumupIntegracaoService {
     });
   }
 
+
+
   // POST /v0.1/merchants/{merchant_code}/readers/{reader_code}/checkout
   async createCheckout(request: CreateCheckoutRequest, reader_code: string) {
     const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers/${reader_code}/checkout`;
@@ -135,11 +137,33 @@ export class SumupIntegracaoService {
       method: 'POST',
       body: JSON.stringify(request),
     });
-    const clientTransactionId = initialResponse.data.client_transaction_id; // Pega o client_transaction_id
+    const clientTransactionId = initialResponse.data.client_transaction_id;
+    const authModel = JSON.parse(localStorage.getItem('authModel') || '{}');
+    const returnPaymentBody = {
+      transactionId: clientTransactionId,
+      token: authModel.access_token 
+    };
+    
+    try {
+      const response = await fetch(this.urlReturnPayment, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(returnPaymentBody),
+      });
+      
+      if (!response.ok) {
+        console.error(`Erro na requisição de retorno: ${response.status} - ${response.statusText}`);
+      } else {
+        const data = await response.json();
+        console.log('Resposta do webhook de retorno:', data);
+        return data;
+      }
+    } catch (error) {
+      console.error('Erro ao chamar webhook de retorno:', error);
+    }
     localStorage.setItem('client_transaction_id', clientTransactionId);
-    console.log('Checkout iniciado com client_transaction_id:', clientTransactionId);
-  
-    // Integração com WebSocke
     
   }
 

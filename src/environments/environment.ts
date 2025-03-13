@@ -4,6 +4,7 @@ export const environment = {
   urlApiDP: 'https://localhost:7093',
   urlApiWebziPay:'https://localhost:5001',
   urlApiSumup: 'https://api.sumup.com',
+  urlReturnPayment: 'https://localhost:7233/api/webhook/check-transaction',
   merchantCode: 'MDEUZAGC',
   clientId: 'cc_classic_kWwcKzywkLEZcOM9yEOpSrExMnnQl',
   clientSecret: 'cc_sk_classic_DcA8vQSX6ByHRLjBgsgPTDwkaF4YdaeWOm4Zvh0XG99N6Jp5IF',
