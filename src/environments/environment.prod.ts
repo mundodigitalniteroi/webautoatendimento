@@ -5,7 +5,7 @@ export const environment = {
   urlApiSumup: 'https://api.sumup.com',
   urlApiWebziPay:'https://api.webzi.com.br',
   merchantCode: 'MDEUZAGC',
-  urlReturnPayment: 'https://5b45-177-12-8-37.ngrok-free.app/api/webhook/check-transaction',
+  urlReturnPayment: 'https://3085-2804-d41-ab26-9900-a8f9-a2b6-8838-f8d0.ngrok-free.app/api/sumupwebhook',
   clientId: 'cc_classic_kWwcKzywkLEZcOM9yEOpSrExMnnQl',
   clientSecret: 'cc_sk_classic_WHizzlncLknRFfNnRHFEukUuwX9j6xD2BMqqcyS3R6RNNuU7p8',
   afilliateKey: 'sup_afk_Ra3JUSxHPT7JQ2xcQpZaB4dp9BTElg93',

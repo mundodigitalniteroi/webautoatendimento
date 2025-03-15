@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { environment } from 'src/environments/environment.prod';
 import * as signalR from '@microsoft/signalr';
+import { SignalRService } from 'src/app/services/signalr/signalr.service';
 
 @Component({
   selector: 'app-payment-wait',
@@ -14,20 +15,25 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   transactionId: string;
   urlReturnPayment = environment.urlReturnPayment;
 
-  constructor(private router: Router) {
-    this.transactionId = localStorage.getItem('current_transaction_id');
+  constructor(private signalRService: SignalRService, private router: Router) {
   }
 
   ngOnInit() {
+    this.signalRService.paymentStatus$.subscribe((payload) => {
+      console.log("payload", payload.status)
+      if (payload.status.toLowerCase() === 'successful') {
+        this.router.navigate(['/payment-confirmed']);
+      }
+    })
   }
 
   ngOnDestroy() {
-    
+
   }
 
- 
 
-  
+
+
 
   goToHome() {
     this.router.navigate(['/home']);

@@ -138,31 +138,6 @@ export class SumupIntegracaoService {
       body: JSON.stringify(request),
     });
     const clientTransactionId = initialResponse.data.client_transaction_id;
-    const authModel = JSON.parse(localStorage.getItem('authModel') || '{}');
-    const returnPaymentBody = {
-      transactionId: clientTransactionId,
-      token: authModel.access_token 
-    };
-    
-    try {
-      const response = await fetch(this.urlReturnPayment, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnPaymentBody),
-      });
-      
-      if (!response.ok) {
-        console.error(`Erro na requisição de retorno: ${response.status} - ${response.statusText}`);
-      } else {
-        const data = await response.json();
-        console.log('Resposta do webhook de retorno:', data);
-        return data;
-      }
-    } catch (error) {
-      console.error('Erro ao chamar webhook de retorno:', error);
-    }
     localStorage.setItem('client_transaction_id', clientTransactionId);
     
   }

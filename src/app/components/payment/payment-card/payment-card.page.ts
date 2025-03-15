@@ -48,13 +48,7 @@ export class PaymentCardPage implements OnInit {
       this.parcelamentoDados = parcelas;
     })
 
-    App.addListener('appUrlOpen', (event) => {
-      const url = new URL(event.url);
-      console.log("Url", url)
-      if (url.host === 'payment-callback' && url.protocol === 'sumupmobile:') {
-        this.router.navigate(['/payment-confirmed']);
-      }
-    })
+    
   }
 
   parcelaSelecionada: PlanoParcelamento = null; // Armazena o item selecionado
@@ -76,7 +70,7 @@ export class PaymentCardPage implements OnInit {
         installments: this.parcelaSelecionada.parcela,
         card_type: 'credit',
         description: 'Pagamento',
-        return_url: `${this.returnUrlPayment}/webhook`
+        return_url: `${this.returnUrlPayment}`
       }
     }
     else if (this.debito) {
@@ -89,18 +83,13 @@ export class PaymentCardPage implements OnInit {
         },
         card_type: 'debit',
         description: 'Pagamento',
-        return_url: `${this.returnUrlPayment}/webhook`
+        return_url: `${this.returnUrlPayment}`
       }
     }
     
     try {
-      const response = await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
-      
-      if (response && response.currentStatus === "SUCCESSFUL") {
-        this.router.navigate(['/payment-confirmed']);
-      } else {
-        console.log('Payment status:', response?.currentStatus);
-      }
+      await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
+      this.router.navigate(['/payment-wait']);
     } catch (error) {
       console.error('Error during payment:', error);
     } finally {

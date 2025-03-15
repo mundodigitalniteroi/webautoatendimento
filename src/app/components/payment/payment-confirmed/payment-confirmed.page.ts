@@ -19,8 +19,11 @@ export class PaymentConfirmedPage implements OnInit {
     this.identificadorProcesso = this.optionsConsulta.informacoesConsulta.veiculo.identificadorProcesso;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  imprimirComprovante() {
+    this.imprimindo = true;
+  }
   imprimirGuia() {
     this.imprimindo = true;
     this.service.guiaLiberacao(this.identificadorProcesso).subscribe(

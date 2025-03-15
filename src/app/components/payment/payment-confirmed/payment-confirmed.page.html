@@ -1,30 +1,43 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="payment-confirmed-page">
   <app-toolbar></app-toolbar>
 
-  <ion-grid class="ion-align-items-center ion-justify-content-center">
-    <ion-row class="row-title ion-justify-content-start ion-align-items-end">
-      <ion-col class="ion-text-center ion-justify-content-center">
-        <ion-img src="../../../../assets/payment-confirmed/check.png"></ion-img>
-        <h1><b>Pagamento confirmado!</b></h1>
-        <p>Imprima sua guia de liberação para retirar o seu veículo!</p>
-      </ion-col>
-    </ion-row>
-    <ion-row class="row-button ion-justify-content-start ion-align-items-center">
-      <ion-col class="ion-text-center">
-        <ion-button fill="clear" (click)="imprimirGuia()">Imprimir Guia de Liberação</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <div class="loading" *ngIf="imprimindo">
-    <div class="lds-roller">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+  <div class="success-container">
+    <div class="success-animation">
+      <ion-img src="../../../../assets/payment-confirmed/check.png" class="success-icon"></ion-img>
+      <div class="success-circle"></div>
+    </div>
+    
+    <div class="success-message">
+      <h1>Pagamento confirmado!</h1>
+      <p>Seu pagamento foi processado com sucesso. Agora você pode retirar seu veículo.</p>
+    </div>
+    
+    <div class="action-container">
+      <ion-button expand="block" class="print-button" (click)="imprimirGuia()">
+        <ion-icon name="print-outline" slot="start"></ion-icon>
+        Imprimir Guia de Liberação
+      </ion-button>
+
+      <ion-button expand="block" class="print-button" (click)="imprimirComprovante()">
+        <ion-icon name="print-outline" slot="start"></ion-icon>
+        Imprimir Comprovante
+      </ion-button>
+
+
+      <ion-button expand="block" fill="outline" class="home-button" routerLink="/home">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        Voltar ao Início
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="loading-overlay" *ngIf="imprimindo">
+    <div class="loading-content">
+      <div class="lds-roller">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <p>Preparando sua guia de liberação...</p>
     </div>
   </div>
 </ion-content>
