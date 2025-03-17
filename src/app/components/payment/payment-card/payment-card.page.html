@@ -16,14 +16,7 @@
                     <ion-img src="../../../../assets/payment-card/credito-branco.png" *ngIf="credit == true"></ion-img>
                     <p>Crédito</p>
                 </ion-item>
-            </ion-col>
-            <ion-col size="6"  [ngClass]="{'debito-blue': debito  }">
-                <ion-item (click)="cardSelected('debito')" lines="none">
-                    <ion-img src="../../../../assets/payment-card/debito.png" *ngIf="debito == false"></ion-img>
-                    <ion-img src="../../../../assets/payment-card/debito-branco.png" *ngIf="debito == true"></ion-img>
-                    <p>Débito</p>
-                </ion-item>
-            </ion-col>
+            </ion-col>           
         </ion-row>
         <ng-template [ngIf]="credit == true">
             <ion-row class="all-width" >
@@ -45,28 +38,7 @@
             {{ isLoading ? 'Processando...' : 'Pagar' }}
         </ion-button>
         <ion-button *ngIf="credit == true" fill="outline" class="back" [routerLink]="['/payment']" [disabled]="isLoading">Voltar</ion-button>
-        </ng-template>
-        <ng-template [ngIf]="debito == true">
-            <ion-row class="all-width" >
-                <ion-col class="legend-parcelas" size="12">
-                    <h4><b>Escolha o número de parcelas</b></h4>
-                    <p>Você pode parcelar seu pagamento em até 12x no crédito</p>
-                </ion-col>
-            </ion-row>
-            <ion-row  class="all-width selected"  >
-                <ion-col class="parcelas" size="9">
-                    <h4><b>{{parcelamentoDados[11].parcela}}x {{parcelamentoDados[11].valorMensal | currency}}</b></h4>
-                    <p>Valor total: {{parcelamentoDados[11].valorTotal | currency}}</p>
-                </ion-col>
-                <ion-col class="check ion-justify-content-end ion-align-items-center " size="3">
-                    <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
-                </ion-col>
-            </ion-row>
-        <ion-button *ngIf="debito == true" (click)="pay()" [disabled]="isLoading">
-            {{ isLoading ? 'Processando...' : 'Pagar' }}
-        </ion-button>
-        <ion-button *ngIf="debito == true" fill="outline" class="back" [routerLink]="['/payment']" [disabled]="isLoading">Voltar</ion-button>
-        </ng-template>
+        </ng-template>       
         
         
         

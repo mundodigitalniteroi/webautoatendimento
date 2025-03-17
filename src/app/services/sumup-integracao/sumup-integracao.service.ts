@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Comprovante } from 'src/app/interfaces/comprovante.interface';
 import {
   AuthorizeRequest,
   CreateCheckoutRequest,
@@ -139,6 +140,7 @@ export class SumupIntegracaoService {
     });
     const clientTransactionId = initialResponse.data.client_transaction_id;
     localStorage.setItem('client_transaction_id', clientTransactionId);
+    return clientTransactionId;
     
   }
 
@@ -157,12 +159,30 @@ export class SumupIntegracaoService {
   }
 
   // GET /v0.1/transactions/{transaction_id}
-  async getTransaction(transactionId: string): Promise<GetTransactionResponse> {
-    const url = `${this.baseUrl}/v0.1/transactions/${transactionId}`;
+  async getTransaction(transactionId: string) {
+    const url = `${this.baseUrl}/v2.1/merchants/${this.merchantCode}/transactions?client_transaction_id=${transactionId}`;
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'GET',
     });
-    return data;
+    const comprovante: Comprovante = {
+      card: {
+        last_4_digits: data.payment_instrument?.last_4_digits || '',
+        type: data.payment_instrument?.type || '',
+      },
+      id: data.id || '',
+      amount: data.amount || 0,
+      process_as: data.payment_type || '',
+      products: data.products?.map(product => ({
+        name: product.name || '',
+        quantity: product.quantity || 1,
+        total_price: product.price || 0
+      })) || [],
+      installments_count: data.installments_count || 1,
+      local_time: new Date(data.timestamp || Date.now()),
+      transaction_code: data.transaction_code || transactionId
+    };
+    
+    return comprovante;
   }
 
   // GET /v0.1/transactions

@@ -115,6 +115,10 @@ export class HomePage implements OnInit {
     }
   }
 
+  goConfirmation(){
+    this.router.navigate(['/payment-confirmed']);
+  }
+
 
 
   hasPermission(): Promise<any> {

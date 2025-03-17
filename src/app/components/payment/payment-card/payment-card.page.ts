@@ -8,6 +8,7 @@ import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { App } from '@capacitor/app';
+import { SignalRService } from 'src/app/services/signalr/signalr.service';
 
 interface Parcela {
   numeroParcelas: string;
@@ -27,7 +28,7 @@ export class PaymentCardPage implements OnInit {
   data: CreateCheckoutRequest;
   informacaoDebito: any;
   parcelamentoDados: PlanoParcelamento[] = []
-  returnUrlPayment =  environment.urlReturnPayment;
+  returnUrlPayment =  environment.urlApiAtendimento;
   websocket: WebSocket;
   isLoading = false;
   
@@ -35,6 +36,7 @@ export class PaymentCardPage implements OnInit {
   constructor(
     private store: Store, 
     private sumupIntegracaoService: SumupIntegracaoService, 
+    private signalR:SignalRService,
     private consultaDebitoService: ConsultaDebitoService,
     private router: Router
   ) { }
@@ -70,25 +72,13 @@ export class PaymentCardPage implements OnInit {
         installments: this.parcelaSelecionada.parcela,
         card_type: 'credit',
         description: 'Pagamento',
-        return_url: `${this.returnUrlPayment}`
+        return_url: `${this.returnUrlPayment}/sumupwebhook`
       }
-    }
-    else if (this.debito) {
-      this.parcelaSelecionada = this.parcelamentoDados[11]
-      this.data = {
-        total_amount: {
-          value: Math.trunc(this.parcelaSelecionada.valorMensal * 100),
-          currency: 'BRL',
-          minor_unit: 2
-        },
-        card_type: 'debit',
-        description: 'Pagamento',
-        return_url: `${this.returnUrlPayment}`
-      }
-    }
+    }    
     
     try {
-      await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
+      const response = await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
+      this.signalR.receivePayment(response);
       this.router.navigate(['/payment-wait']);
     } catch (error) {
       console.error('Error during payment:', error);

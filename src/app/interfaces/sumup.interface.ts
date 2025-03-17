@@ -83,3 +83,4 @@ export interface AuthorizeRequest {
 export interface AuthorizeResponse {
     code: string;
 }
+

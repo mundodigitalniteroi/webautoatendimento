@@ -11,6 +11,7 @@ import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Util } from '../util/util.service';
+import { Comprovante } from 'src/app/interfaces/comprovante.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class PrintService {
     private storage: Storage,
     private diagnostic: Diagnostic,
     private store: Store
-  ) {}
+  ) { }
 
   searchBluetoothPrinter() {
     return this.btSerial.list();
@@ -141,6 +142,76 @@ export class PrintService {
 
       this.printData(encoder.encode());
     };
+  }
+
+  async printComprovante(dados: Comprovante) {
+    const printer = await this.storage.get('printer');
+    const encoder = new EscPosEncoder();
+    const img = new Image();
+    img.src = '/assets/login/logo_patiosg_320.png';
+    img.crossOrigin = 'Anonymous';
+
+    // Format amount to currency (R$)
+    const formattedAmount = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(dados.amount);
+
+    img.onload = () => {
+      encoder
+        .initialize()
+        .align('center')
+        .image(img, 320, 80, 'atkinson', 256)
+        .size('normal')
+        .bold()
+        .line('COMPROVANTE DE PAGAMENTO')
+        .bold(false)
+        .newline()
+        .align('left')
+        .line('================================================')
+        .newline()
+        .line(this.printLine('Data:', moment(dados.local_time).format('DD/MM/YYYY')))
+        .line(this.printLine('Hora:', moment(dados.local_time).format('HH:mm')))
+        .line(this.printLine('Transação:', dados.id))
+        .line(this.printLine('NSU:', dados.transaction_code))
+        .newline()
+        .line('------------------------------------------------')
+        .bold()
+        .line(this.printLine('Valor Total:', formattedAmount))
+        .bold(false)
+        .line('------------------------------------------------')
+        .newline()
+        .line('FORMA DE PAGAMENTO')
+        .line(this.printLine('Tipo:', dados.process_as))
+        .line(this.printLine('Cartão:', `**** **** **** ${dados.card.last_4_digits}`))
+        .line(this.printLine('Parcelas:', dados.installments_count.toString()))
+        .newline()
+        .line('PRODUTOS')
+        .newline();
+
+      // Print each product with its details
+      dados.products.forEach(product => {
+        encoder
+          .line(`${product.name}`)
+          .line(`${product.quantity}x R$ ${product.total_price / product.quantity} = R$ ${product.total_price}`)
+          .newline();
+      });
+
+      encoder
+        .line('================================================')
+        .newline()
+        .align('center')
+        .line('* GUARDE SEU COMPROVANTE *')
+        .newline()
+        .newline()
+        .newline();
+    }
+
+    if (printer && printer.usarGuilhotina) {
+      encoder.cut('partial');
+    }
+
+    this.printData(encoder.encode());
   }
 
   async printGuiaLiberacao(dados: any) {

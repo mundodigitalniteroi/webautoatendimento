@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Subject } from 'rxjs';
 export class SignalRService {
   private hubConnection: signalR.HubConnection;
   public paymentStatus$ = new Subject<{ status: string }>();
+  private urlHub = environment.urlApiAtendimento;
   private reconnecting = false; // Flag para evitar reconexões simultâneas
   private readonly reconnectInterval = 5000; // Intervalo de reconexão em milissegundos (5 segundos)
 
@@ -17,56 +19,33 @@ export class SignalRService {
 
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://3085-2804-d41-ab26-9900-a8f9-a2b6-8838-f8d0.ngrok-free.app/paymentHub', {
+      .withUrl(`${this.urlHub}/paymentHub`, {
         transport: signalR.HttpTransportType.WebSockets,
         skipNegotiation: true
       })
+      .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Conexão SignalR estabelecida');
-        this.reconnecting = false; // Reseta a flag ao conectar com sucesso
       })
       .catch(err => console.error('Erro ao conectar ao SignalR:', err));
 
-    this.hubConnection.on('ReceivePaymentStatus', (status: string) => {
+    this.hubConnection.on('ReceivePayment', (status: string) => {
       console.log('Status:', status);
       this.paymentStatus$.next({ status });
     });
 
     // Detecta o fechamento da conexão e tenta reconectar
     this.hubConnection.onclose((error) => {
-      console.error('Conexão SignalR fechada:', error || 'Desconexão detectada');
-      this.attemptReconnect();
+      this.startConnection()
     });
   }
 
-  private attemptReconnect() {
-    if (this.reconnecting) {
-      console.log('Reconexão já em andamento, ignorando nova tentativa');
-      return;
-    }
-
-    this.reconnecting = true;
-    console.log('Tentando reconectar ao SignalR...');
-
-    const reconnect = () => {
-      this.hubConnection
-        .start()
-        .then(() => {
-          console.log('Reconexão SignalR bem-sucedida');
-          this.reconnecting = false;
-        })
-        .catch(err => {
-          console.error('Erro ao reconectar ao SignalR:', err);
-          setTimeout(reconnect, this.reconnectInterval); // Tenta novamente após o intervalo
-        });
-    };
-
-    setTimeout(reconnect, this.reconnectInterval); // Inicia a tentativa de reconexão após o intervalo
+  receivePayment(client_transaction_id: string) {
+    this.hubConnection.invoke('ReceivePayment', client_transaction_id).then((data) => console.log("data", data)).catch((err) => console.error(err));
   }
 
 }

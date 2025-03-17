@@ -13,7 +13,7 @@ import { SignalRService } from 'src/app/services/signalr/signalr.service';
 export class PaymentWaitComponent implements OnInit, OnDestroy {
   parcelaSelecionada: PlanoParcelamento;
   transactionId: string;
-  urlReturnPayment = environment.urlReturnPayment;
+  urlReturnPayment = environment.urlApiAtendimento;
 
   constructor(private signalRService: SignalRService, private router: Router) {
   }
