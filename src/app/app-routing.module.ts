@@ -116,9 +116,7 @@ const routes: Routes = [
   {
     path: 'payment-confirmed',
     loadChildren: () =>
-      import(
-        './components/payment/payment-confirmed/payment-confirmed.module'
-      ).then((m) => m.PaymentConfirmedPageModule),
+      import('./components/payment/payment-confirmed/payment-confirmed.module').then((m) => m.PaymentConfirmedPageModule),
   },
   {
     path: 'schedule-shipping',

@@ -32,6 +32,7 @@ export class PrintService {
   }
 
   connectToBluetoothPrinter(macAddress) {
+    console.log("macAddress", macAddress);
     return this.btSerial.connect(macAddress);
   }
 
@@ -76,19 +77,40 @@ export class PrintService {
   }
 
   printData(data: any) {
+    console.log("dataAfterPrinter", data);
     this.storage.get('printer').then((p) => {
+      console.log("p", p);
       this.connectToBluetoothPrinter(p.printer).subscribe(
-        (_) => {
-          this.btSerial.write(data).then(
-            (_) => {
-              this.disconnectBluetoothPrinter();
-            },
-            (err) => {
-              this.toast('Erro ao imprimir o comprovante');
+        async (_) => {
+          console.log("dataPrinter", data);
+          try {
+            // Divide os dados em chunks menores (4096 bytes cada)
+            const chunkSize = 4096;
+            const dataArray = new Uint8Array(data);
+            
+            for (let i = 0; i < dataArray.length; i += chunkSize) {
+              const chunk = dataArray.slice(i, i + chunkSize);
+              await this.btSerial.write(chunk);
+              // Pequeno delay entre os chunks para dar tempo da impressora processar
+              await new Promise(resolve => setTimeout(resolve, 250));
             }
-          );
+
+            // Adiciona um delay final para garantir que tudo foi impresso
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Envia comando de fim de impressão
+            await this.btSerial.write(new Uint8Array([0x0A, 0x0A, 0x0A, 0x0A]));
+            
+            // Desconecta após garantir que tudo foi impresso
+            await this.disconnectBluetoothPrinter();
+          } catch (err) {
+            console.log("err", err);
+            this.toast('Erro ao imprimir o comprovante');
+            await this.disconnectBluetoothPrinter();
+          }
         },
         (err) => {
+          console.log("Erro de conexão:", err);
           this.toast('Erro ao conectar a impressora');
         }
       );
@@ -146,72 +168,80 @@ export class PrintService {
 
   async printComprovante(dados: Comprovante) {
     const printer = await this.storage.get('printer');
+    console.log("printer", printer);
     const encoder = new EscPosEncoder();
     const img = new Image();
     img.src = '/assets/login/logo_patiosg_320.png';
     img.crossOrigin = 'Anonymous';
 
-    // Format amount to currency (R$)
-    const formattedAmount = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(dados.amount);
+    // Retorna uma Promise para garantir que a imagem seja carregada
+    return new Promise((resolve, reject) => {
+      img.onload = async () => {
+        try {
+          encoder
+            .initialize()
+            .align('center')
+            .image(img, 320, 80, 'atkinson', 128) // Reduzido a profundidade de cor para 128
+            .size('normal')
+            .bold()
+            .line('COMPROVANTE DE PAGAMENTO')
+            .bold(false)
+            .newline()
+            .align('left')
+            .newline()
+            .line(this.printLine('Data:', moment(dados.local_time).format('DD/MM/YYYY')))
+            .line(this.printLine('Hora:', moment(dados.local_time).format('HH:mm')))
+            .line(this.printLine('Id da Transacao:', dados.id))
+            .line(this.printLine('Codigo da Transacao:', dados.transaction_code))
+            .newline()
+            .line(this.printLine('Valor Total:', 'R$ ' + dados.amount))
+            .bold(false)
+            .line('------------------------------------------------')
+            .newline()
+            .line('FORMA DE PAGAMENTO')
+            .line(this.printLine('Tipo:', 'credito'))
+            .line(this.printLine('Cartao:', dados.card.type.toString()))
+            .line(this.printLine('Parcelas:', dados.installments_count.toString()))
+            .newline()
+            .line('PRODUTO')
+            .newline();
 
-    img.onload = () => {
-      encoder
-        .initialize()
-        .align('center')
-        .image(img, 320, 80, 'atkinson', 256)
-        .size('normal')
-        .bold()
-        .line('COMPROVANTE DE PAGAMENTO')
-        .bold(false)
-        .newline()
-        .align('left')
-        .line('================================================')
-        .newline()
-        .line(this.printLine('Data:', moment(dados.local_time).format('DD/MM/YYYY')))
-        .line(this.printLine('Hora:', moment(dados.local_time).format('HH:mm')))
-        .line(this.printLine('Transação:', dados.id))
-        .line(this.printLine('NSU:', dados.transaction_code))
-        .newline()
-        .line('------------------------------------------------')
-        .bold()
-        .line(this.printLine('Valor Total:', formattedAmount))
-        .bold(false)
-        .line('------------------------------------------------')
-        .newline()
-        .line('FORMA DE PAGAMENTO')
-        .line(this.printLine('Tipo:', dados.process_as))
-        .line(this.printLine('Cartão:', `**** **** **** ${dados.card.last_4_digits}`))
-        .line(this.printLine('Parcelas:', dados.installments_count.toString()))
-        .newline()
-        .line('PRODUTOS')
-        .newline();
+          // Print each product with its details
+          dados.products.forEach(product => {
+            encoder
+              .line(`${product.name}`)
+              .line(`${product.quantity}x R$ ${product.total_price / product.quantity} = R$ ${product.total_price}`)
+              .newline();
+          });
 
-      // Print each product with its details
-      dados.products.forEach(product => {
-        encoder
-          .line(`${product.name}`)
-          .line(`${product.quantity}x R$ ${product.total_price / product.quantity} = R$ ${product.total_price}`)
-          .newline();
-      });
+          encoder
+            .line('================================================')
+            .newline()
+            .align('center')
+            .line('* GUARDE SEU COMPROVANTE *')
+            .newline()
+            .newline()
+            .newline();
 
-      encoder
-        .line('================================================')
-        .newline()
-        .align('center')
-        .line('* GUARDE SEU COMPROVANTE *')
-        .newline()
-        .newline()
-        .newline();
-    }
+          if (printer && printer.usarGuilhotina) {
+            encoder.cut('partial');
+          }
 
-    if (printer && printer.usarGuilhotina) {
-      encoder.cut('partial');
-    }
+          // Gera os dados da impressão e envia
+          const data = encoder.encode();
+          await this.printData(data);
+          resolve(true);
+        } catch (error) {
+          console.error('Erro na impressão:', error);
+          reject(error);
+        }
+      };
 
-    this.printData(encoder.encode());
+      img.onerror = (error) => {
+        console.error('Erro ao carregar imagem:', error);
+        reject(error);
+      };
+    });
   }
 
   async printGuiaLiberacao(dados: any) {

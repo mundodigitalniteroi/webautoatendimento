@@ -1,43 +1,35 @@
-<ion-content [fullscreen]="true" class="payment-confirmed-page">
+<ion-content [fullscreen]="true" class="payment-success-page">
   <app-toolbar></app-toolbar>
 
   <div class="success-container">
-    <div class="success-animation">
-      <ion-img src="../../../../assets/payment-confirmed/check.png" class="success-icon"></ion-img>
+    <div class="success-icon-wrapper">
       <div class="success-circle"></div>
+      <ion-img src="../../../../assets/payment-confirmed/check.png" class="check-icon"></ion-img>
     </div>
-    
-    <div class="success-message">
+
+    <div class="success-content">
       <h1>Pagamento confirmado!</h1>
-      <p>Seu pagamento foi processado com sucesso. Agora você pode retirar seu veículo.</p>
+      <p>Imprima sua guia de liberação para retirar o seu veículo</p>
     </div>
-    
-    <div class="action-container">
-      <ion-button expand="block" class="print-button" (click)="imprimirGuia()">
-        <ion-icon name="print-outline" slot="start"></ion-icon>
+
+    <div class="buttons-container">
+      <ion-button expand="block" class="main-button" (click)="imprimirGuia()">
+        <ion-icon name="document-text-outline" slot="start"></ion-icon>
         Imprimir Guia de Liberação
       </ion-button>
 
-      <ion-button expand="block" class="print-button" (click)="imprimirComprovante()">
-        <ion-icon name="print-outline" slot="start"></ion-icon>
+      <ion-button expand="block" class="secondary-button" (click)="imprimirComprovante()">
+        <ion-icon name="receipt-outline" slot="start"></ion-icon>
         Imprimir Comprovante
-      </ion-button>
-
-
-      <ion-button expand="block" fill="outline" class="home-button" routerLink="/home">
-        <ion-icon name="home-outline" slot="start"></ion-icon>
-        Voltar ao Início
       </ion-button>
     </div>
   </div>
 
+  <!-- Loading overlay -->
   <div class="loading-overlay" *ngIf="imprimindo">
     <div class="loading-content">
-      <div class="lds-roller">
-        <div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
-      </div>
-      <p>Preparando sua guia de liberação...</p>
+      <div class="spinner"></div>
+      <p>Preparando impressão...</p>
     </div>
   </div>
 </ion-content>

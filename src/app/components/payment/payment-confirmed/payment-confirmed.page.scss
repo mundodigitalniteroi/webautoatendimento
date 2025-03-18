@@ -5,13 +5,13 @@ ion-content {
   align-items: center;
 }
 ion-grid {
-  background-color: #0775e8;
-  height: 90vh;
-  width: 92%;
+  height: 100vh;
+  width: 100%;
   margin-top: 2.5vh;
   border-radius: 15px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 .row-title {
@@ -139,107 +139,129 @@ ion-button {
   }
 }
 
-.payment-confirmed-page {
-  --background: #f8f9fa;
+.payment-success-page {
+  --background: #f5f7fa;
   
   .success-container {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    height: 80%;
+    text-align: center;
   }
-  
-  .success-animation {
+
+  .success-icon-wrapper {
     position: relative;
-    margin-bottom: 2rem;
-    
-    .success-icon {
-      width: 100px;
-      height: 100px;
-      z-index: 2;
-      position: relative;
-    }
-    
+    margin-bottom: 2.5rem;
+
     .success-circle {
       position: absolute;
-      top: -15px;
-      left: -15px;
-      width: 130px;
-      height: 130px;
+      width: 120px;
+      height: 120px;
+      background: rgba(46, 213, 115, 0.1);
       border-radius: 50%;
-      background-color: rgba(76, 217, 100, 0.1);
       animation: pulse 2s infinite;
     }
+
+    .check-icon {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      z-index: 2;
+      margin: 20px;
+    }
   }
-  
-  .success-message {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    
+
+  .success-content {
+    margin-bottom: 3rem;
+
     h1 {
-      color: #2dd36f;
+      color: #2e3442;
       font-size: 28px;
       font-weight: 700;
       margin-bottom: 1rem;
     }
-    
+
     p {
-      color: #6c757d;
+      color: #6c7a93;
       font-size: 16px;
-      max-width: 300px;
-      margin: 0 auto;
       line-height: 1.5;
+      margin: 0;
+      padding: 0 1rem;
     }
   }
-  
-  .action-container {
+
+  .buttons-container {
     width: 100%;
-    max-width: 320px;
-    
-    .print-button {
-      --background: #2dd36f;
-      --background-hover: #28bd62;
-      --color: white;
+    max-width: 340px;
+    padding: 0 1rem;
+
+    .main-button {
+      --background: #2e3442;
+      --background-hover: #1a1f2a;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(46, 52, 66, 0.15);
       margin-bottom: 1rem;
-      height: 48px;
+      height: 54px;
+      font-size: 16px;
       font-weight: 500;
-      --border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(45, 211, 111, 0.2);
+      
+      ion-icon {
+        margin-right: 8px;
+        font-size: 20px;
+      }
     }
-    
-    .home-button {
-      --color: #6c757d;
-      --border-color: #6c757d;
-      height: 48px;
-      --border-radius: 10px;
+
+    .secondary-button {
+      --background: #ffffff;
+      --background-hover: #f5f7fa;
+      --color: #2e3442;
+      --border-radius: 12px;
+      --border-color: #e1e8ef;
+      --border-style: solid;
+      --border-width: 2px;
+      height: 54px;
+      font-size: 16px;
+      font-weight: 500;
+
+      ion-icon {
+        margin-right: 8px;
+        font-size: 20px;
+      }
     }
   }
-  
+
   .loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(255, 255, 255, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    
+    z-index: 999;
+
     .loading-content {
-      background-color: white;
-      padding: 2rem;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      text-align: center;
       
+      .spinner {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto 1rem;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #2e3442;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
       p {
-        margin-top: 1rem;
-        color: #6c757d;
+        color: #2e3442;
+        font-size: 16px;
+        margin: 0;
       }
     }
   }
@@ -247,100 +269,42 @@ ion-button {
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(0.95);
+    opacity: 0.5;
   }
   50% {
-    transform: scale(1.1);
-    opacity: 0.7;
+    transform: scale(1);
+    opacity: 0.8;
   }
   100% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(0.95);
+    opacity: 0.5;
   }
 }
 
-.lds-roller {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-.lds-roller div {
-  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  transform-origin: 40px 40px;
-}
-.lds-roller div:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #2dd36f;
-  margin: -4px 0 0 -4px;
-}
-.lds-roller div:nth-child(1) {
-  animation-delay: -0.036s;
-}
-.lds-roller div:nth-child(1):after {
-  top: 63px;
-  left: 63px;
-}
-.lds-roller div:nth-child(2) {
-  animation-delay: -0.072s;
-}
-.lds-roller div:nth-child(2):after {
-  top: 68px;
-  left: 56px;
-}
-.lds-roller div:nth-child(3) {
-  animation-delay: -0.108s;
-}
-.lds-roller div:nth-child(3):after {
-  top: 71px;
-  left: 48px;
-}
-.lds-roller div:nth-child(4) {
-  animation-delay: -0.144s;
-}
-.lds-roller div:nth-child(4):after {
-  top: 72px;
-  left: 40px;
-}
-.lds-roller div:nth-child(5) {
-  animation-delay: -0.18s;
-}
-.lds-roller div:nth-child(5):after {
-  top: 71px;
-  left: 32px;
-}
-.lds-roller div:nth-child(6) {
-  animation-delay: -0.216s;
-}
-.lds-roller div:nth-child(6):after {
-  top: 68px;
-  left: 24px;
-}
-.lds-roller div:nth-child(7) {
-  animation-delay: -0.252s;
-}
-.lds-roller div:nth-child(7):after {
-  top: 63px;
-  left: 17px;
-}
-.lds-roller div:nth-child(8) {
-  animation-delay: -0.288s;
-}
-.lds-roller div:nth-child(8):after {
-  top: 56px;
-  left: 12px;
-}
-@keyframes lds-roller {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+
+// Responsividade
+@media (max-width: 360px) {
+  .payment-success-page {
+    .success-content {
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+
+    .buttons-container {
+      .main-button,
+      .secondary-button {
+        font-size: 14px;
+        height: 48px;
+      }
+    }
   }
 }

@@ -31,7 +31,7 @@
                     <p>Valor total: {{item.valorTotal | currency}}</p>
                 </ion-col>
                 <ion-col class="check ion-justify-content-end ion-align-items-center " size="3">
-                    <ion-img src="../../../../assets/payment-card/check.png"></ion-img>
+                    <ion-img *ngIf="item === parcelaSelecionada" src="../../../../assets/payment-card/check.png"></ion-img>
                 </ion-col>
             </ion-row>
         <ion-button *ngIf="credit == true" (click)="pay()" [disabled]="isLoading || !parcelaSelecionada">

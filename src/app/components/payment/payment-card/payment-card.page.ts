@@ -28,15 +28,15 @@ export class PaymentCardPage implements OnInit {
   data: CreateCheckoutRequest;
   informacaoDebito: any;
   parcelamentoDados: PlanoParcelamento[] = []
-  returnUrlPayment =  environment.urlApiAtendimento;
+  returnUrlPayment = environment.urlApiAtendimento;
   websocket: WebSocket;
   isLoading = false;
-  
+
 
   constructor(
-    private store: Store, 
-    private sumupIntegracaoService: SumupIntegracaoService, 
-    private signalR:SignalRService,
+    private store: Store,
+    private sumupIntegracaoService: SumupIntegracaoService,
+    private signalR: SignalRService,
     private consultaDebitoService: ConsultaDebitoService,
     private router: Router
   ) { }
@@ -45,12 +45,12 @@ export class PaymentCardPage implements OnInit {
     this.informacaoDebito = this.store.selectSnapshot(state => state.consulta.informacaoDebito);
     console.log("informacaoDebito", this.informacaoDebito)
     this.consultaDebitoService
-    .consultarParcelamento(this.informacaoDebito.faturamento.valorFaturado, 1, localStorage.getItem('authTokenParcelas'))
-    .subscribe((parcelas)=>{
-      this.parcelamentoDados = parcelas;
-    })
+      .consultarParcelamento(this.informacaoDebito.faturamento.valorFaturado, 1, localStorage.getItem('authTokenParcelas'))
+      .subscribe((parcelas) => {
+        this.parcelamentoDados = parcelas;
+      })
 
-    
+
   }
 
   parcelaSelecionada: PlanoParcelamento = null; // Armazena o item selecionado
@@ -61,7 +61,7 @@ export class PaymentCardPage implements OnInit {
 
   async pay() {
     this.isLoading = true;
-    
+
     if (this.credit) {
       this.data = {
         total_amount: {
@@ -71,15 +71,18 @@ export class PaymentCardPage implements OnInit {
         },
         installments: this.parcelaSelecionada.parcela,
         card_type: 'credit',
-        description: 'Pagamento',
+        description: this.informacaoDebito.veiculo.marcaModelo.marcaModelo,
         return_url: `${this.returnUrlPayment}/sumupwebhook`
       }
-    }    
-    
+    }
+
     try {
-      const response = await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
-      this.signalR.receivePayment(response);
-      this.router.navigate(['/payment-wait']);
+      await this.sumupIntegracaoService.createCheckout(this.data, localStorage.getItem('reader_id'));
+      if (localStorage.getItem('client_transaction_id') && localStorage.getItem('client_transaction_id') !== undefined) {
+        this.signalR.receivePayment(localStorage.getItem('client_transaction_id'));
+        this.router.navigate(['/payment-wait']);
+      }
+      
     } catch (error) {
       console.error('Error during payment:', error);
     } finally {
@@ -87,7 +90,7 @@ export class PaymentCardPage implements OnInit {
     }
   }
 
- 
+
 
 
   cardSelected(type) {

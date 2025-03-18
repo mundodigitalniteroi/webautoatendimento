@@ -164,6 +164,7 @@ export class SumupIntegracaoService {
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'GET',
     });
+    console.log("data",data)
     const comprovante: Comprovante = {
       card: {
         last_4_digits: data.payment_instrument?.last_4_digits || '',
