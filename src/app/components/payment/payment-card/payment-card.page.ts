@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { CreateCheckoutRequest } from 'src/app/interfaces/sumup.interface';
 import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
@@ -7,8 +7,11 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { ActivatedRoute } from '@angular/router';
 import { App } from '@capacitor/app';
 import { SignalRService } from 'src/app/services/signalr/signalr.service';
+import { ToastController, AlertController } from '@ionic/angular';
+import { SetParcelaSelecionada } from 'src/app/state/consulta/consulta.action';
 
 interface Parcela {
   numeroParcelas: string;
@@ -31,14 +34,29 @@ export class PaymentCardPage implements OnInit {
   returnUrlPayment = environment.urlApiAtendimento;
   websocket: WebSocket;
   isLoading = false;
+  showErrorAlert = false;
+  @ViewChild('paymentAlert') paymentAlert: any;
 
+  alertButtons = [
+    {
+      text: 'Fechar',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+  ];
+
+  
 
   constructor(
     private store: Store,
     private sumupIntegracaoService: SumupIntegracaoService,
     private signalR: SignalRService,
     private consultaDebitoService: ConsultaDebitoService,
-    private router: Router
+    private router: Router,
+    private activateRouter: ActivatedRoute,
+    private alertController: AlertController
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +68,26 @@ export class PaymentCardPage implements OnInit {
         this.parcelamentoDados = parcelas;
       })
 
+    this.activateRouter.queryParams.subscribe(async params => {
+      if (params['paymentError'] === 'true') {
+        this.presentAlert()
+      }
+    });
+  }
 
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'custom-alert',
+      header: 'Erro no Pagamento',
+      message: 'Houve um erro ao concluir a transação. Por favor, tente novamente.',
+      buttons: ['Fechar'],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   parcelaSelecionada: PlanoParcelamento = null; // Armazena o item selecionado
@@ -65,7 +102,7 @@ export class PaymentCardPage implements OnInit {
     if (this.credit) {
       this.data = {
         total_amount: {
-          value: Math.trunc(this.parcelaSelecionada.valorMensal * 100),
+          value: Math.trunc(this.parcelaSelecionada.valorTotal * 100),
           currency: 'BRL',
           minor_unit: 2
         },
@@ -74,6 +111,7 @@ export class PaymentCardPage implements OnInit {
         description: this.informacaoDebito.veiculo.marcaModelo.marcaModelo,
         return_url: `${this.returnUrlPayment}/sumupwebhook`
       }
+      this.store.dispatch(new SetParcelaSelecionada(this.parcelaSelecionada));
     }
 
     try {
@@ -82,7 +120,7 @@ export class PaymentCardPage implements OnInit {
         this.signalR.receivePayment(localStorage.getItem('client_transaction_id'));
         this.router.navigate(['/payment-wait']);
       }
-      
+
     } catch (error) {
       console.error('Error during payment:', error);
     } finally {

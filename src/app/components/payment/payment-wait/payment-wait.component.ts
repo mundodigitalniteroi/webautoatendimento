@@ -32,6 +32,11 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
           console.error('Erro na navegação:', error);
         }
       }
+      else {
+        await this.router.navigate(['/payment-card'], {
+          queryParams: { paymentError: true }
+        });
+      }
     });
   }
 

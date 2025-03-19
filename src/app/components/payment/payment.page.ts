@@ -41,7 +41,7 @@ export class PaymentPage implements OnInit {
       this.router.navigate(['/payment-card']);
     }
     if (type == 'pix') {
-      this.consultaDebitoService.alterarPixDinamico(indentifadorFaturamento, identificadorUsuario).subscribe(
+      this.consultaDebitoService.alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario,17).subscribe(
         () => {
           this.consultaDebitoService.gerarPixDinamico(indentifadorFaturamento, identificadorUsuario).subscribe((resp: any) => {
             this.store.dispatch(new SetPixEstatico(resp));

@@ -50,15 +50,15 @@ export class HomePage implements OnInit {
       }
     })
     this.options = this.store.selectSnapshot(AuthState.all);
+    this.login()
   }
 
 
   goPublicSearch() {
     this.router.navigate(['/term-acception']);
   }
-  async goQuery() {
-    await this.login()
-
+  goQuery() {
+    this.router.navigate(['/query']);
   }
   fecharMenu() {
     this.menu.close();
@@ -103,7 +103,7 @@ export class HomePage implements OnInit {
 
 
       // Após tudo configurado, navega para payment-card
-      this.router.navigate(['/query']);
+      
     } catch (error) {
       console.error('Erro no login:', error);
     }

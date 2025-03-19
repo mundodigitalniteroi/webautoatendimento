@@ -12,12 +12,15 @@ import { Subject } from 'rxjs';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Util } from '../util/util.service';
 import { Comprovante } from 'src/app/interfaces/comprovante.interface';
+import { ConsultaState } from 'src/app/state/consulta/consulta.state';
+import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PrintService {
   private unsubscribeAll$ = new Subject();
+  optionsConsulta;
   permissions = ['BLUETOOTH_CONNECT', 'BLUETOOTH_SCAN'];
   constructor(
     public btSerial: BluetoothSerial,
@@ -25,7 +28,10 @@ export class PrintService {
     private storage: Storage,
     private diagnostic: Diagnostic,
     private store: Store
-  ) { }
+  ) {
+    this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
+
+   }
 
   searchBluetoothPrinter() {
     return this.btSerial.list();
@@ -173,6 +179,7 @@ export class PrintService {
     const img = new Image();
     img.src = '/assets/login/logo_patiosg_320.png';
     img.crossOrigin = 'Anonymous';
+    const parcelaSelecionada:PlanoParcelamento = this.optionsConsulta.informacaoParcelaSelecionada;
 
     // Retorna uma Promise para garantir que a imagem seja carregada
     return new Promise((resolve, reject) => {
@@ -181,47 +188,22 @@ export class PrintService {
           encoder
             .initialize()
             .align('center')
-            .image(img, 320, 80, 'atkinson', 128) // Reduzido a profundidade de cor para 128
+            .image(img, 200, 80, 'bayer', 64) // Reduzido a profundidade de cor para 128
             .size('normal')
             .bold()
             .line('COMPROVANTE DE PAGAMENTO')
             .bold(false)
             .newline()
             .align('left')
-            .newline()
             .line(this.printLine('Data:', moment(dados.local_time).format('DD/MM/YYYY')))
             .line(this.printLine('Hora:', moment(dados.local_time).format('HH:mm')))
-            .line(this.printLine('Id da Transacao:', dados.id))
-            .line(this.printLine('Codigo da Transacao:', dados.transaction_code))
-            .newline()
-            .line(this.printLine('Valor Total:', 'R$ ' + dados.amount))
+            .line(this.printLine('Cod. Autorizacao:', dados.auth_code))
             .bold(false)
-            .line('------------------------------------------------')
-            .newline()
-            .line('FORMA DE PAGAMENTO')
             .line(this.printLine('Tipo:', 'credito'))
-            .line(this.printLine('Cartao:', dados.card.type.toString()))
+            .line(this.printLine('Cartao:', dados.card.last_4_digits.toString()))
             .line(this.printLine('Parcelas:', dados.installments_count.toString()))
-            .newline()
-            .line('PRODUTO')
-            .newline();
-
-          // Print each product with its details
-          dados.products.forEach(product => {
-            encoder
-              .line(`${product.name}`)
-              .line(`${product.quantity}x R$ ${product.total_price / product.quantity} = R$ ${product.total_price}`)
-              .newline();
-          });
-
-          encoder
-            .line('================================================')
-            .newline()
-            .align('center')
-            .line('* GUARDE SEU COMPROVANTE *')
-            .newline()
-            .newline()
-            .newline();
+            .line(this.printLine('Valor Mensal:', 'R$ ' + parcelaSelecionada.valorMensal))   
+            .line(this.printLine('Valor Total:', 'R$ ' + dados.amount))   
 
           if (printer && printer.usarGuilhotina) {
             encoder.cut('partial');

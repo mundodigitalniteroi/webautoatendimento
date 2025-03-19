@@ -101,6 +101,16 @@ export class ConsultaDebitoService {
     );
   }
 
+  alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario,identificadorNovaFormaPagamento) {
+    return this.http.get(
+      this.apiConsultaUrl +
+      `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${identificadorNovaFormaPagamento}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   gerarBoleto(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl + `/api/banco/gerarboleto?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}`,

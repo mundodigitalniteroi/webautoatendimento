@@ -3,6 +3,7 @@ export interface ConsultaModel {
   informacaoDebito: {};
   informacaoBoleto: {};
   informacaoPixEstatico: {};
+  informacaoParcelaSelecionada: {};
 }
 
 export interface PlanoParcelamento {

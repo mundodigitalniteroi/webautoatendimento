@@ -15,3 +15,9 @@ export class SetPixEstatico {
   static readonly type = 'Armazenar Dados do Pix Estático';
   constructor(public payload: any) {}
 }
+export class SetParcelaSelecionada {
+  static readonly type = 'Armazenar Dados da Parcela Selecionada';
+  constructor(public payload: any) {}
+}
+
+

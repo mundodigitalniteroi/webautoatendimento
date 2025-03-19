@@ -167,17 +167,13 @@ export class SumupIntegracaoService {
     console.log("data",data)
     const comprovante: Comprovante = {
       card: {
-        last_4_digits: data.payment_instrument?.last_4_digits || '',
-        type: data.payment_instrument?.type || '',
+        last_4_digits: data.card?.last_4_digits || '',
+        type: data.card?.type || '',
       },
+      auth_code: data.auth_code,
       id: data.id || '',
       amount: data.amount || 0,
-      process_as: data.payment_type || '',
-      products: data.products?.map(product => ({
-        name: product.name || '',
-        quantity: product.quantity || 1,
-        total_price: product.price || 0
-      })) || [],
+      process_as: data.process_as || '',
       installments_count: data.installments_count || 1,
       local_time: new Date(data.timestamp || Date.now()),
       transaction_code: data.transaction_code || transactionId

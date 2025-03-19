@@ -5,12 +5,8 @@ export interface Comprovante {
   };
   id: string;
   amount: number;
+  auth_code: string;
   process_as: string;
-  products: {
-    name: string;
-    quantity: number;
-    total_price: number;
-  }[];
   installments_count: number;
   local_time: Date;
   transaction_code: string;

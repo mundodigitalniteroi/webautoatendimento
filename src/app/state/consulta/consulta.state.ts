@@ -8,6 +8,7 @@ import {
   SetBoleto,
   SetInformacoesConsulta,
   SetInformations,
+  SetParcelaSelecionada,
   SetPixEstatico,
 } from './consulta.action';
 import { ConsultaModel } from 'src/app/interfaces/consulta.interface';
@@ -62,6 +63,15 @@ export class ConsultaState {
     ctx.patchState({
       ...state,
       informacaoPixEstatico: payload.payload,
+    });
+  }
+
+  @Action(SetParcelaSelecionada)
+  SetParcelaSelecionada(ctx: StateContext<ConsultaModel>, payload) {
+    const state = ctx.getState;
+    ctx.patchState({
+      ...state,
+      informacaoParcelaSelecionada: payload.payload,
     });
   }
   // @Action(FinalizarAtendimento)

@@ -7,8 +7,6 @@ import { PaymentCardRoutingModule } from './payment-card-routing.module';
 import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
-
-
 @NgModule({
   declarations: [PaymentCardPage],
   imports: [
