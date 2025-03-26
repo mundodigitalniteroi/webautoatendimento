@@ -7,11 +7,11 @@ export interface CreateCheckoutRequest {
     installments?: number;
     card_type?: 'credit' | 'debit'
     description?: string;
-    return_url?:string;
+    return_url?: string;
 }
 
 export interface CreateCheckoutResponse {
-    data: {client_transaction_id:string}
+    data: { client_transaction_id: string }
 }
 
 export interface CreateReaderRequest {
@@ -41,6 +41,10 @@ export interface ListTransactionsRequest {
     offset?: number;
     start_date?: string;
     end_date?: string;
+}
+
+export interface GetMerchantCodeResponse {
+    merchant_code: string;
 }
 
 export interface ListTransactionsResponse {

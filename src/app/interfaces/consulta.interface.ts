@@ -4,6 +4,7 @@ export interface ConsultaModel {
   informacaoBoleto: {};
   informacaoPixEstatico: {};
   informacaoParcelaSelecionada: {};
+  informacaoTipoPagamento: {};
 }
 
 export interface PlanoParcelamento {

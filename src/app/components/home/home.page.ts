@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
     private atendimentoService: AtendimentoService,
     private consultaDebitoService: ConsultaDebitoService,
     private diagnostic: Diagnostic,
+    private changeDetectorRef: ChangeDetectorRef,
     private sumupIntegracaoService: SumupIntegracaoService
   ) {
     this.hasPermission();
@@ -71,13 +72,16 @@ export class HomePage implements OnInit {
     try {
       // Se authModel não existe, inicia o fluxo de autorização
       if (!localStorage.getItem('authModel')) {
-        this.sumupIntegracaoService.authorize();
+        await this.sumupIntegracaoService.authorize();
       }
 
       // Se reader_id não existe, abre o modal
       if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
+        console.log("entrooou")
         if (!this.modalPairingCode) {
+          console.log("Abriuu")
           this.modalPairingCode = true; // Abre o modal
+          this.changeDetectorRef.detectChanges();
         }
 
         // Após o modal ser confirmado, usa o pairingCode se disponível
@@ -85,6 +89,7 @@ export class HomePage implements OnInit {
           const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode });
           localStorage.setItem('reader_id', responseReader.id);
           this.modalPairingCode = false; // Fecha o modal
+          this.changeDetectorRef.detectChanges();
         } else {
           throw new Error('Pairing code não foi fornecido');
         }
@@ -113,6 +118,10 @@ export class HomePage implements OnInit {
     if (this.pairingCode) {
       this.login(); // Chama login() para prosseguir com o pairingCode preenchido
     }
+  }
+
+  onInputChange(event: any) {
+    this.pairingCode = event.target.value.toUpperCase(); // Converte para maiúsculas
   }
 
   goConfirmation(){

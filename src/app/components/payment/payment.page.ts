@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { AuthState } from 'src/app/state/auth/auth.state';
-import { SetBoleto, SetPixEstatico } from 'src/app/state/consulta/consulta.action';
+import { SetBoleto, SetPixEstatico, SetTipoPagamento } from 'src/app/state/consulta/consulta.action';
 import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 
 @Component({
@@ -38,9 +38,11 @@ export class PaymentPage implements OnInit {
     const indentifadorFaturamento = this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
     const identificadorUsuario = this.options.usuarioDPId;
     if (type == 'card') {
+      this.store.dispatch(new SetTipoPagamento('cartao'));
       this.router.navigate(['/payment-card']);
     }
     if (type == 'pix') {
+      this.store.dispatch(new SetTipoPagamento('pix'));
       this.consultaDebitoService.alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario,17).subscribe(
         () => {
           this.consultaDebitoService.gerarPixDinamico(indentifadorFaturamento, identificadorUsuario).subscribe((resp: any) => {

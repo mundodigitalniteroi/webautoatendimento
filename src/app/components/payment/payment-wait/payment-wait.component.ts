@@ -5,6 +5,13 @@ import { environment } from 'src/environments/environment.prod';
 import * as signalR from '@microsoft/signalr';
 import { SignalRService } from 'src/app/services/signalr/signalr.service';
 import { Subscription } from 'rxjs';
+import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
+import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
+import { Store } from '@ngxs/store';
+import { ConsultaState } from 'src/app/state/consulta/consulta.state';
+import { AuthState } from 'src/app/state/auth/auth.state';
+import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
+import { Bandeira, CartaoRequest } from 'src/app/interfaces/pagamento.interface';
 
 @Component({
   selector: 'app-payment-wait',
@@ -16,18 +23,22 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   transactionId: string;
   urlReturnPayment = environment.urlApiAtendimento;
   private subscription: Subscription;
+  optionsConsulta;
+  options;
 
-  constructor(private signalRService: SignalRService, private router: Router) {
+  constructor(private signalRService: SignalRService, private sumupIntegracaoService: SumupIntegracaoService, private store: Store, private atendimentoService: AtendimentoService, private consultaDebitoService: ConsultaDebitoService, private router: Router) {
   }
 
   ngOnInit() {
+    this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
+    this.options = this.store.selectSnapshot(AuthState.all);
+    console.log("optionsConsulta", this.optionsConsulta);
+    console.log("options", this.options);
     this.subscription = this.signalRService.paymentStatus$.subscribe(async (payload) => {
       console.log("payload", payload.status)
       if (payload.status.toLowerCase() === 'successful') {
         try {
-          // Opcional: aguardar um pequeno delay
-          await new Promise(resolve => setTimeout(resolve, 100));
-          await this.router.navigate(['/payment-confirmed']);
+          await this.confirmarPagamento();
         } catch (error) {
           console.error('Erro na navegação:', error);
         }
@@ -38,6 +49,58 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  mapearBandeira(bandeiraString: string): Bandeira {
+    const bandeiraNormalizada = bandeiraString.toUpperCase(); // Normaliza para maiúsculas
+    console.log("bandeiraNormalizada", bandeiraNormalizada);
+    switch (bandeiraNormalizada) {
+      case "AMEX":
+        return Bandeira.AmericanExpress;
+      case "DINERS":
+        return Bandeira.Diners;
+      case "HIPERCARD":
+        return Bandeira.Hipercard;
+      case "MASTERCARD":
+        return Bandeira.MasterCard;
+      case "VISA":
+        return Bandeira.Visa;
+      case "ELO":
+        return Bandeira.Elo;
+      default:
+        throw new Error(`Bandeira desconhecida: ${bandeiraString}`);
+    }
+  }
+
+  async confirmarPagamento() {
+    const indentifadorFaturamento = this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
+    const identificadorUsuario = this.options.usuarioDPId;
+    const transacaoResponse = await this.sumupIntegracaoService.getTransaction(localStorage.getItem('client_transaction_id'))
+    console.log("transacaoResponse", transacaoResponse);
+    console.log("identificadorUsuario", identificadorUsuario);
+    console.log("indentifadorFaturamento", indentifadorFaturamento);
+    const cartaoDados: CartaoRequest = {
+      bandeira: this.mapearBandeira(transacaoResponse.card.type),
+      numeroCartao: '****'+transacaoResponse.card.last_4_digits,
+      codigoAutorizacao: transacaoResponse.auth_code
+    }
+    console.log("dados do cartao",cartaoDados);
+    this.consultaDebitoService.alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario, 10)
+      .subscribe(() => {
+        this.consultaDebitoService.confirmarPagamentoCartao(indentifadorFaturamento, identificadorUsuario, cartaoDados).subscribe((resp: any) => {
+          if (resp.faturamento.status == 'P') {
+            const atendimentoId = this.optionsConsulta.informacoesConsulta.atendimentoId;
+            this.atendimentoService.confirmarPagamento(atendimentoId).subscribe(() => {
+              this.router.navigate(['/payment-confirmed']);
+            });
+          }
+          else {
+            this.confirmarPagamento();
+          }
+        });
+      })
+
+
   }
 
   ngOnDestroy() {

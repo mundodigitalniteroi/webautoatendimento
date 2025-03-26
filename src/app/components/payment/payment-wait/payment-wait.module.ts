@@ -8,10 +8,12 @@ import { PrintService } from 'src/app/services/print/print.service';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { PaymentWaitPageRoutingModule } from './payment-wait-routing.module';
 import { PaymentWaitComponent } from './payment-wait.component';
+import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, PaymentWaitPageRoutingModule, ToolbarModule],
   declarations: [PaymentWaitComponent],
-  providers: [PrintService, BluetoothSerial, Diagnostic],
+  providers: [InAppBrowser,SumupIntegracaoService,PrintService, BluetoothSerial, Diagnostic],
 })
 export class PaymentWaitPageModule {}

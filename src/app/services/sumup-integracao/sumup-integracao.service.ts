@@ -11,6 +11,7 @@ import {
   ListTransactionsRequest,
   ListTransactionsResponse,
   CreateTokenResponse,
+  GetMerchantCodeResponse,
 } from 'src/app/interfaces/sumup.interface';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +25,7 @@ export class SumupIntegracaoService {
   private redirectUri = environment.redirectUri;
   private merchantCode = environment.merchantCode;
   private urlReturnPayment = environment.urlReturnPayment;
-  constructor(private inAppBrowser: InAppBrowser) {}
+  constructor(private inAppBrowser: InAppBrowser) { }
 
   // Obtém o token de autorização do localStorage
   private getAuthHeaders(): { [key: string]: string } {
@@ -94,7 +95,7 @@ export class SumupIntegracaoService {
   }
 
   // Abre a URL de autorização no InAppBrowser
-  authorize(): void {
+  async authorize(): Promise<void> {
     const scopes =
       'transactions.history user.app-settings user.profile_readonly email profile user.profile user.subaccounts user.payout-settings products invoices.read invoices.write accounting.read accounting.write readers.read readers.write payments payment_instruments';
     const request: AuthorizeRequest = {
@@ -133,7 +134,7 @@ export class SumupIntegracaoService {
   async createCheckout(request: CreateCheckoutRequest, reader_code: string) {
     const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers/${reader_code}/checkout`;
     console.log('URL:', url);
-  
+
     const initialResponse = await this.fetchWithTokenRefresh(url, {
       method: 'POST',
       body: JSON.stringify(request),
@@ -141,7 +142,7 @@ export class SumupIntegracaoService {
     const clientTransactionId = initialResponse.data.client_transaction_id;
     localStorage.setItem('client_transaction_id', clientTransactionId);
     return clientTransactionId;
-    
+
   }
 
   // POST /v0.1/merchants/{merchant_code}/readers
@@ -154,7 +155,7 @@ export class SumupIntegracaoService {
       method: 'POST',
       body: JSON.stringify(request),
     });
-    console.log("data",data)
+    console.log("data", data)
     return data;
   }
 
@@ -164,7 +165,7 @@ export class SumupIntegracaoService {
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'GET',
     });
-    console.log("data",data)
+    console.log("data", data)
     const comprovante: Comprovante = {
       card: {
         last_4_digits: data.card?.last_4_digits || '',
@@ -178,8 +179,14 @@ export class SumupIntegracaoService {
       local_time: new Date(data.timestamp || Date.now()),
       transaction_code: data.transaction_code || transactionId
     };
-    
+
     return comprovante;
+  }
+
+  async getMerchantProfile(): Promise<GetMerchantCodeResponse> {
+    const url = `${this.baseUrl}/v0.1/me/merchant-profile`;
+    const data = await this.fetchWithTokenRefresh(url, { method: 'GET' })
+    return data.merchant_code
   }
 
   // GET /v0.1/transactions

@@ -19,5 +19,9 @@ export class SetParcelaSelecionada {
   static readonly type = 'Armazenar Dados da Parcela Selecionada';
   constructor(public payload: any) {}
 }
+export class SetTipoPagamento {
+  static readonly type = 'Armazenar Dados do Tipo de Pagamento';
+  constructor(public payload: any) {}
+}
 
 

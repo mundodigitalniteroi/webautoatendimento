@@ -6,6 +6,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { map } from 'rxjs/operators';
+import { CartaoRequest } from 'src/app/interfaces/pagamento.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -73,7 +74,7 @@ export class ConsultaDebitoService {
       );
   }
 
-  consultarParcelamento(valor: number, op: number,token:string): Observable<PlanoParcelamento[]> {
+  consultarParcelamento(valor: number, op: number, token: string): Observable<PlanoParcelamento[]> {
     return this.http.get<PlanoParcelamento[]>(this.apiWebziPay + `/api/Simulacao?valor=${valor}&op=${op}`, {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -101,7 +102,7 @@ export class ConsultaDebitoService {
     );
   }
 
-  alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario,identificadorNovaFormaPagamento) {
+  alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario, identificadorNovaFormaPagamento) {
     return this.http.get(
       this.apiConsultaUrl +
       `/api/Faturamento/AlterarFormaPagamento?identificadorFaturamento=${indentifadorFaturamento}&identificadorUsuario=${identificadorUsuario}&identificadorNovaFormaPagamento=${identificadorNovaFormaPagamento}`,
@@ -153,6 +154,17 @@ export class ConsultaDebitoService {
     const body = {
       identificadorUsuario: identificadorUsuario,
       identificadorFaturamento: indentifadorFaturamento,
+    };
+    return this.http.post(this.apiConsultaUrl + `/api/pagamento/ConfirmarPagamento`, body, {
+      headers: this.headers,
+    });
+  }
+
+  confirmarPagamentoCartao(indentifadorFaturamento, identificadorUsuario, cartao:CartaoRequest) {
+    const body = {
+      identificadorUsuario: identificadorUsuario,
+      identificadorFaturamento: indentifadorFaturamento,
+      cartao: cartao
     };
     return this.http.post(this.apiConsultaUrl + `/api/pagamento/ConfirmarPagamento`, body, {
       headers: this.headers,

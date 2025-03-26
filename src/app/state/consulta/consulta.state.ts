@@ -10,6 +10,7 @@ import {
   SetInformations,
   SetParcelaSelecionada,
   SetPixEstatico,
+  SetTipoPagamento,
 } from './consulta.action';
 import { ConsultaModel } from 'src/app/interfaces/consulta.interface';
 
@@ -72,6 +73,15 @@ export class ConsultaState {
     ctx.patchState({
       ...state,
       informacaoParcelaSelecionada: payload.payload,
+    });
+  }
+
+  @Action(SetTipoPagamento)
+  SetTipoPagamento(ctx: StateContext<ConsultaModel>, payload) {
+    const state = ctx.getState;
+    ctx.patchState({
+      ...state,
+      informacaoTipoPagamento: payload.payload,
     });
   }
   // @Action(FinalizarAtendimento)

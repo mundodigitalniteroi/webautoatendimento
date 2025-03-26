@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-  <app-toolbar></app-toolbar>
+  <!-- <app-toolbar></app-toolbar> -->
 
   <ion-grid class="ion-align-items-center ion-justify-content-center">
     <ion-row class="row-title ion-justify-content-start ion-align-items-end">
@@ -12,7 +12,8 @@
     <ion-row class="row-button ion-justify-content-start ion-align-items-center">
       <ion-col class="ion-text-center">
         <ion-button fill="clear" (click)="imprimirGuia()">Imprimir Guia de Liberação</ion-button>
-        <ion-button (click)="imprimirComprovante()" color="warning">Imprimir Comprovante</ion-button>
+        <ion-button *ngIf="tipoPagamento == 'cartao'" (click)="imprimirComprovante()" color="warning">Imprimir Comprovante</ion-button>
+        <ion-button (click)="irParaHome()" color="danger">Voltar para a Home</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
