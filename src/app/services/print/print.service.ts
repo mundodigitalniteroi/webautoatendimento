@@ -38,7 +38,6 @@ export class PrintService {
   }
 
   connectToBluetoothPrinter(macAddress) {
-    console.log("macAddress", macAddress);
     return this.btSerial.connect(macAddress);
   }
 
@@ -83,12 +82,9 @@ export class PrintService {
   }
 
   printData(data: any) {
-    console.log("dataAfterPrinter", data);
     this.storage.get('printer').then((p) => {
-      console.log("p", p);
       this.connectToBluetoothPrinter(p.printer).subscribe(
         async (_) => {
-          console.log("dataPrinter", data);
           try {
             // Divide os dados em chunks menores (4096 bytes cada)
             const chunkSize = 4096;
@@ -110,13 +106,11 @@ export class PrintService {
             // Desconecta após garantir que tudo foi impresso
             await this.disconnectBluetoothPrinter();
           } catch (err) {
-            console.log("err", err);
             this.toast('Erro ao imprimir o comprovante');
             await this.disconnectBluetoothPrinter();
           }
         },
         (err) => {
-          console.log("Erro de conexão:", err);
           this.toast('Erro ao conectar a impressora');
         }
       );
@@ -174,7 +168,6 @@ export class PrintService {
 
   async printComprovante(dados: Comprovante) {
     const printer = await this.storage.get('printer');
-    console.log("printer", printer);
     const encoder = new EscPosEncoder();
     const img = new Image();
     img.src = '/assets/login/logo_patiosg_320.png';

@@ -34,7 +34,6 @@ export class SignalRService {
       .catch(err => console.error('Erro ao conectar ao SignalR:', err));
 
     this.hubConnection.on('ReceivePayment', (status: string) => {
-      console.log('Status:', status);
       this.paymentStatus$.next({ status });
     });
 
@@ -45,7 +44,7 @@ export class SignalRService {
   }
 
   receivePayment(client_transaction_id: string) {
-    this.hubConnection.invoke('ReceivePayment', client_transaction_id).then((data) => console.log("data", data)).catch((err) => console.error(err));
+    this.hubConnection.invoke('ReceivePayment', client_transaction_id).then((data) => console.log(data)).catch((err) => console.error(err));
   }
 
 }

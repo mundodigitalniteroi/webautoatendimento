@@ -32,10 +32,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
     this.options = this.store.selectSnapshot(AuthState.all);
-    console.log("optionsConsulta", this.optionsConsulta);
-    console.log("options", this.options);
     this.subscription = this.signalRService.paymentStatus$.subscribe(async (payload) => {
-      console.log("payload", payload.status)
       if (payload.status.toLowerCase() === 'successful') {
         try {
           await this.confirmarPagamento();
@@ -52,8 +49,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   }
 
   mapearBandeira(bandeiraString: string): Bandeira {
-    const bandeiraNormalizada = bandeiraString.toUpperCase(); // Normaliza para maiúsculas
-    console.log("bandeiraNormalizada", bandeiraNormalizada);
+    const bandeiraNormalizada = bandeiraString.toUpperCase();
     switch (bandeiraNormalizada) {
       case "AMEX":
         return Bandeira.AmericanExpress;
@@ -76,15 +72,12 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
     const indentifadorFaturamento = this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
     const identificadorUsuario = this.options.usuarioDPId;
     const transacaoResponse = await this.sumupIntegracaoService.getTransaction(localStorage.getItem('client_transaction_id'))
-    console.log("transacaoResponse", transacaoResponse);
-    console.log("identificadorUsuario", identificadorUsuario);
-    console.log("indentifadorFaturamento", indentifadorFaturamento);
+      
     const cartaoDados: CartaoRequest = {
       bandeira: this.mapearBandeira(transacaoResponse.card.type),
       numeroCartao: '****'+transacaoResponse.card.last_4_digits,
       codigoAutorizacao: transacaoResponse.auth_code
     }
-    console.log("dados do cartao",cartaoDados);
     this.consultaDebitoService.alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario, 10)
       .subscribe(() => {
         this.consultaDebitoService.confirmarPagamentoCartao(indentifadorFaturamento, identificadorUsuario, cartaoDados).subscribe((resp: any) => {

@@ -33,7 +33,6 @@ export class PrintPage implements OnInit {
 
   ionViewWillEnter() {
     this.storage.get('printer').then((p) => {
-      console.log(p);
       this.form.controls.printer.setValue(p.printer);
       this.selectedPrinter = p.printer;
       this.usarGuilhotina = p.usarGuilhotina;

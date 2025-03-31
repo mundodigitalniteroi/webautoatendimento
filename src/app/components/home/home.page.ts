@@ -40,18 +40,16 @@ export class HomePage implements OnInit {
   ngOnInit() {
     App.addListener('appUrlOpen', (event) => {
       const url = new URL(event.url);
-
-      // Verifica se o deep link é o esperado
-      console.log("Url", url)
       if (url.host === 'callback' && url.protocol === 'sumupmobile:') {
         this.authCode = url.searchParams.get('code');
         const responseToken = this.sumupIntegracaoService.createToken({ grant_type: 'authorization_code', code: this.authCode })
         localStorage.setItem('authModel', JSON.stringify(responseToken));
         this.router.navigate(['/home']);
+        this.login();
       }
     })
     this.options = this.store.selectSnapshot(AuthState.all);
-    this.login()
+    this.login();
   }
 
 
@@ -77,27 +75,20 @@ export class HomePage implements OnInit {
 
       // Se reader_id não existe, abre o modal
       if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
-        console.log("entrooou")
+        
         if (!this.modalPairingCode) {
-          console.log("Abriuu")
           this.modalPairingCode = true; // Abre o modal
           this.changeDetectorRef.detectChanges();
         }
+        const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode });
+        localStorage.setItem('reader_id', responseReader.id);
+        this.modalPairingCode = false; // Fecha o modal
+        this.changeDetectorRef.detectChanges();
 
-        // Após o modal ser confirmado, usa o pairingCode se disponível
-        if (this.pairingCode) {
-          const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode });
-          localStorage.setItem('reader_id', responseReader.id);
-          this.modalPairingCode = false; // Fecha o modal
-          this.changeDetectorRef.detectChanges();
-        } else {
-          throw new Error('Pairing code não foi fornecido');
-        }
       }
 
       this.consultaDebitoService.loginWebziPay().subscribe(
         token => {
-          console.log("authToken",token)
           localStorage.setItem('authTokenParcelas', token);
           // Use o token aqui
         },
@@ -108,7 +99,7 @@ export class HomePage implements OnInit {
 
 
       // Após tudo configurado, navega para payment-card
-      
+
     } catch (error) {
       console.error('Erro no login:', error);
     }
@@ -124,7 +115,7 @@ export class HomePage implements OnInit {
     this.pairingCode = event.target.value.toUpperCase(); // Converte para maiúsculas
   }
 
-  goConfirmation(){
+  goConfirmation() {
     this.router.navigate(['/payment-confirmed']);
   }
 

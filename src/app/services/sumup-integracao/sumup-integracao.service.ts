@@ -113,7 +113,6 @@ export class SumupIntegracaoService {
       state: request.state,
     });
     const authUrl = `${this.baseUrl}/authorize?${params.toString()}`;
-    console.log('Abrindo URL de autorização:', authUrl);
 
     const browser = this.inAppBrowser.create(authUrl, '_blank');
     browser.on('loadstart').subscribe((event) => {
@@ -121,8 +120,6 @@ export class SumupIntegracaoService {
       if (url.host === 'callback' && url.protocol === 'sumupmobile:') {
         const code = url.searchParams.get('code');
         const state = url.searchParams.get('state');
-        console.log('Code:', code);
-        console.log('State:', state);
         browser.close();
       }
     });
@@ -133,7 +130,6 @@ export class SumupIntegracaoService {
   // POST /v0.1/merchants/{merchant_code}/readers/{reader_code}/checkout
   async createCheckout(request: CreateCheckoutRequest, reader_code: string) {
     const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers/${reader_code}/checkout`;
-    console.log('URL:', url);
 
     const initialResponse = await this.fetchWithTokenRefresh(url, {
       method: 'POST',
@@ -148,14 +144,11 @@ export class SumupIntegracaoService {
   // POST /v0.1/merchants/{merchant_code}/readers
   async createReader(request: CreateReaderRequest): Promise<CreateReaderResponse> {
     const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers`;
-    console.log(url);
-    console.log(request);
 
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'POST',
       body: JSON.stringify(request),
     });
-    console.log("data", data)
     return data;
   }
 
@@ -165,7 +158,6 @@ export class SumupIntegracaoService {
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'GET',
     });
-    console.log("data", data)
     const comprovante: Comprovante = {
       card: {
         last_4_digits: data.card?.last_4_digits || '',

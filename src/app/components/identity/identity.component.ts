@@ -39,7 +39,6 @@ export class IdentityComponent implements OnInit, OnDestroy {
       this.isPessoaJuridica = tipo == 2;
       const atendimento = this.store.selectSnapshot(AtendimentoState.all);
       this.form.get('tipoAtendimentoId').setValue(atendimento.tipoAtendimentoId);
-      console.log(atendimento.tipoAtendimento);
 
       this.resetFormProprietario(tipo);
 
@@ -129,7 +128,6 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   save() {
     this.submitAttempt = true;
-    console.log(this.form);
     if (this.form.valid) {
       const formValue = this.form?.getRawValue();
 

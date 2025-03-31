@@ -15,7 +15,6 @@ export class PreviewPage implements OnInit {
   constructor(private modal: ModalController) {}
 
   ngOnInit() {
-    console.log(this.image);
     if (!this.image) {
       this.launchCamera();
     }

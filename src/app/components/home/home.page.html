@@ -36,7 +36,7 @@
         <ion-label position="floating">Pairing Code</ion-label>
         <ion-input [(ngModel)]="pairingCode" type="text" placeholder="Ex.: DRZOCD0ZR" (ionInput)="onInputChange($event)"></ion-input>
       </ion-item>
-      <ion-button expand="block" (click)="confirmPairingCode()" [disabled]="!pairingCode">Confirmar</ion-button>
+      <ion-button expand="block" (click)="confirmPairingCode()">Confirmar</ion-button>
     </div>
   </div>
 </ion-content>
