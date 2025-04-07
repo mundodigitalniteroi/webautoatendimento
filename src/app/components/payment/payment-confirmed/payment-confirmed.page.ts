@@ -35,6 +35,7 @@ export class PaymentConfirmedPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // Limpa o timer quando o componente for destruído
+    
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertController, MenuController, Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { App } from '@capacitor/app';
+import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     private store: Store,
     private router: Router,
     private menu: MenuController,
+    private sumupIntegracaoService:SumupIntegracaoService,
     private platform: Platform,
     private _location: Location,
     public alertController: AlertController
@@ -51,6 +53,30 @@ export class AppComponent implements OnInit {
   print() {
     this.menu.close();
     this.router.navigate(['/print']);
+  }
+
+  async desconnectReader(){
+    if(localStorage.getItem("reader_id")){
+      const response = await this.sumupIntegracaoService.removeReader(localStorage.getItem("reader_id"))
+      this.alertController.create({
+        header:"Sucesso",
+        message:response,
+        backdropDismiss:false
+      })
+      .then((alert) => {
+        alert.present();
+      });
+    }
+    else{
+      this.alertController.create({
+        header:"Erro",
+        message:"O leitor ja foi removido!",
+        backdropDismiss:false
+      })
+      .then((alert) => {
+        alert.present();
+      });
+    }
   }
 
   showExitConfirm() {

@@ -51,6 +51,29 @@ export interface EnderecoModel {
   bairro: string;
 }
 
+export interface DiariasReboqueRequest {
+  valor: number,
+  parcela: number,
+  referenciaExterna: string,
+  cartao: {
+    codTransacao: string,
+    codAutorizacao: string,
+    nsu: string,
+    numCartao: string,
+    bandeiraCartao: string
+  },
+  cliente: {
+    nome: string,
+    cpfCnpj: string
+  },
+  composicao: [
+    {
+      descricao: string,
+      valor: number
+    }
+  ]
+}
+
 export interface Geolocation {
   latitude: any;
   longitude: any;

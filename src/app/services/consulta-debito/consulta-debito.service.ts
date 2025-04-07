@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { map } from 'rxjs/operators';
 import { CartaoRequest } from 'src/app/interfaces/pagamento.interface';
+import { DiariasReboqueRequest } from 'src/app/interfaces/atendimento.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +68,7 @@ export class ConsultaDebitoService {
   }
 
   loginWebziPay() {
-    const requestBody = { login: 'eblonline', senha: '83XW8Rfr', provider: 'ApiService' };
+    const requestBody = { login: 'cuiaba', senha: '83XW8Rfr', provider: 'ApiService' };
     return this.http.post(`${this.apiWebziPay}/api/Usuario/login`, requestBody)
       .pipe(
         map((response: any) => response.token) // Extrai o token da resposta
@@ -158,6 +159,14 @@ export class ConsultaDebitoService {
     return this.http.post(this.apiConsultaUrl + `/api/pagamento/ConfirmarPagamento`, body, {
       headers: this.headers,
     });
+  }
+
+  diariasReboque(diariasReboque:DiariasReboqueRequest,token: string){
+    return this.http.post(this.apiWebziPay + '/api/Parcelamento/diariasreboque',diariasReboque,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
   }
 
   confirmarPagamentoCartao(indentifadorFaturamento, identificadorUsuario, cartao:CartaoRequest) {

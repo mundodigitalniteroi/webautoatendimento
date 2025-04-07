@@ -23,8 +23,6 @@ export class SumupIntegracaoService {
   private clientId = environment.clientId;
   private clientSecret = environment.clientSecret;
   private redirectUri = environment.redirectUri;
-  private merchantCode = environment.merchantCode;
-  private urlReturnPayment = environment.urlReturnPayment;
   constructor(private inAppBrowser: InAppBrowser) { }
 
   // Obtém o token de autorização do localStorage
@@ -65,7 +63,12 @@ export class SumupIntegracaoService {
       throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
     }
 
-    return response.json();
+    try {
+      return response.json();
+    }
+    catch{
+      return "";
+    }
   }
 
   // Atualiza o token usando o refresh_token
@@ -129,7 +132,7 @@ export class SumupIntegracaoService {
 
   // POST /v0.1/merchants/{merchant_code}/readers/{reader_code}/checkout
   async createCheckout(request: CreateCheckoutRequest, reader_code: string) {
-    const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers/${reader_code}/checkout`;
+    const url = `${this.baseUrl}/v0.1/merchants/${localStorage.getItem("merchant_code")}/readers/${reader_code}/checkout`;
 
     const initialResponse = await this.fetchWithTokenRefresh(url, {
       method: 'POST',
@@ -143,7 +146,7 @@ export class SumupIntegracaoService {
 
   // POST /v0.1/merchants/{merchant_code}/readers
   async createReader(request: CreateReaderRequest): Promise<CreateReaderResponse> {
-    const url = `${this.baseUrl}/v0.1/merchants/${this.merchantCode}/readers`;
+    const url = `${this.baseUrl}/v0.1/merchants/${localStorage.getItem("merchant_code")}/readers`;
 
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'POST',
@@ -154,7 +157,7 @@ export class SumupIntegracaoService {
 
   // GET /v0.1/transactions/{transaction_id}
   async getTransaction(transactionId: string) {
-    const url = `${this.baseUrl}/v2.1/merchants/${this.merchantCode}/transactions?client_transaction_id=${transactionId}`;
+    const url = `${this.baseUrl}/v2.1/merchants/${localStorage.getItem("merchant_code")}/transactions?client_transaction_id=${transactionId}`;
     const data = await this.fetchWithTokenRefresh(url, {
       method: 'GET',
     });
@@ -175,11 +178,13 @@ export class SumupIntegracaoService {
     return comprovante;
   }
 
-  async getMerchantProfile(): Promise<GetMerchantCodeResponse> {
+  async getMerchantProfile() {
     const url = `${this.baseUrl}/v0.1/me/merchant-profile`;
     const data = await this.fetchWithTokenRefresh(url, { method: 'GET' })
-    return data.merchant_code
+    localStorage.setItem("merchant_code", data.merchant_code)
   }
+
+
 
   // GET /v0.1/transactions
   async listTransactions(request: ListTransactionsRequest): Promise<ListTransactionsResponse> {
@@ -194,6 +199,19 @@ export class SumupIntegracaoService {
       method: 'GET',
     });
     return data;
+  }
+
+  // DELETE /v0.1/merchants/{merchant_code}/readers/{reader_id}
+  async removeReader(reader_id: string) {
+    const url = `${this.baseUrl}/v0.1/merchants/${localStorage.getItem("merchant_code")}/readers/${reader_id}`
+    const data = await this.fetchWithTokenRefresh(url, {
+      method: 'DELETE'
+    })
+    localStorage.removeItem("authModel")
+    localStorage.removeItem("authTokenParcelas")
+    localStorage.removeItem("merchant_code")
+    localStorage.removeItem("reader_id")
+    return 'Leitor removido com sucesso!'
   }
 
   // POST /token
@@ -221,6 +239,7 @@ export class SumupIntegracaoService {
     const data: CreateTokenResponse = await response.json();
     const authModel = { ...data, expires_at: Date.now() / 1000 + data.expires_in };
     localStorage.setItem('authModel', JSON.stringify(authModel)); // Salva automaticamente o token
+    this.getMerchantProfile()
     return authModel;
   }
 }

@@ -17,6 +17,8 @@ import { ConsultaState } from './state/consulta/consulta.state';
 
 import { environment } from 'src/environments/environment';
 import { APP_BASE_HREF } from '@angular/common';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SumupIntegracaoService } from './services/sumup-integracao/sumup-integracao.service';
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +36,8 @@ registerLocaleData(ptBr);
     HttpClientModule,
   ],
   providers: [
+    InAppBrowser,
+    SumupIntegracaoService,    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },

@@ -12,6 +12,8 @@ import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-integracao.service';
 import { Bandeira, CartaoRequest } from 'src/app/interfaces/pagamento.interface';
+import { DiariasReboqueRequest } from 'src/app/interfaces/atendimento.interface';
+import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 
 @Component({
   selector: 'app-payment-wait',
@@ -25,6 +27,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   optionsConsulta;
   options;
+  atendimento;
 
   constructor(private signalRService: SignalRService, private sumupIntegracaoService: SumupIntegracaoService, private store: Store, private atendimentoService: AtendimentoService, private consultaDebitoService: ConsultaDebitoService, private router: Router) {
   }
@@ -32,6 +35,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
     this.options = this.store.selectSnapshot(AuthState.all);
+    this.atendimento = this.store.selectSnapshot(AtendimentoState.all);
     this.subscription = this.signalRService.paymentStatus$.subscribe(async (payload) => {
       if (payload.status.toLowerCase() === 'successful') {
         try {
@@ -83,7 +87,34 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
         this.consultaDebitoService.confirmarPagamentoCartao(indentifadorFaturamento, identificadorUsuario, cartaoDados).subscribe((resp: any) => {
           if (resp.faturamento.status == 'P') {
             const atendimentoId = this.optionsConsulta.informacoesConsulta.atendimentoId;
+            const composicaoValues = this.atendimento.informacaoConsulta.faturamento.listagemServico.map((composicao:any)=>{
+              const response = {
+                  descricao:composicao.nomeServico,
+                  valor:composicao.valorFaturado
+              }
+              return response;
+            })
+            const diariasRequest:DiariasReboqueRequest = {
+              valor: this.optionsConsulta.informacaoParcelaSelecionada.valorTotal,
+              parcela: this.optionsConsulta.informacaoParcelaSelecionada.parcela,
+              referenciaExterna:this.atendimento.informacaoConsulta.identificadorProcesso,
+              cartao:{
+                bandeiraCartao:transacaoResponse.card.type,
+                codTransacao:transacaoResponse.transaction_code,
+                numCartao:cartaoDados.numeroCartao,
+                codAutorizacao:cartaoDados.codigoAutorizacao,
+                nsu: ""
+              },
+              cliente:{
+                cpfCnpj:this.atendimento.proprietario.cpf,
+                nome:this.atendimento.proprietario.nome
+              },
+              composicao: composicaoValues
+            }            
             this.atendimentoService.confirmarPagamento(atendimentoId).subscribe(() => {
+              this.consultaDebitoService.diariasReboque(diariasRequest,localStorage.getItem('authTokenParcelas')).subscribe((resp)=>{
+                console.log("respReboque",resp)
+              })
               this.router.navigate(['/payment-confirmed']);
             });
           }
