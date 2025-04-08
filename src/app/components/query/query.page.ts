@@ -54,6 +54,7 @@ export class QueryPage implements OnInit {
           this.store.dispatch(new SetInformacoesConsulta(deb.data));
           this.router.navigate(['/process-information']);
         } else if (deb.data.statusId == 6) {
+          this.store.dispatch(new SetInformacoesConsulta(deb.data));
           this.router.navigate(['/payment-confirmed']);
         } else {
           this.error = true;

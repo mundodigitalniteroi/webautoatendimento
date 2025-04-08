@@ -95,7 +95,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
               return response;
             })
             const diariasRequest:DiariasReboqueRequest = {
-              valor: this.optionsConsulta.informacaoParcelaSelecionada.valorTotal,
+              valor: this.atendimento.informacaoConsulta.faturamento.valorFaturado,
               parcela: this.optionsConsulta.informacaoParcelaSelecionada.parcela,
               referenciaExterna:this.atendimento.informacaoConsulta.identificadorProcesso,
               cartao:{

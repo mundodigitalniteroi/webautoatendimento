@@ -2,6 +2,8 @@ export const environment = {
   production: true,
   urlApiAtendimento: 'https://linkpatios.com.br/adminatendimentoapi',
   urlApiDP: 'https://linkpatios.com.br/autoatendimentoapi',
+  // urlApiAtendimento: 'https://api.atendimento.gestordepatios.app.br',
+  // urlApiDP: 'https://api.autoatendimento.webzi.com.br',
   urlApiSumup: 'https://api.sumup.com',
   urlApiWebziPay:'https://api.webzi.com.br',
   merchantCode: 'MDEUZAGC',

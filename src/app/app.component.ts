@@ -15,6 +15,10 @@ import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-
 })
 export class AppComponent implements OnInit {
   options;
+  msgModal = "";
+  showModal = false;
+  titleModal = "";
+  typeModal: "success" | "error" = "success";
   constructor(
     private store: Store,
     private router: Router,
@@ -61,7 +65,13 @@ export class AppComponent implements OnInit {
       this.alertController.create({
         header:"Sucesso",
         message:response,
-        backdropDismiss:false
+        backdropDismiss:false,
+        buttons:[
+          {
+            text: 'Fechar',
+            role: 'cancel',
+          },
+        ],
       })
       .then((alert) => {
         alert.present();
@@ -71,7 +81,13 @@ export class AppComponent implements OnInit {
       this.alertController.create({
         header:"Erro",
         message:"O leitor ja foi removido!",
-        backdropDismiss:false
+        backdropDismiss:false,
+        buttons:[
+          {
+            text: 'Fechar',
+            role: 'cancel',
+          },
+        ],
       })
       .then((alert) => {
         alert.present();

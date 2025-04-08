@@ -80,7 +80,7 @@ export class HomePage implements OnInit {
           this.modalPairingCode = true; // Abre o modal
           this.changeDetectorRef.detectChanges();
         }
-        const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode });
+        const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode.toUpperCase() });
         localStorage.setItem('reader_id', responseReader.id);
         this.modalPairingCode = false; // Fecha o modal
         this.changeDetectorRef.detectChanges();

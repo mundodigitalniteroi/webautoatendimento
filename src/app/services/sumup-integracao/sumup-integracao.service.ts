@@ -63,10 +63,14 @@ export class SumupIntegracaoService {
       throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
     }
 
-    try {
+    console.log("response",response)
+    console.log("response.text()",response.text())
+    console.log("response.json()",response.body)
+
+    if(response.bodyUsed){
       return response.json();
     }
-    catch{
+    else{
       return "";
     }
   }
@@ -211,6 +215,7 @@ export class SumupIntegracaoService {
     localStorage.removeItem("authTokenParcelas")
     localStorage.removeItem("merchant_code")
     localStorage.removeItem("reader_id")
+    localStorage.removeItem("client_transaction_id")
     return 'Leitor removido com sucesso!'
   }
 
