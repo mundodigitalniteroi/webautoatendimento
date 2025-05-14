@@ -121,7 +121,7 @@ export class PrintService {
     const printer = await this.storage.get('printer');
     const encoder = new EscPosEncoder();
     const img = new Image();
-    img.src = '/assets/login/logo_patiosg_320.png';
+    img.src = '/assets/login/logo_translog.png';
     img.crossOrigin = 'Anonymous';
 
     img.onload = () => {
@@ -170,7 +170,7 @@ export class PrintService {
     const printer = await this.storage.get('printer');
     const encoder = new EscPosEncoder();
     const img = new Image();
-    img.src = '/assets/login/logo_patiosg_320.png';
+    img.src = '/assets/login/logo_translog.png';
     img.crossOrigin = 'Anonymous';
     const parcelaSelecionada:PlanoParcelamento = this.optionsConsulta.informacaoParcelaSelecionada;
 
