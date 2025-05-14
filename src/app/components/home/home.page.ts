@@ -37,7 +37,8 @@ export class HomePage implements OnInit {
     this.hasPermission();
   }
 
-  ngOnInit() {
+  ngOnInit() { 
+
     App.addListener('appUrlOpen', (event) => {
       const url = new URL(event.url);
       if (url.host === 'callback' && url.protocol === 'sumupmobile:') {
@@ -50,6 +51,9 @@ export class HomePage implements OnInit {
     })
     this.options = this.store.selectSnapshot(AuthState.all);
     this.login();
+    if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
+      this.modalPairingCode = true;
+    }
   }
 
 
@@ -73,20 +77,6 @@ export class HomePage implements OnInit {
         await this.sumupIntegracaoService.authorize();
       }
 
-      // Se reader_id não existe, abre o modal
-      if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
-        
-        if (!this.modalPairingCode) {
-          this.modalPairingCode = true; // Abre o modal
-          this.changeDetectorRef.detectChanges();
-        }
-        const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode.toUpperCase() });
-        localStorage.setItem('reader_id', responseReader.id);
-        this.modalPairingCode = false; // Fecha o modal
-        this.changeDetectorRef.detectChanges();
-
-      }
-
       this.consultaDebitoService.loginWebziPay().subscribe(
         token => {
           localStorage.setItem('authTokenParcelas', token);
@@ -97,9 +87,6 @@ export class HomePage implements OnInit {
         }
       );
 
-
-      // Após tudo configurado, navega para payment-card
-
     } catch (error) {
       console.error('Erro no login:', error);
     }
@@ -107,12 +94,11 @@ export class HomePage implements OnInit {
 
   async confirmPairingCode() {
     if (this.pairingCode) {
-      this.login(); // Chama login() para prosseguir com o pairingCode preenchido
+      const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode.toUpperCase() });
+      localStorage.setItem('reader_id', responseReader.id);
+      this.modalPairingCode = false; // Fecha o modal
+      this.changeDetectorRef.detectChanges();
     }
-  }
-
-  onInputChange(event: any) {
-    this.pairingCode = event.target.value.toUpperCase(); // Converte para maiúsculas
   }
 
   goConfirmation() {

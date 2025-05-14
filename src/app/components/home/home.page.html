@@ -25,7 +25,7 @@
         <p class="ion-text-center">Escolha a opção desejada abaixo</p>
         <ion-button (click)="goPublicSearch()" class="btn-busca">Iniciar Auto Atendimento</ion-button>
         <ion-button (click)="goQuery()" class="btn-busca" color="warning">Pagamento</ion-button>        
-        <ion-button [routerLink]="['/protocol']" class="btn-busca btn-consulta">Atendimento no Guichê</ion-button>
+        <!-- <ion-button [routerLink]="['/protocol']" class="btn-busca btn-consulta">Atendimento no Guichê</ion-button> -->
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -34,7 +34,7 @@
       <h2>Digite o Código de Pareamento</h2>
       <ion-item>
         <ion-label position="floating">Codigo</ion-label>
-        <ion-input [(ngModel)]="pairingCode" type="text" placeholder="Ex.: DRZOCD0ZR" (ionInput)="onInputChange($event)"></ion-input>
+        <ion-input [(ngModel)]="pairingCode" type="text" placeholder="Ex.: DRZOCD0ZR"></ion-input>
       </ion-item>
       <ion-button expand="block" (click)="confirmPairingCode()">Confirmar</ion-button>
     </div>

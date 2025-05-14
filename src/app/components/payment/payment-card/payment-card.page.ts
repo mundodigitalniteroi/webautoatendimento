@@ -6,7 +6,7 @@ import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { PlanoParcelamento } from 'src/app/interfaces/consulta.interface';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { App } from '@capacitor/app';
 import { SignalRService } from 'src/app/services/signalr/signalr.service';
