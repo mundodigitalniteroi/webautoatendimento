@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  urlApiAtendimento: 'https://hml.api.atendimento.gestordepatios.app.br',
-  urlApiDP: 'https://api.dev.autoatendimento.webzi.com.br',
+  urlApiAtendimento: 'https://api.atendimento.gestordepatios.app.br',
+  urlApiDP: 'https://api.autoatendimento.webzi.com.br',
   // urlApiAtendimento: 'https://api.atendimento.gestordepatios.app.br',
   // urlApiDP: 'https://api.autoatendimento.webzi.com.br',
   urlApiSumup: 'https://api.sumup.com',
