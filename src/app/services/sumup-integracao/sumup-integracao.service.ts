@@ -95,7 +95,7 @@ export class SumupIntegracaoService {
   // Abre a URL de autorização no InAppBrowser
   async authorize(): Promise<void> {
     const scopes =
-      'transactions.history user.app-settings user.profile_readonly email profile user.profile user.subaccounts user.payout-settings products invoices.read invoices.write accounting.read accounting.write readers.read readers.write payments payment_instruments';
+      'transactions.history user.app-settings user.profile_readonly email profile user.profile user.subaccounts user.payout-settings products invoices.read invoices.write accounting.read accounting.write readers.read readers.write';
     const request: AuthorizeRequest = {
       response_type: 'code',
       client_id: this.clientId,
