@@ -105,7 +105,7 @@ export class PaymentCardPage implements OnInit {
         },
         installments: this.parcelaSelecionada.parcela,
         card_type: 'credit',
-        description: this.informacaoDebito.veiculo.marcaModelo.marcaModelo,
+        description: this.informacaoDebito.veiculo.marcaModelo.marcaModelo + ' ' + this.informacaoDebito.veiculo.numeroProcesso,
         return_url: `${this.returnUrlPayment}/sumupwebhook`
       }
       this.store.dispatch(new SetParcelaSelecionada(this.parcelaSelecionada));

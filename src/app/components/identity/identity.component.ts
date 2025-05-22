@@ -89,7 +89,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
       nome: ['', Validators.required],
       dataNascimento: ['', [<any>Validators.required, <any>DataValidator.validate]],
       cpf: ['', [Validators.required, CpfCnpjValidator.validate]],
-      cnh: ['', [<any>CnhValidator.validate]],
+      cnh: ['', [Validators.required,<any>CnhValidator.validate]],
       telefone: ['', [<any>CelularValidator.validate]],
       email: ['', Validators.email],
     });

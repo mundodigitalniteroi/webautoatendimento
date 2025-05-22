@@ -125,7 +125,7 @@
 
           <ng-template [ngIf]="isPessoaFisica">
             <ion-item [class.ion-item-invalid]="proprietarioInvalid('cnh')" *ngIf="isPessoaFisica">
-              <ion-label position="floating">CNH</ion-label>
+              <ion-label position="floating">CNH*</ion-label>
               <ion-input
                 inputmode="numeric"
                 formControlName="cnh"
@@ -136,6 +136,14 @@
                 cnh
               ></ion-input>
             </ion-item>
+            <div
+              class="error-message"
+              *ngIf="
+                proprietario.controls.cnh.errors && proprietario.controls.cnh.errors.required && (proprietario.controls.cnh.dirty || submitAttempt)
+              "
+            >
+              CNH é obrigatório
+            </div>
             <div class="error-message" *ngIf="proprietario.controls.cnh.hasError('cnh') && submitAttempt">CNH inválido</div>
           </ng-template>
 
