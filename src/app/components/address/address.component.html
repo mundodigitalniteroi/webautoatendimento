@@ -27,10 +27,12 @@
                 mask: '99999-999',
                 blockedKeys: [',', '.', '+', '-', ' ']
               }"
-              maxlength="10"
+              maxlength="9"
             ></ion-input>
           </ion-item>
-          <div class="error-message" *ngIf="proprietarioInvalid('cep')">CEP é obrigatorio</div>
+          <div class="error-message" *ngIf="proprietarioInvalid('cep')">
+            {{ getCepErrorMessage('cep', 'proprietario') }}
+          </div>
           <ion-item [class.ion-item-invalid]="proprietarioInvalid('rua')">
             <ion-label position="floating">Rua*</ion-label>
             <ion-input formControlName="rua"></ion-input>
@@ -84,10 +86,12 @@
                   mask: '99999-999',
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
-                maxlength="10"
+                maxlength="9"
               ></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavelInvalid('cep')">CEP é obrigatorio</div>
+            <div class="error-message" *ngIf="responsavelInvalid('cep')">
+              {{ getCepErrorMessage('cep', 'responsavel') }}
+            </div>
             <ion-item [class.ion-item-invalid]="responsavelInvalid('rua')">
               <ion-label position="floating">Rua*</ion-label>
               <ion-input formControlName="rua"></ion-input>

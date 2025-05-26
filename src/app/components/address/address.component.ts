@@ -19,14 +19,14 @@ export class AddressComponent implements OnInit {
   @Select(AtendimentoState.all) state$: Observable<AtendimentoModel>;
   submitAttempt = false;
 
-  constructor(private cepService: ConsultaCepService, private fb: FormBuilder, private store: Store, private router: Router) {}
+  constructor(private cepService: ConsultaCepService, private fb: FormBuilder, private store: Store, private router: Router) { }
 
   ngOnInit(): void {
     //this.options = this.store.selectSnapshot(AtendimentoState.all);
     // // console.log(this.options)
     this.form = this.fb.group({
       enderecoProprietario: this.fb.group({
-        cep: [null, Validators.required],
+        cep: [null, Validators.required, Validators.pattern(/^\d{8}$|^\d{5}-\d{3}$/)],
         rua: [null, Validators.required],
         numero: [null, [Validators.required, Validators.minLength(1)]],
         estado: [null, [Validators.required]],
@@ -52,7 +52,7 @@ export class AddressComponent implements OnInit {
         this.form.addControl(
           'enderecoResponsavel',
           this.fb.group({
-            cep: [null, Validators.required],
+            cep: [null, Validators.required, Validators.pattern(/^\d{8}$|^\d{5}-\d{3}$/)],
             rua: [null, Validators.required],
             numero: [null, [Validators.required, Validators.minLength(1)]],
             estado: [null, [Validators.required]],
@@ -63,6 +63,19 @@ export class AddressComponent implements OnInit {
         );
       }
     });
+  }
+
+  getCepErrorMessage(control: string, grupo: 'proprietario' | 'responsavel'): string {
+    const formGroup = grupo === 'proprietario' ? this.enderecoProprietario : this.enderecoResponsavel;
+    const cepControl = formGroup?.get(control);
+    
+    if (cepControl?.errors?.['required']) {
+      return 'CEP é obrigatório';
+    }
+    if (cepControl?.errors?.['pattern']) {
+      return 'CEP deve conter 8 números válidos';
+    }
+    return '';
   }
 
   consultaCEP(param) {
