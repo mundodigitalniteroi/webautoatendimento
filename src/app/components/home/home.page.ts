@@ -39,21 +39,21 @@ export class HomePage implements OnInit {
 
   ngOnInit() { 
 
-    App.addListener('appUrlOpen', (event) => {
-      const url = new URL(event.url);
-      if (url.host === 'callback' && url.protocol === 'sumupmobile:') {
-        this.authCode = url.searchParams.get('code');
-        const responseToken = this.sumupIntegracaoService.createToken({ grant_type: 'authorization_code', code: this.authCode })
-        localStorage.setItem('authModel', JSON.stringify(responseToken));
-        this.router.navigate(['/home']);
-        this.login();
-      }
-    })
+    // App.addListener('appUrlOpen', (event) => {
+    //   const url = new URL(event.url);
+    //   if (url.host === 'callback' && url.protocol === 'sumupmobile:') {
+    //     this.authCode = url.searchParams.get('code');
+    //     const responseToken = this.sumupIntegracaoService.createToken({ grant_type: 'authorization_code', code: this.authCode })
+    //     localStorage.setItem('authModel', JSON.stringify(responseToken));
+    //     this.router.navigate(['/home']);
+    //     this.login();
+    //   }
+    // })
     this.options = this.store.selectSnapshot(AuthState.all);
     this.login();
-    if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
-      this.modalPairingCode = true;
-    }
+    // if (!localStorage.getItem('reader_id') || localStorage.getItem('reader_id') === undefined) {
+    //   this.modalPairingCode = true;
+    // }
   }
 
 
@@ -73,9 +73,9 @@ export class HomePage implements OnInit {
   async login() {
     try {
       // Se authModel não existe, inicia o fluxo de autorização
-      if (!localStorage.getItem('authModel')) {
-        await this.sumupIntegracaoService.authorize();
-      }
+      // if (!localStorage.getItem('authModel')) {
+      //   await this.sumupIntegracaoService.authorize();
+      // }
 
       this.consultaDebitoService.loginWebziPay().subscribe(
         token => {
@@ -92,14 +92,14 @@ export class HomePage implements OnInit {
     }
   }
 
-  async confirmPairingCode() {
-    if (this.pairingCode) {
-      const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode.toUpperCase() });
-      localStorage.setItem('reader_id', responseReader.id);
-      this.modalPairingCode = false; // Fecha o modal
-      this.changeDetectorRef.detectChanges();
-    }
-  }
+  // async confirmPairingCode() {
+  //   if (this.pairingCode) {
+  //     const responseReader = await this.sumupIntegracaoService.createReader({ pairing_code: this.pairingCode.toUpperCase() });
+  //     localStorage.setItem('reader_id', responseReader.id);
+  //     this.modalPairingCode = false; // Fecha o modal
+  //     this.changeDetectorRef.detectChanges();
+  //   }
+  // }
 
   goConfirmation() {
     this.router.navigate(['/payment-confirmed']);
