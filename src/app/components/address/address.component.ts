@@ -21,12 +21,28 @@ export class AddressComponent implements OnInit {
 
   constructor(private cepService: ConsultaCepService, private fb: FormBuilder, private store: Store, private router: Router) { }
 
+  // Validator customizado para CEP
+  private cepValidator(control: any) {
+    if (!control.value) {
+      return null; // deixa o required validator tratar valores vazios
+    }
+    
+    // Remove caracteres não numéricos para validação
+    const digitsOnly = control.value.replace(/\D/g, '');
+    
+    if (digitsOnly.length !== 8) {
+      return { pattern: true };
+    }
+    
+    return null;
+  }
+
   ngOnInit(): void {
     //this.options = this.store.selectSnapshot(AtendimentoState.all);
     // // console.log(this.options)
     this.form = this.fb.group({
       enderecoProprietario: this.fb.group({
-        cep: [null, Validators.required, Validators.pattern(/^\d{8}$|^\d{5}-\d{3}$/)],
+        cep: [null, [Validators.required, this.cepValidator.bind(this)]],
         rua: [null, Validators.required],
         numero: [null, [Validators.required, Validators.minLength(1)]],
         estado: [null, [Validators.required]],
@@ -52,7 +68,7 @@ export class AddressComponent implements OnInit {
         this.form.addControl(
           'enderecoResponsavel',
           this.fb.group({
-            cep: [null, Validators.required, Validators.pattern(/^\d{8}$|^\d{5}-\d{3}$/)],
+            cep: [null, [Validators.required, this.cepValidator.bind(this)]],
             rua: [null, Validators.required],
             numero: [null, [Validators.required, Validators.minLength(1)]],
             estado: [null, [Validators.required]],
@@ -73,7 +89,7 @@ export class AddressComponent implements OnInit {
       return 'CEP é obrigatório';
     }
     if (cepControl?.errors?.['pattern']) {
-      return 'CEP deve conter 8 números válidos';
+      return 'CEP precisa ter exatamente 8 dígitos';
     }
     return '';
   }
@@ -86,8 +102,10 @@ export class AddressComponent implements OnInit {
       cep = this.enderecoProprietario.get('cep').value;
     }
 
-    if (cep != null && cep !== '' && cep.length == 9) {
-      this.cepService.consultaCEP(cep).subscribe((dados) => this.populaDadosForm(dados, param));
+    // Remove hífen para consulta na API e verifica se tem 8 dígitos
+    const cepLimpo = cep?.replace(/\D/g, '');
+    if (cepLimpo && cepLimpo.length === 8) {
+      this.cepService.consultaCEP(cepLimpo).subscribe((dados) => this.populaDadosForm(dados, param));
     }
   }
 
