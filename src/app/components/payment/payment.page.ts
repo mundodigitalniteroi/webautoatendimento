@@ -76,5 +76,8 @@ export class PaymentPage implements OnInit {
         });
       });
     }
+    if(type == 'estadia'){
+      this.router.navigate(['/payment-confirmed-estadia'])
+    }
   }
 }

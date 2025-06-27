@@ -1,0 +1,19 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class="ion-align-items-center">
+    <ion-row class="row-title ion-justify-content-start ion-align-items-center">
+      <ion-col>
+        <h1>Confirme o pagamento da sua estadia</h1>
+      </ion-col>
+    </ion-row>    
+    <ion-row class="row-title value ion-justify-content-start ion-align-items-center">
+      <ion-col>
+        <h2>Valor</h2>
+        <p><b>{{valorTotal}}</b></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-row class="row-buttons ion-justify-content-center">
+    <ion-button (click)="confirmarPagamento()">Consultar Pagamento</ion-button>
+    <ion-button fill="outline" class="back" [routerLink]="['/home']" *ngIf="segundos < 0">Fechar</ion-button>
+  </ion-row>
+</ion-content>

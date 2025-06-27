@@ -89,6 +89,7 @@ export class ConsultaDebitoService {
       }
     );
   }
+  
   gerarPixEstatico(indentifadorFaturamento, identificadorUsuario) {
     return this.http.get(
       this.apiConsultaUrl +
