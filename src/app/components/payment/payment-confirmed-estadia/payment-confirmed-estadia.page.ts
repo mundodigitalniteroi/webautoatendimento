@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { PrintService } from 'src/app/services/print/print.service';
+import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 
@@ -19,6 +20,8 @@ export class PaymentConfirmedEstadiaPage implements OnInit {
   segundos = 120;
   interval;
   options;
+  optionsInformations;
+  informations;
   intervalConsultaPix;
 
   constructor(
@@ -29,23 +32,11 @@ export class PaymentConfirmedEstadiaPage implements OnInit {
   ) {
     this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
     this.options = this.store.selectSnapshot(AuthState.all);
-    this.valorTotal = this.optionsConsulta?.informacaoPixEstatico?.valorOriginal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-    this.interval = setInterval(() => {
-      this.tempo = this.formatarTempo(this.segundos);
-      this.segundos--;
-
-      if (this.segundos < 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
-
-    this.intervalConsultaPix = setInterval(() => {
-      this.confirmarPagamento();
-    }, 5000);
+    this.optionsInformations = this.store.selectSnapshot(AtendimentoState.all);
+    this.informations = this.optionsInformations?.informacaoConsulta;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   formatarTempo(segundos) {
     segundos %= 3600;

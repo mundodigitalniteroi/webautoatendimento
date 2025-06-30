@@ -8,12 +8,12 @@
     <ion-row class="row-title value ion-justify-content-start ion-align-items-center">
       <ion-col>
         <h2>Valor</h2>
-        <p><b>{{valorTotal}}</b></p>
+        <p><b>{{informations.faturamento.valorFaturado | currency}}</b></p>
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-row class="row-buttons ion-justify-content-center">
-    <ion-button (click)="confirmarPagamento()">Consultar Pagamento</ion-button>
-    <ion-button fill="outline" class="back" [routerLink]="['/home']" *ngIf="segundos < 0">Fechar</ion-button>
+    <ion-button (click)="confirmarPagamento()">Confirmar Pagamento</ion-button>
+    <ion-button fill="outline" class="back" [routerLink]="['/home']">Voltar</ion-button>
   </ion-row>
 </ion-content>
