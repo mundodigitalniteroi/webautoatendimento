@@ -114,6 +114,13 @@ const routes: Routes = [
       ).then((m) => m.PaymentConfirmedPageModule),
   },
   {
+    path: 'payment-confirmed-estadia',
+    loadChildren: () =>
+      import(
+        './components/payment/payment-confirmed-estadia/payment-confirmed-estadia.module'
+      ).then((m) => m.PaymentConfirmedEstadiaPageModule),
+  },
+  {
     path: 'schedule-shipping',
     loadChildren: () =>
       import('./components/schedule-shipping/schedule-shipping.module').then(
