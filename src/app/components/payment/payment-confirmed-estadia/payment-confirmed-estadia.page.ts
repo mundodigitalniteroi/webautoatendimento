@@ -23,6 +23,7 @@ export class PaymentConfirmedEstadiaPage implements OnInit {
   optionsInformations;
   informations;
   intervalConsultaPix;
+  informacoesDebito;
 
   constructor(
     private store: Store,
@@ -32,8 +33,7 @@ export class PaymentConfirmedEstadiaPage implements OnInit {
   ) {
     this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
     this.options = this.store.selectSnapshot(AuthState.all);
-    this.optionsInformations = this.store.selectSnapshot(AtendimentoState.all);
-    this.informations = this.optionsInformations?.informacaoConsulta;
+    this.informacoesDebito = this.optionsConsulta?.informacaoDebito;
   }
 
   ngOnInit(): void { }

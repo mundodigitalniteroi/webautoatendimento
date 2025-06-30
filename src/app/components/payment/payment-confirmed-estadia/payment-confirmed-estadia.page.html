@@ -4,16 +4,19 @@
       <ion-col>
         <h1>Confirme o pagamento da sua estadia</h1>
       </ion-col>
-    </ion-row>    
-    <ion-row class="row-title value ion-justify-content-start ion-align-items-center">
+    </ion-row>
+    <ion-row
+      class="row-title value ion-justify-content-start ion-align-items-center">
       <ion-col>
         <h2>Valor</h2>
-        <p><b>{{informations.faturamento.valorFaturado | currency}}</b></p>
+        <p><b>{{informacoesDebito.faturamento.valorFaturado | currency}}</b></p>
+        <div class="ion-justify-content-center" style="display: flex; gap: 10px; margin-top: 20px;">
+          <ion-button fill="outline" (click)="confirmarPagamento()">Confirmar
+            Pagamento</ion-button>
+          <ion-button fill="outline" class="back"
+            [routerLink]="['/home']">Voltar</ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-row class="row-buttons ion-justify-content-center">
-    <ion-button (click)="confirmarPagamento()">Confirmar Pagamento</ion-button>
-    <ion-button fill="outline" class="back" [routerLink]="['/home']">Voltar</ion-button>
-  </ion-row>
 </ion-content>
