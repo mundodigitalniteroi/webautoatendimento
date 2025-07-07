@@ -9,11 +9,13 @@ import * as moment from 'moment';
 import { ModalController, ToastController } from '@ionic/angular';
 import { PreviewPage } from '../preview/preview.page';
 import { Util } from 'src/app/services/util/util.service';
+
 @Component({
   selector: 'app-document-upload',
   templateUrl: './document-upload.page.html',
   styleUrls: ['./document-upload.page.scss'],
 })
+
 export class DocumentUploadPage implements OnInit, OnDestroy {
   line = false;
   checkCrlv = false;

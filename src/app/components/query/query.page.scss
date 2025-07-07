@@ -6,6 +6,8 @@ ion-grid {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 20px;
+  max-height: 80vh;
 }
 .row-center {
   width: 100%;
@@ -36,6 +38,7 @@ p {
 ion-button {
   text-decoration: none;
   width: 100%;
+  max-width: 350px;
   height: 80px;
   margin-top: 30px;
   --border-radius: 10px;
@@ -43,6 +46,15 @@ ion-button {
   font-family: $font-family;
   font-size: 1.6rem;
   // @extend %margin-top;
+}
+
+.container-btn {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
 }
 
 ion-list {
@@ -54,6 +66,7 @@ ion-item {
 }
 ion-input {
   margin-top: 20px;
+  font-size: 1.8rem;
   --color: rgb(107, 107, 107);
   font-family: $font-family;
 }
@@ -87,7 +100,7 @@ ion-item::part(native) {
   transform-origin: 40px 40px;
 }
 .lds-roller div:after {
-  content: ' ';
+  content: " ";
   display: block;
   position: absolute;
   width: 7px;
