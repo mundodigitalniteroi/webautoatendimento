@@ -60,40 +60,87 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
   }
 
   async openCamera(doc, nome) {
-    const foto = this.fotos.find((x) => x.tipoDocumentoId == doc.tipoDocumentoId);
-    const modal = await this.modal.create({
-      component: PreviewPage,
-      cssClass: '',
-      animated: true,
-      componentProps: {
-        title: nome,
-        image: foto?.base64,
-        tipoDocumentoId: doc.tipoDocumentoId,
-      },
-    });
-    modal.onDidDismiss().then((resp) => {
-      if (resp !== null && resp.data && resp.data.change) {
-        doc.isUploading = true;
-        doc.check = false;
-        let fotoModel = this.fotos.find((x) => x.tipoDocumentoId == resp.data.tipoDocumentoId);
-
-        if (fotoModel) {
-          fotoModel.base64 = resp.data.base64;
-        } else {
-          fotoModel = {
-            arquivoId: 0,
-            tipo: 'image/jpeg',
-            base64: resp.data.base64,
-            tipoDocumentoId: doc.tipoDocumentoId,
-            tamanho: 0,
-            nome: nome + '.jpg',
+    // Verifica se a largura da tela é maior que 768px
+    if (window.innerWidth > 768) {
+      // Cria um input de arquivo para desktop
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (event: any) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const base64 = reader.result as string;
+            this.processSelectedFile(base64, doc, nome);
           };
+          reader.readAsDataURL(file);
         }
+      };
+      input.click();
+    } else {
+      // Comportamento original para mobile (largura <= 768px)
+      const foto = this.fotos.find((x) => x.tipoDocumentoId == doc.tipoDocumentoId);
+      const modal = await this.modal.create({
+        component: PreviewPage,
+        cssClass: '',
+        animated: true,
+        componentProps: {
+          title: nome,
+          image: foto?.base64,
+          tipoDocumentoId: doc.tipoDocumentoId,
+        },
+      });
+      modal.onDidDismiss().then((resp) => {
+        if (resp !== null && resp.data && resp.data.change) {
+          doc.isUploading = true;
+          doc.check = false;
+          let fotoModel = this.fotos.find((x) => x.tipoDocumentoId == resp.data.tipoDocumentoId);
 
-        this.addFoto(fotoModel, doc);
-      }
-    });
-    return await modal.present();
+          if (fotoModel) {
+            fotoModel.base64 = resp.data.base64;
+          } else {
+            fotoModel = {
+              arquivoId: 0,
+              tipo: 'image/jpeg',
+              base64: resp.data.base64,
+              tipoDocumentoId: doc.tipoDocumentoId,
+              tamanho: 0,
+              nome: nome + '.jpg',
+            };
+          }
+
+          this.addFoto(fotoModel, doc);
+        }
+      });
+      return await modal.present();
+    }
+  }
+
+  // Adicione este método auxiliar para processar o arquivo selecionado
+  private processSelectedFile(base64: string, doc: any, nome: string) {
+    doc.isUploading = true;
+    doc.check = false;
+    
+    // Remove o prefixo data:image/...;base64, se presente
+    const cleanBase64 = base64.includes(',') ? base64.split(',')[1] : base64;
+    
+    let fotoModel = this.fotos.find((x) => x.tipoDocumentoId == doc.tipoDocumentoId);
+    
+    if (fotoModel) {
+      fotoModel.base64 = cleanBase64;
+    } else {
+      fotoModel = {
+        arquivoId: 0,
+        tipo: 'image/jpeg',
+        base64: cleanBase64,
+        tipoDocumentoId: doc.tipoDocumentoId,
+        tamanho: 0,
+        nome: nome + '.jpg',
+      };
+    }
+    
+    this.addFoto(fotoModel, doc);
   }
 
   uploadFoto(fotoModel, doc) {

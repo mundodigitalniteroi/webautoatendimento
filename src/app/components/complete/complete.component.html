@@ -1,7 +1,6 @@
 <ion-content [fullscreen]="true">
   <ion-grid
-    class="ion-text-center ion-justify-content-center ion-align-items-center"
-  >
+    class="ion-text-center ion-justify-content-center ion-align-items-center">
     <ion-row class="ion-justify-content-center">
       <ion-col size="6">
         <ion-img src="../../../assets/check.png"></ion-img>
@@ -9,25 +8,26 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h1 style="margin: 0; margin-top: 20px">
-          <b>Cadastro Concluído!</b>
+        <h1>
+          Cadastro Concluído!
         </h1>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <h5>
-          <b>Protocolo do Atendimento</b>
+          Protocolo do Atendimento
         </h5>
         <p class="protocolo">{{ options?.protocolo }}</p>
         <p class="text">
           Seus documentos serão analisados e em breve você será informado pelo
           painel. Pegue seu protocolo na impressora.
         </p>
-        <ion-button [routerLink]="['/home']">Novo Atendimento</ion-button>
-        <ion-button fill="outline" (click)="imprimir()"
-          >Imprimir Protocolo</ion-button
-        >
+        <div class="container-btn">
+          <ion-button fill="outline" (click)="imprimir()">Imprimir
+            Protocolo</ion-button>
+          <ion-button [routerLink]="['/home']">Novo Atendimento</ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
