@@ -18,11 +18,13 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <div class="container-btn">
-      <ion-button fill="outline"
-        [routerLink]="['/foto-facial']">Voltar</ion-button>
-      <ion-button (click)="save()" class="btn-enviar">Enviar</ion-button>
-    </div>
+    <ion-row>
+      <div class="container-btn">
+        <ion-button fill="outline"
+          [routerLink]="['/foto-facial']">Voltar</ion-button>
+        <ion-button (click)="save()" class="btn-enviar">Enviar</ion-button>
+      </div>
+    </ion-row>
     <div class="loading" *ngIf="loading">
       <div class="lds-roller">
         <div></div>

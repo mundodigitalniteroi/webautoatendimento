@@ -4,6 +4,11 @@
     font-size: 1.2rem;
   }
 }
+
+ion-button{
+  height: 70px;
+}
+
 ion-item,
 ion-label {
   font-size: 1.2rem;
@@ -13,6 +18,10 @@ ion-menu {
   --width: 450px;
   --background: #ffffff;
   border: 1px solid #808080;
+}
+
+ion-app{
+  padding-bottom: 20px;
 }
 ion-avatar {
   width: 120px;
@@ -80,6 +89,10 @@ ion-item {
   #usuario {
     padding-top: 50px;
   }
+}
+
+#main{
+  padding-bottom: 20px;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;900&display=swap');
