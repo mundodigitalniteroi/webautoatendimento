@@ -29,7 +29,6 @@ ion-button {
   font-size: 1.6rem;
   // @extend %margin-top;
 }
-
 h1 {
   margin-top: 15%;
   color: rgb(22, 127, 247);
@@ -45,17 +44,23 @@ p {
   text-align: center;
 }
 ion-row {
-  width: 98%;
+  width: 100%;
 }
 ion-card {
   border-radius: 10px;
-  margin: 2px;
   b {
     color: rgb(34, 34, 34);
   }
   ion-card-content {
     height: 100%;
   }
+}
+
+.container-btn{
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 16px;
+  width: 100%;
 }
 
 ion-label {
@@ -114,6 +119,11 @@ ion-item {
     .ipva-img {
       width: 3vw;
     }
+  }
+  .container-btn{
+    flex-direction: row;
+    justify-content: space-between;
+    gap:16px;
   }
 }
 

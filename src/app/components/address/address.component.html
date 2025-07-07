@@ -1,18 +1,13 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="12" class="ion-text-center">
-      <h2>Cadastro</h2>
-    </ion-col>
-  </ion-row>
-  <ion-card>
+  <ion-card class="container-card">
     <ion-card-header>
       <ion-card-title>Cadastro de Endereço</ion-card-title>
       <ion-card-subtitle>Por favor preencha os campos corretamente</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-grid [formGroup]="form">
+      <section class="form-section" [formGroup]="form">
         <ion-row class="ion-justify-content-start" style="margin-top: 15px">
           <h1>Endereco do Proprietário</h1>
         </ion-row>
@@ -120,13 +115,11 @@
             <div class="error-message" *ngIf="responsavelInvalid('estado')">Estado é obrigatorio</div>
           </ion-list>
         </ng-template>
-      </ion-grid>
+        <div class="container-btn">
+          <ion-button fill="outline" (click)="voltar()">Voltar</ion-button>
+          <ion-button class="btn-search" (click)="save()">Continuar</ion-button>
+        </div>
+      </section>
     </ion-card-content>
   </ion-card>
-  <ion-row class="col-btn">
-    <ion-col>
-      <ion-button class="btn-search" (click)="save()">Continuar</ion-button>
-      <ion-button fill="outline" (click)="voltar()">Voltar</ion-button>
-    </ion-col>
-  </ion-row>
 </ion-content>

@@ -50,8 +50,7 @@
             </ion-col>
           </ion-row>
           <ion-row
-            *ngFor="let debito of  informations.faturamento.listagemServico"
-          >
+            *ngFor="let debito of  informations.faturamento.listagemServico">
             <ion-col size="5">
               <p>{{debito.nomeServico}}</p>
             </ion-col>
@@ -80,14 +79,10 @@
       </ion-card-content>
     </ion-card>
   </ion-row>
-  <ion-row class="ion-justify-content-center">
-    <ion-button class="next" [routerLink]="['/how-liberation']"
-      >Liberar veículo</ion-button
-    >
-  </ion-row>
-  <ion-row class="ion-justify-content-center">
-    <ion-button fill="outline" [routerLink]="['/public-search']"
-      >Voltar</ion-button
-    >
-  </ion-row>
+  <div class="container-btn">
+    <ion-button fill="outline"
+      [routerLink]="['/public-search']">Voltar</ion-button>
+    <ion-button class="next" [routerLink]="['/how-liberation']">Liberar
+      veículo</ion-button>
+  </div>
 </ion-content>

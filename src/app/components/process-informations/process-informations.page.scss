@@ -81,6 +81,13 @@ ion-card {
     color: black;
   }
 }
+
+.container-btn {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+}
 ion-button {
   width: 98%;
   height: 80px;
@@ -90,8 +97,23 @@ ion-button {
   font-size: 1.6rem;
   font-family: $font-family;
   margin-top: 30px;
+  
   // --background: rgb(72, 135, 252);
+}
+
+@media (min-width: 768px) {
+  .container-btn {
+    flex-direction: row;
+    justify-content: space-between;
+    
+  }
+  ion-button {
+    max-width: 350px;
+  }  
 }
 // .services {
 //   width: 95%;
 // }
+
+
+

@@ -9,13 +9,21 @@ ion-content {
   margin-top: 30px;
 }
 
-.row-center {
+#car-image {
   width: 100%;
-  flex-direction: column !important;
+  height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 50%;
 }
+
+.row-center {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .drive {
   margin-top: 50px;
 }
@@ -40,17 +48,33 @@ p {
   height: 175px;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   margin-top: 30px;
   margin-bottom: 30px;
   section {
-    width: 175px;
-    height: 175px;
-    border: 1px solid grey;
-    border-radius: 20px;
-    display: flex;
-    // justify-content: space-around;
-    cursor: pointer;
     position: relative;
+    border: 1px solid black;
+    padding: 16px;
+    border-radius: 10px;
+    .check {
+      width: 100%;
+      height: 18%;
+      border: none;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      position: absolute;
+      top: 20px;
+      ion-img {
+        width: 35%;
+        height: 30px;
+      }
+    }
+    ion-img {
+      width: 40px;
+      height: 40px;
+      margin-top: 0%;
+    }
   }
 }
 ion-button {
@@ -64,50 +88,23 @@ ion-button {
   margin-top: 30px;
   // --background: rgb(72, 135, 252);
 }
-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  .check {
-    width: 100%;
-    height: 18%;
-    border: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    position: absolute;
-    top: 20px;
-    ion-img {
-      width: 35%;
-      height: 30px;
-    }
-  }
-  ion-img {
-    width: 40px;
-    height: 40px;
-    margin-top: 0%;
-  }
-  p {
-    margin: 0%;
-    margin-right: 0% !important;
-    color: black;
-    font-weight: 700;
-    font-family: $font-family;
-  }
-}
+
 h1 {
   width: 100%;
   font-family: $font-family;
 }
+
+
+
 .selection {
   width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-@media (min-width: 821px) {
-  .drive {
-    display: none;
-  }
+
+@media (min-width: 768px) {
+  
   .drive-md {
     width: 90%;
     height: 150px;
@@ -127,19 +124,12 @@ h1 {
     justify-content: center !important;
     align-items: center !important;
   }
-  .row-btns {
-    width: 100%;
-  }
-  .background-md {
-    background-color: #f7f7f7;
-    height: 100%;
-  }
-  .selection {
-    width: 100% !important;
-  }
   h1 {
     width: 100%;
     font-family: $font-family;
+  }
+  ion-button {
+    max-width: 450px;
   }
   // .col-center{
   //   background-color: #F7F7F7;

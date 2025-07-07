@@ -1,49 +1,54 @@
 <ion-content [fullscreen]="true">
   <app-toolbar></app-toolbar>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="12" class="ion-text-center">
-      <h2>Cadastro</h2>
-    </ion-col>
-  </ion-row>
-  <ion-card *ngIf="this.form && state$ | async">
+  <ion-card class="container-card" *ngIf="this.form && state$ | async">
     <ion-card-header>
       <ion-card-title>Cadastro Pessoal</ion-card-title>
-      <ion-card-subtitle>Por favor preencha os campos corretamente</ion-card-subtitle>
+      <ion-card-subtitle>Por favor preencha os campos
+        corretamente</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-grid [formGroup]="form">
+      <section class="form-section" [formGroup]="form">
         <ion-row class="ion-justify-content-start" style="margin-top: 15px">
           <h1>Dados do Proprietário</h1>
         </ion-row>
         <ion-list style="margin-top: 15px">
           <ion-item>
             <ion-label>Tipo do Proprietário</ion-label>
-            <ion-select placeholder="Selecione o Tipo de Pessoa" formControlName="tipoPessoaId">
-              <ion-select-option [value]="item.tipoPessoaId" *ngFor="let item of tipoPessoas">{{
+            <ion-select placeholder="Selecione o Tipo de Pessoa"
+              formControlName="tipoPessoaId">
+              <ion-select-option [value]="item.tipoPessoaId"
+                *ngFor="let item of tipoPessoas">{{
                 item.descricao == 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'
-              }}</ion-select-option>
+                }}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-list>
         <ion-list formGroupName="proprietario" *ngIf="proprietario">
           <ng-template [ngIf]="isPessoaFisica">
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="proprietarioInvalid('nome')">
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="proprietarioInvalid('nome')">
               <ion-label position="floating">Nome Completo*</ion-label>
-              <ion-input (ionChange)="inputChangedName($event)" formControlName="nome"></ion-input>
+              <ion-input (ionChange)="inputChangedName($event)"
+                formControlName="nome"></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="proprietarioInvalid('nome')">Nome é obrigatório</div>
+            <div class="error-message" *ngIf="proprietarioInvalid('nome')">Nome
+              é obrigatório</div>
           </ng-template>
           <ng-template [ngIf]="isPessoaJuridica">
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="proprietarioInvalid('nome')">
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="proprietarioInvalid('nome')">
               <ion-label position="floating">Razão Social*</ion-label>
-              <ion-input (ionChange)="inputChangedName($event)" formControlName="nome"></ion-input>
+              <ion-input (ionChange)="inputChangedName($event)"
+                formControlName="nome"></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="proprietarioInvalid('nome')">Razão Social é obrigatório</div>
+            <div class="error-message" *ngIf="proprietarioInvalid('nome')">Razão
+              Social é obrigatório</div>
           </ng-template>
 
           <ng-template [ngIf]="isPessoaFisica">
-            <ion-item [class.ion-item-invalid]="proprietarioInvalid('dataNascimento')">
+            <ion-item
+              [class.ion-item-invalid]="proprietarioInvalid('dataNascimento')">
               <ion-label position="floating">Data de Nascimento*</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -53,8 +58,7 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="10"
-                data
-              ></ion-input>
+                data></ion-input>
             </ion-item>
             <div
               class="error-message"
@@ -62,15 +66,17 @@
                 proprietario.controls.dataNascimento.errors &&
                 proprietario.controls.dataNascimento.errors.required &&
                 (proprietario.controls.dataNascimento.dirty || submitAttempt)
-              "
-            >
+              ">
               Data de nascimento é obrigatória
             </div>
-            <div class="error-message" *ngIf="proprietario.controls.dataNascimento.hasError('data') && submitAttempt">Data inválida</div>
+            <div class="error-message"
+              *ngIf="proprietario.controls.dataNascimento.hasError('data') && submitAttempt">Data
+              inválida</div>
           </ng-template>
 
           <ng-template [ngIf]="isPessoaFisica">
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="proprietarioInvalid('cpf')">
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="proprietarioInvalid('cpf')">
               <ion-label position="floating">CPF*</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -80,24 +86,25 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="14"
-                appCpfCnpjValidate
-              ></ion-input>
+                appCpfCnpjValidate></ion-input>
             </ion-item>
             <div
               class="error-message"
               *ngIf="
                 proprietario.controls.cpf.errors && proprietario.controls.cpf.errors.required && (proprietario.controls.cpf.dirty || submitAttempt)
-              "
-            >
+              ">
               CPF é obrigatório
             </div>
-            <div class="error-message" *ngIf="proprietario.controls.cpf.hasError('digit') && (proprietario.controls.cpf.dirty || submitAttempt)">
+            <div class="error-message"
+              *ngIf="proprietario.controls.cpf.hasError('digit') && (proprietario.controls.cpf.dirty || submitAttempt)">
               CPF inválido
             </div>
           </ng-template>
 
           <ng-template [ngIf]="isPessoaJuridica">
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="proprietarioInvalid('cpf')" *ngIf="isPessoaJuridica">
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="proprietarioInvalid('cpf')"
+              *ngIf="isPessoaJuridica">
               <ion-label position="floating">CNPJ*</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -107,24 +114,24 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="19"
-                appCpfCnpjValidate
-              ></ion-input>
+                appCpfCnpjValidate></ion-input>
             </ion-item>
             <div
               class="error-message"
               *ngIf="
                 proprietario.controls.cpf.errors && proprietario.controls.cpf.errors.required && (proprietario.controls.cpf.dirty || submitAttempt)
-              "
-            >
+              ">
               CNPJ é obrigatório
             </div>
-            <div class="error-message" *ngIf="proprietario.controls.cpf.hasError('digit') && (proprietario.controls.cpf.dirty || submitAttempt)">
+            <div class="error-message"
+              *ngIf="proprietario.controls.cpf.hasError('digit') && (proprietario.controls.cpf.dirty || submitAttempt)">
               CNPJ inválido
             </div>
           </ng-template>
 
           <ng-template [ngIf]="isPessoaFisica">
-            <ion-item [class.ion-item-invalid]="proprietarioInvalid('cnh')" *ngIf="isPessoaFisica">
+            <ion-item [class.ion-item-invalid]="proprietarioInvalid('cnh')"
+              *ngIf="isPessoaFisica">
               <ion-label position="floating">CNH</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -133,10 +140,11 @@
                   mask: '',
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
-                cnh
-              ></ion-input>
+                cnh></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="proprietario.controls.cnh.hasError('cnh') && submitAttempt">CNH inválido</div>
+            <div class="error-message"
+              *ngIf="proprietario.controls.cnh.hasError('cnh') && submitAttempt">CNH
+              inválido</div>
           </ng-template>
 
           <ion-item class="ion-justify-content-start">
@@ -149,37 +157,47 @@
                 blockedKeys: [',', '.', '+', '-', ' ']
               }"
               maxlength="15"
-              celular
-            ></ion-input>
+              celular></ion-input>
           </ion-item>
-          <div class="error-message" *ngIf="proprietario.controls.telefone.hasError('celular') && submitAttempt">Celular inválido</div>
+          <div class="error-message"
+            *ngIf="proprietario.controls.telefone.hasError('celular') && submitAttempt">Celular
+            inválido</div>
 
-          <ion-item [class.ion-item-invalid]="!proprietario.controls.email.valid && submitAttempt">
+          <ion-item
+            [class.ion-item-invalid]="!proprietario.controls.email.valid && submitAttempt">
             <ion-label position="floating">Email</ion-label>
-            <ion-input type="email" inputmode="email" formControlName="email" email></ion-input>
+            <ion-input type="email" inputmode="email" formControlName="email"
+              email></ion-input>
           </ion-item>
         </ion-list>
-        <div class="error-message" *ngIf="!proprietario.controls.email.valid && submitAttempt">Email é inválido</div>
+        <div class="error-message"
+          *ngIf="!proprietario.controls.email.valid && submitAttempt">Email é
+          inválido</div>
 
         <ng-template
           [ngIf]="
             form.controls.responsavel &&
             ((state$ | async).tipoAtendimento == 'procurador' || (isPessoaJuridica && (state$ | async).tipoAtendimento == 'proprietario'))
-          "
-        >
+          ">
           <ion-row class="ion-justify-content-start" style="margin-top: 15px">
-            <h1 *ngIf="(state$ | async).tipoAtendimento == 'proprietario'">Dados do Responsável</h1>
-            <h1 *ngIf="(state$ | async).tipoAtendimento == 'procurador'">Dados do Procurador</h1>
+            <h1 *ngIf="(state$ | async).tipoAtendimento == 'proprietario'">Dados
+              do Responsável</h1>
+            <h1 *ngIf="(state$ | async).tipoAtendimento == 'procurador'">Dados
+              do Procurador</h1>
           </ion-row>
 
           <ion-list formGroupName="responsavel">
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="responsavelInvalid('nome')">
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="responsavelInvalid('nome')">
               <ion-label position="floating">Nome Completo*</ion-label>
-              <ion-input (ionChange)="inputChangedName($event)" formControlName="nome"></ion-input>
+              <ion-input (ionChange)="inputChangedName($event)"
+                formControlName="nome"></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavelInvalid('nome')">Nome obrigatório</div>
+            <div class="error-message" *ngIf="responsavelInvalid('nome')">Nome
+              obrigatório</div>
 
-            <ion-item [class.ion-item-invalid]="responsavelInvalid('dataNascimento')">
+            <ion-item
+              [class.ion-item-invalid]="responsavelInvalid('dataNascimento')">
               <ion-label position="floating">Data de Nascimento*</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -189,8 +207,7 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="10"
-                data
-              ></ion-input>
+                data></ion-input>
             </ion-item>
             <div
               class="error-message"
@@ -198,13 +215,15 @@
                 responsavel.controls.dataNascimento.errors &&
                 responsavel.controls.dataNascimento.errors.required &&
                 (responsavel.controls.dataNascimento.dirty || submitAttempt)
-              "
-            >
+              ">
               Data de nascimento é obrigatória
             </div>
-            <div class="error-message" *ngIf="responsavel.controls.dataNascimento.hasError('data') && submitAttempt">Data inválida</div>
+            <div class="error-message"
+              *ngIf="responsavel.controls.dataNascimento.hasError('data') && submitAttempt">Data
+              inválida</div>
 
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="responsavelInvalid('cpf')">
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="responsavelInvalid('cpf')">
               <ion-label position="floating">CPF*</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -214,16 +233,15 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="14"
-                appCpfCnpjValidate
-              ></ion-input>
+                appCpfCnpjValidate></ion-input>
             </ion-item>
             <div
               class="error-message"
-              *ngIf="responsavel.controls.cpf.errors && responsavel.controls.cpf.errors.required && (responsavel.controls.cpf.dirty || submitAttempt)"
-            >
+              *ngIf="responsavel.controls.cpf.errors && responsavel.controls.cpf.errors.required && (responsavel.controls.cpf.dirty || submitAttempt)">
               CPF obrigatório
             </div>
-            <div class="error-message" *ngIf="responsavel.controls.cpf.hasError('digit') && (responsavel.controls.cpf.dirty || submitAttempt)">
+            <div class="error-message"
+              *ngIf="responsavel.controls.cpf.hasError('digit') && (responsavel.controls.cpf.dirty || submitAttempt)">
               CPF inválido
             </div>
 
@@ -235,11 +253,13 @@
                 [appIonMask]="{
                   mask: '',
                   blockedKeys: [',', '.', '+', '-', ' ']
-                }"
-              ></ion-input>
+                }"></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavel.controls.cnh.hasError('cnh') && submitAttempt">CNH inválido</div>
-            <ion-item class="ion-justify-content-start" [class.ion-item-invalid]="responsavelInvalid('telefone')">
+            <div class="error-message"
+              *ngIf="responsavel.controls.cnh.hasError('cnh') && submitAttempt">CNH
+              inválido</div>
+            <ion-item class="ion-justify-content-start"
+              [class.ion-item-invalid]="responsavelInvalid('telefone')">
               <ion-label position="floating">Celular</ion-label>
               <ion-input
                 inputmode="numeric"
@@ -249,25 +269,29 @@
                   blockedKeys: [',', '.', '+', '-', ' ']
                 }"
                 maxlength="15"
-                celular
-              ></ion-input>
+                celular></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="responsavel.controls.telefone.hasError('celular') && submitAttempt">Celular inválido</div>
+            <div class="error-message"
+              *ngIf="responsavel.controls.telefone.hasError('celular') && submitAttempt">Celular
+              inválido</div>
 
-            <ion-item [class.ion-item-invalid]="!responsavel.get('email').valid && submitAttempt">
+            <ion-item
+              [class.ion-item-invalid]="!responsavel.get('email').valid && submitAttempt">
               <ion-label position="floating">Email</ion-label>
-              <ion-input type="email" inputmode="email" formControlName="email"></ion-input>
+              <ion-input type="email" inputmode="email"
+                formControlName="email"></ion-input>
             </ion-item>
-            <div class="error-message" *ngIf="!responsavel.get('email').valid && submitAttempt">Email é inválido</div>
+            <div class="error-message"
+              *ngIf="!responsavel.get('email').valid && submitAttempt">Email é
+              inválido</div>
           </ion-list>
         </ng-template>
-      </ion-grid>
+        <div class="container-btn">
+          <ion-button fill="outline" (click)="voltar()">Voltar</ion-button>
+          <ion-button class="btn-search" (click)="save()">Continuar</ion-button>
+        </div>
+      </section>
     </ion-card-content>
   </ion-card>
-  <ion-row class="col-btn">
-    <ion-col>
-      <ion-button class="btn-search" (click)="save()">Continuar</ion-button>
-      <ion-button fill="outline" (click)="voltar()">Voltar</ion-button>
-    </ion-col>
-  </ion-row>
+  
 </ion-content>

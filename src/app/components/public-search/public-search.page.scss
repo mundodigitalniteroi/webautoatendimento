@@ -36,6 +36,7 @@ p {
 ion-button {
   text-decoration: none;
   width: 100%;
+  max-width: 450px;
   height: 80px;
   margin-top: 30px;
   --border-radius: 10px;
@@ -53,7 +54,8 @@ ion-item {
   --background: transparent;
 }
 ion-input {
-  margin-top: 20px;
+  margin-top: 30px;
+  font-size: 1.8rem;
   --color: rgb(107, 107, 107);
   font-family: $font-family;
 }
@@ -87,7 +89,7 @@ ion-item::part(native) {
   transform-origin: 40px 40px;
 }
 .lds-roller div:after {
-  content: ' ';
+  content: " ";
   display: block;
   position: absolute;
   width: 7px;

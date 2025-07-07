@@ -50,3 +50,27 @@ ion-button {
   color: #858585;
   padding: 0 80px;
 }
+
+@media (min-width: 1025px) {
+  .container-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  #protocolo-img {
+    width: 350px !important;
+    height: 350px !important;
+  }
+  ion-button {
+    width: 100%;
+    max-width: 450px;
+  }
+  .container-btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}

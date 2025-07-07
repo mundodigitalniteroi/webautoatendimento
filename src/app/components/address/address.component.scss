@@ -95,8 +95,27 @@ ion-item {
   }
 }
 
+.container-card{
+  width: auto;
+}
+
 .error-message {
   color: red;
   font-size: 14px;
   margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+
+  .container-btn{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap:16px;
+  }
+
+  .container-card{
+    width: 60vw;
+    margin: 0 auto;
+  }
 }
