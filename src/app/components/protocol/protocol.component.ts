@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
 import { PrintService } from 'src/app/services/print/print.service';
@@ -16,7 +17,8 @@ export class ProtocolComponent implements OnInit {
   constructor(
     private store: Store,
     private print: PrintService,
-    private atendimento: AtendimentoService
+    private atendimento: AtendimentoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -37,5 +39,9 @@ export class ProtocolComponent implements OnInit {
 
   imprimir(protocolo) {
     this.print.printProtocolo(protocolo);
+    setTimeout(() => {
+      this.protocolo = null;
+      this.router.navigate(['/home'], { replaceUrl: true });
+    }, 5000);
   }
 }
