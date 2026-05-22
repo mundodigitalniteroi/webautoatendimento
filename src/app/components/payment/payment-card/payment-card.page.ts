@@ -26,6 +26,9 @@ interface Parcela {
 })
 
 export class PaymentCardPage implements OnInit {
+  loading: boolean = false;
+  msgError: string;
+  error: boolean = false;
   credit = true;
   debito = false;
   data: CreateCheckoutRequest;
@@ -46,7 +49,7 @@ export class PaymentCardPage implements OnInit {
     },
   ];
 
-  
+
 
   constructor(
     private store: Store,
@@ -59,16 +62,52 @@ export class PaymentCardPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.informacaoDebito = this.store.selectSnapshot(state => state.consulta.informacaoDebito);
-    this.consultaDebitoService
-      .consultarParcelamento(this.informacaoDebito.faturamento.valorFaturado, 1, localStorage.getItem('authTokenParcelas'))
-      .subscribe((parcelas) => {
-        this.parcelamentoDados = parcelas;
-      })
+    this.loading = true;
+    this.error = false;
+    this.msgError = '';
 
-    this.activateRouter.queryParams.subscribe(async params => {
-      if (params['paymentError'] === 'true') {
-        this.presentAlert()
+    this.informacaoDebito = this.store.selectSnapshot(
+      (state) => state.consulta.informacaoDebito
+    );
+
+    // evita quebrar se vier vazio
+    const valor = this.informacaoDebito?.faturamento?.valorFaturado;
+    const token = localStorage.getItem('authTokenParcelas');
+
+    if (!valor || !token) {
+      this.loading = false;
+      this.error = true;
+      this.msgError = 'Dados para consulta de parcelamento não encontrados';
+      return;
+    }
+
+    this.consultaDebitoService
+      .consultarParcelamento(valor, 1, token)
+      .subscribe(
+        (parcelas: any) => {
+          this.loading = false;
+
+          if (!parcelas) {
+            this.error = true;
+            this.msgError = 'Nenhum parcelamento encontrado';
+            return;
+          }
+
+          this.parcelamentoDados = parcelas;
+        },
+        (erro) => {
+          this.loading = false;
+          this.error = true;
+          this.msgError =
+            'Houve um erro ao consultar o parcelamento. Tente novamente.';
+
+          console.error('Erro consultarParcelamento:', erro);
+        }
+      );
+
+    this.activateRouter.queryParams.subscribe((params) => {
+      if (params?.['paymentError'] === 'true') {
+        this.presentAlert();
       }
     });
   }

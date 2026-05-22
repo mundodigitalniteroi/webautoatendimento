@@ -24,7 +24,7 @@ export class AtendimentoService {
   getTipoPessoas() {
     return this.http.get(this.apiUrl + `/TipoPessoa`, {
       headers: this.headers,
-    });
+    })
   }
 
   getTipoAtendimento() {

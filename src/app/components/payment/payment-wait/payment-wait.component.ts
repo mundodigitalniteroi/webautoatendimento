@@ -14,6 +14,7 @@ import { SumupIntegracaoService } from 'src/app/services/sumup-integracao/sumup-
 import { Bandeira, CartaoRequest } from 'src/app/interfaces/pagamento.interface';
 import { DiariasReboqueRequest } from 'src/app/interfaces/atendimento.interface';
 import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
+import { PrintService } from 'src/app/services/print/print.service';
 
 @Component({
   selector: 'app-payment-wait',
@@ -29,7 +30,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   options;
   atendimento;
 
-  constructor(private signalRService: SignalRService, private sumupIntegracaoService: SumupIntegracaoService, private store: Store, private atendimentoService: AtendimentoService, private consultaDebitoService: ConsultaDebitoService, private router: Router) {
+  constructor(private print: PrintService, private signalRService: SignalRService, private sumupIntegracaoService: SumupIntegracaoService, private store: Store, private atendimentoService: AtendimentoService, private consultaDebitoService: ConsultaDebitoService, private router: Router) {
   }
 
   ngOnInit() {
@@ -73,58 +74,133 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
   }
 
   async confirmarPagamento() {
-    const indentifadorFaturamento = this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
-    const identificadorUsuario = this.options.usuarioDPId;
-    const transacaoResponse = await this.sumupIntegracaoService.getTransaction(localStorage.getItem('client_transaction_id'))
-      
-    const cartaoDados: CartaoRequest = {
-      bandeira: this.mapearBandeira(transacaoResponse.card.type),
-      numeroCartao: '****'+transacaoResponse.card.last_4_digits,
-      codigoAutorizacao: transacaoResponse.auth_code
+    try {
+      const indentifadorFaturamento =
+        this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
+
+      const identificadorUsuario = this.options.usuarioDPId;
+
+      const transacaoResponse =
+        await this.sumupIntegracaoService.getTransaction(
+          localStorage.getItem('client_transaction_id')
+        );
+
+      const cartaoDados: CartaoRequest = {
+        bandeira: this.mapearBandeira(transacaoResponse.card.type),
+        numeroCartao: '****' + transacaoResponse.card.last_4_digits,
+        codigoAutorizacao: transacaoResponse.auth_code
+      };
+
+      this.consultaDebitoService
+        .alterarFormaPagamento(
+          indentifadorFaturamento,
+          identificadorUsuario,
+          10
+        )
+        .subscribe(
+          () => {
+            this.consultaDebitoService
+              .confirmarPagamentoCartao(
+                indentifadorFaturamento,
+                identificadorUsuario,
+                cartaoDados
+              )
+              .subscribe(
+                (resp: any) => {
+                  if (resp?.faturamento?.status === 'P') {
+                    const atendimentoId =
+                      this.optionsConsulta.informacoesConsulta.atendimentoId;
+
+                    const composicaoValues =
+                      this.atendimento.informacaoConsulta.faturamento.listagemServico.map(
+                        (composicao: any) => ({
+                          descricao: composicao.nomeServico,
+                          valor: composicao.valorFaturado
+                        })
+                      );
+
+                    const diariasRequest: DiariasReboqueRequest = {
+                      valor:
+                        this.atendimento.informacaoConsulta.faturamento
+                          .valorFaturado,
+                      parcela:
+                        this.optionsConsulta
+                          .informacaoParcelaSelecionada.parcela,
+                      referenciaExterna:
+                        this.atendimento.informacaoConsulta
+                          .identificadorProcesso,
+                      cartao: {
+                        bandeiraCartao: transacaoResponse.card.type,
+                        codTransacao:
+                          transacaoResponse.transaction_code,
+                        numCartao: cartaoDados.numeroCartao,
+                        codAutorizacao:
+                          cartaoDados.codigoAutorizacao,
+                        nsu: ''
+                      },
+                      cliente: {
+                        cpfCnpj: this.atendimento.proprietario.cpf,
+                        nome: this.atendimento.proprietario.nome
+                      },
+                      composicao: composicaoValues
+                    };
+
+                    this.atendimentoService
+                      .confirmarPagamento(atendimentoId)
+                      .subscribe(
+                        () => {
+                          this.consultaDebitoService
+                            .diariasReboque(
+                              diariasRequest,
+                              localStorage.getItem(
+                                'authTokenParcelas'
+                              )
+                            )
+                            .subscribe(
+                              () => { },
+                              () => {
+                                console.error(
+                                  'Erro ao enviar diárias/reboque'
+                                );
+                              }
+                            );
+
+                          this.router.navigate([
+                            '/payment-confirmed'
+                          ]);
+                        },
+                        () => {
+                          this.print.toast(
+                            'Erro ao confirmar pagamento'
+                          );
+                        }
+                      );
+                  } else {
+                    this.print.toast(
+                      'Pagamento ainda não confirmado. Tente novamente.'
+                    );
+                  }
+                },
+                () => {
+                  this.print.toast(
+                    'Erro ao confirmar pagamento no cartão'
+                  );
+                }
+              );
+          },
+          () => {
+            this.print.toast(
+              'Erro ao alterar forma de pagamento'
+            );
+          }
+        );
+    } catch (error) {
+      console.error(error);
+
+      this.print.toast(
+        'Erro ao consultar transação do pagamento'
+      );
     }
-    this.consultaDebitoService.alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario, 10)
-      .subscribe(() => {
-        this.consultaDebitoService.confirmarPagamentoCartao(indentifadorFaturamento, identificadorUsuario, cartaoDados).subscribe((resp: any) => {
-          if (resp.faturamento.status == 'P') {
-            const atendimentoId = this.optionsConsulta.informacoesConsulta.atendimentoId;
-            const composicaoValues = this.atendimento.informacaoConsulta.faturamento.listagemServico.map((composicao:any)=>{
-              const response = {
-                  descricao:composicao.nomeServico,
-                  valor:composicao.valorFaturado
-              }
-              return response;
-            })
-            const diariasRequest:DiariasReboqueRequest = {
-              valor: this.atendimento.informacaoConsulta.faturamento.valorFaturado,
-              parcela: this.optionsConsulta.informacaoParcelaSelecionada.parcela,
-              referenciaExterna:this.atendimento.informacaoConsulta.identificadorProcesso,
-              cartao:{
-                bandeiraCartao:transacaoResponse.card.type,
-                codTransacao:transacaoResponse.transaction_code,
-                numCartao:cartaoDados.numeroCartao,
-                codAutorizacao:cartaoDados.codigoAutorizacao,
-                nsu: ""
-              },
-              cliente:{
-                cpfCnpj:this.atendimento.proprietario.cpf,
-                nome:this.atendimento.proprietario.nome
-              },
-              composicao: composicaoValues
-            }            
-            this.atendimentoService.confirmarPagamento(atendimentoId).subscribe(() => {
-              this.consultaDebitoService.diariasReboque(diariasRequest,localStorage.getItem('authTokenParcelas')).subscribe((resp)=>{
-                console.log("respReboque",resp)
-              })
-              this.router.navigate(['/payment-confirmed']);
-            });
-          }
-          else {
-            this.confirmarPagamento();
-          }
-        });
-      })
-
-
   }
 
   ngOnDestroy() {

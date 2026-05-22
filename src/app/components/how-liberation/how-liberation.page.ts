@@ -14,6 +14,9 @@ export class HowLiberationPage implements OnInit {
   optionSelected;
   tiposAtendimentos = [];
   tipoAtendimentoId;
+  loading: boolean = false;
+  msgError: string;
+  error: boolean = false;
   constructor(
     private store: Store,
     private router: Router,
@@ -33,11 +36,34 @@ export class HowLiberationPage implements OnInit {
     this.tipoAtendimentoId = tipoAtendimento?.tipoAtendimentoId || 1;
   }
 
-  getTipoAtendimento() {
-    this.atendimentoService.getTipoAtendimento().subscribe((item: any) => {
+getTipoAtendimento() {
+  this.loading = true;
+  this.error = false;
+  this.msgError = '';
+
+  this.atendimentoService.getTipoAtendimento().subscribe(
+    (item: any) => {
+      this.loading = false;
+
+      if (!item?.data || item.data.length === 0) {
+        this.error = true;
+        this.msgError = 'Nenhum tipo de atendimento encontrado';
+        return;
+      }
+
       this.tiposAtendimentos = item.data;
-    });
-  }
+    },
+    (erro) => {
+      this.loading = false;
+      this.error = true;
+
+      this.msgError =
+        'Houve um erro ao buscar os tipos de atendimento. Tente novamente.';
+
+      console.error('Erro getTipoAtendimento:', erro);
+    }
+  );
+}
 
   saveContact() {
     const payload = {

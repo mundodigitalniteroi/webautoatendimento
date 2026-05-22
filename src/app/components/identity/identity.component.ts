@@ -19,6 +19,9 @@ import * as moment from 'moment';
   styleUrls: ['./identity.component.scss'],
 })
 export class IdentityComponent implements OnInit, OnDestroy {
+  loading: boolean = false;
+  msgError: string;
+  error: boolean = false;
   isPessoaFisica = false;
   isPessoaJuridica = false;
   form: FormGroup;
@@ -89,7 +92,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
       nome: ['', Validators.required],
       dataNascimento: ['', [<any>Validators.required, <any>DataValidator.validate]],
       cpf: ['', [Validators.required, CpfCnpjValidator.validate]],
-      cnh: ['', [Validators.required,<any>CnhValidator.validate]],
+      cnh: ['', [Validators.required, <any>CnhValidator.validate]],
       telefone: ['', [<any>CelularValidator.validate]],
       email: ['', Validators.email],
     });
@@ -117,12 +120,42 @@ export class IdentityComponent implements OnInit, OnDestroy {
   }
 
   getTipoPessoas() {
+    this.loading = true;
+    this.error = false;
+    this.msgError = '';
+
     this.sub.push(
-      this.atendimentoService.getTipoPessoas().subscribe((item: any) => {
-        this.tipoPessoas = item.data;
-        const getPessoa = this.tipoPessoas.find((pess) => pess.descricao == 'PF');
-        this.form.get('tipoPessoaId').patchValue(getPessoa.tipoPessoaId);
-      })
+      this.atendimentoService.getTipoPessoas().subscribe(
+        (item: any) => {
+          this.loading = false;
+
+          if (!item?.data || item.data.length === 0) {
+            this.error = true;
+            this.msgError = 'Nenhum tipo de pessoa encontrado';
+            return;
+          }
+
+          this.tipoPessoas = item.data;
+
+          const getPessoa = this.tipoPessoas.find(
+            (pess) => pess.descricao === 'PF'
+          );
+
+          if (getPessoa) {
+            this.form.get('tipoPessoaId')?.patchValue(
+              getPessoa.tipoPessoaId
+            );
+          }
+        },
+        (erro) => {
+          this.loading = false;
+          this.error = true;
+          this.msgError =
+            'Houve um erro ao buscar os tipos de pessoa. Tente novamente.';
+
+          console.error('Erro getTipoPessoas:', erro);
+        }
+      )
     );
   }
 

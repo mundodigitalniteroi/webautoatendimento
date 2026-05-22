@@ -14,6 +14,9 @@ import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
   styleUrls: ['./address.component.scss'],
 })
 export class AddressComponent implements OnInit {
+  error = false;
+  msgError = '';
+  loading = false;
   // @Input() saveFields = false;
   form: FormGroup;
   @Select(AtendimentoState.all) state$: Observable<AtendimentoModel>;
@@ -26,14 +29,14 @@ export class AddressComponent implements OnInit {
     if (!control.value) {
       return null; // deixa o required validator tratar valores vazios
     }
-    
+
     // Remove caracteres não numéricos para validação
     const digitsOnly = control.value.replace(/\D/g, '');
-    
+
     if (digitsOnly.length !== 8) {
       return { pattern: true };
     }
-    
+
     return null;
   }
 
@@ -84,7 +87,7 @@ export class AddressComponent implements OnInit {
   getCepErrorMessage(control: string, grupo: 'proprietario' | 'responsavel'): string {
     const formGroup = grupo === 'proprietario' ? this.enderecoProprietario : this.enderecoResponsavel;
     const cepControl = formGroup?.get(control);
-    
+
     if (cepControl?.errors?.['required']) {
       return 'CEP é obrigatório';
     }
@@ -95,7 +98,12 @@ export class AddressComponent implements OnInit {
   }
 
   consultaCEP(param) {
+    this.loading = true;
+    this.error = false;
+    this.msgError = '';
+
     let cep;
+
     if (param == 'responsavel') {
       cep = this.enderecoResponsavel.get('cep').value;
     } else {
@@ -104,8 +112,35 @@ export class AddressComponent implements OnInit {
 
     // Remove hífen para consulta na API e verifica se tem 8 dígitos
     const cepLimpo = cep?.replace(/\D/g, '');
+
     if (cepLimpo && cepLimpo.length === 8) {
-      this.cepService.consultaCEP(cepLimpo).subscribe((dados) => this.populaDadosForm(dados, param));
+      this.cepService.consultaCEP(cepLimpo).subscribe(
+        (dados: any) => {
+          this.loading = false;
+            if (dados?.erro) {
+            this.error = true;
+            this.msgError = 'CEP inválido';
+            return;
+          }
+
+          this.populaDadosForm(dados, param);
+        },
+        (erro) => {
+          this.loading = false;
+          this.error = true;
+
+          if (erro.error?.mensagem?.includes('CEP não encontrado')) {
+            this.msgError = 'CEP não encontrado';
+          }
+          else {
+            this.msgError = 'Houve um erro ao consultar o CEP, por favor tente novamente';
+          }
+        }
+      );
+    } else {
+      this.loading = false;
+      this.error = true;
+      this.msgError = 'CEP inválido';
     }
   }
 

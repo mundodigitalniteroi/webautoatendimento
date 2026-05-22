@@ -16,10 +16,24 @@ export class CompleteComponent implements OnInit {
     this.imprimir();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.options = this.store.selectSnapshot(AtendimentoState.all);
+    this.imprimir();
+  }
 
   imprimir() {
-    const protocolo = this.options.protocolo;
-    this.print.printProtocolo(protocolo);
+    const protocolo = this.options?.protocolo;
+
+    if (!protocolo) {
+      this.print.toast('Protocolo não encontrado');
+      return;
+    }
+
+    try {
+      this.print.printProtocolo(protocolo);
+    } catch (erro) {
+      console.error('Erro ao imprimir:', erro);
+      this.print.toast('Erro ao imprimir protocolo');
+    }
   }
 }

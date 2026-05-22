@@ -27,26 +27,51 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
   documentos = [];
   timeout;
   loading = false;
+  error = false;
+  msgError = '';
   constructor(
     private atendimentoService: AtendimentoService,
     private store: Store,
     private router: Router,
     private toastController: ToastController,
     private modal: ModalController
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getTiposDocumentos();
   }
 
   getTiposDocumentos() {
+    this.loading = true;
+    this.error = false;
+    this.msgError = '';
+
     this.options = this.store.selectSnapshot(AtendimentoState.all);
     this.informacoesLogin = this.store.selectSnapshot(AuthState.all);
+
     this.atendimentoService
-      .getTiposDocumentos(this.options?.tipoPessoaId, this.informacoesLogin?.terminalId, this.options?.tipoAtendimentoId)
-      .subscribe((resp: any) => {
-        this.documentos = resp.data;
-      });
+      .getTiposDocumentos(
+        this.options?.tipoPessoaId,
+        this.informacoesLogin?.terminalId,
+        this.options?.tipoAtendimentoId
+      )
+      .subscribe(
+        (resp: any) => {
+          this.loading = false;
+          this.documentos = resp?.data || [];
+        },
+        (erro) => {
+          this.loading = false;
+          this.error = true;
+
+          if (erro?.error?.mensagem) {
+            this.msgError = erro.error.mensagem;
+          } else {
+            this.msgError =
+              'Houve um erro ao buscar os tipos de documentos, por favor tente novamente';
+          }
+        }
+      );
   }
 
   takePhoto() {
@@ -94,14 +119,35 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  uploadFoto(fotoModel, doc) {
-    const file = Util.convertBase64ToFile(fotoModel.base64);
-    this.atendimentoService.uploadArquivo(file, 'PRIVADO').subscribe((resp: any) => {
+uploadFoto(fotoModel, doc) {
+  this.error = false;
+  this.msgError = '';
+
+  const file = Util.convertBase64ToFile(fotoModel.base64);
+
+  this.atendimentoService.uploadArquivo(file, 'PRIVADO').subscribe(
+    (resp: any) => {
+
       fotoModel.arquivoId = resp.data.arquivoId;
       doc.isUploading = false;
       doc.check = true;
-    });
-  }
+    },
+    (erro) => {
+      this.loading = false;
+      this.error = true;
+
+      doc.isUploading = false;
+      doc.check = false;
+
+      if (erro?.error?.mensagem) {
+        this.msgError = erro.error.mensagem;
+      } else {
+        this.msgError =
+          'Houve um erro ao enviar a foto, por favor tente novamente';
+      }
+    }
+  );
+}
 
   private addFoto(fotoModel, doc) {
     this.fotos.push(fotoModel);
@@ -131,24 +177,24 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
       const atendimentoCompleto = {
         responsavel: atendimento?.responsavel
           ? {
-              nome: atendimento?.responsavel?.nome,
-              cpfCnpj: atendimento?.responsavel?.cpf,
-              cnh: atendimento?.responsavel?.cnh,
-              dataNascimento: atendimento?.responsavel?.dataNascimento
-                ? moment.utc(atendimento?.responsavel?.dataNascimento, 'DD/MM/YYYY', true).toISOString()
-                : null,
-              telefone: atendimento?.responsavel?.telefone,
-              email: atendimento?.responsavel?.email,
-              endereco: {
-                logradouro: atendimento?.enderecoResponsavel?.rua,
-                numero: atendimento?.enderecoResponsavel?.numero,
-                complemento: atendimento?.enderecoResponsavel?.complemento,
-                bairro: atendimento?.enderecoResponsavel?.bairro,
-                cidade: atendimento?.enderecoResponsavel?.cidade,
-                estado: atendimento?.enderecoResponsavel?.estado,
-                cep: atendimento?.enderecoResponsavel?.cep,
-              },
-            }
+            nome: atendimento?.responsavel?.nome,
+            cpfCnpj: atendimento?.responsavel?.cpf,
+            cnh: atendimento?.responsavel?.cnh,
+            dataNascimento: atendimento?.responsavel?.dataNascimento
+              ? moment.utc(atendimento?.responsavel?.dataNascimento, 'DD/MM/YYYY', true).toISOString()
+              : null,
+            telefone: atendimento?.responsavel?.telefone,
+            email: atendimento?.responsavel?.email,
+            endereco: {
+              logradouro: atendimento?.enderecoResponsavel?.rua,
+              numero: atendimento?.enderecoResponsavel?.numero,
+              complemento: atendimento?.enderecoResponsavel?.complemento,
+              bairro: atendimento?.enderecoResponsavel?.bairro,
+              cidade: atendimento?.enderecoResponsavel?.cidade,
+              estado: atendimento?.enderecoResponsavel?.estado,
+              cep: atendimento?.enderecoResponsavel?.cep,
+            },
+          }
           : null,
         proprietario: {
           tipoPessoaId: atendimento.tipoPessoaId,

@@ -5,6 +5,7 @@ import { AtendimentoService } from 'src/app/services/atendimento/atendimento.ser
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { ConsultaState } from 'src/app/state/consulta/consulta.state';
+import { PrintService } from 'src/app/services/print/print.service';
 
 @Component({
   selector: 'app-pix',
@@ -12,6 +13,9 @@ import { ConsultaState } from 'src/app/state/consulta/consulta.state';
   styleUrls: ['./pix.page.scss'],
 })
 export class PixPage implements OnInit {
+  loading: boolean = false;
+  msgError: string;
+  error: boolean = false;
   optionsConsulta;
   valorTotal;
   tempo;
@@ -24,8 +28,10 @@ export class PixPage implements OnInit {
     private store: Store,
     private consultaDebitoService: ConsultaDebitoService,
     private router: Router,
-    private atendimentoService: AtendimentoService
+    private atendimentoService: AtendimentoService,
+    private print: PrintService,
   ) {
+    this.print = print;
     this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
     this.options = this.store.selectSnapshot(AuthState.all);
     this.valorTotal = this.optionsConsulta?.informacaoPixEstatico?.valorOriginal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -44,7 +50,7 @@ export class PixPage implements OnInit {
     }, 5000);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   formatarTempo(segundos) {
     segundos %= 3600;
@@ -55,18 +61,82 @@ export class PixPage implements OnInit {
   }
 
   confirmarPagamento() {
-    const indentifadorFaturamento = this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
-    const identificadorUsuario = this.options.usuarioDPId;
+    this.loading = true;
+    this.error = false;
+    this.msgError = '';
 
-    this.consultaDebitoService.confirmarPagamento(indentifadorFaturamento, identificadorUsuario).subscribe((resp: any) => {
-      if (resp.faturamento.status == 'P') {
-        clearInterval(this.intervalConsultaPix);
+    const indentifadorFaturamento =
+      this.optionsConsulta?.informacoesConsulta?.veiculo?.identificadorFaturamento;
 
-        const atendimentoId = this.optionsConsulta.informacoesConsulta.atendimentoId;
-        this.atendimentoService.confirmarPagamento(atendimentoId).subscribe(() => {
-          this.router.navigate(['/payment-confirmed']);
-        });
-      }
-    });
+    const identificadorUsuario = this.options?.usuarioDPId;
+
+    if (!indentifadorFaturamento || !identificadorUsuario) {
+      this.loading = false;
+      this.error = true;
+      this.msgError = 'Dados do pagamento não encontrados';
+      this.print.toast(this.msgError);
+      return;
+    }
+
+    this.consultaDebitoService
+      .confirmarPagamento(
+        indentifadorFaturamento,
+        identificadorUsuario
+      )
+      .subscribe(
+        (resp: any) => {
+          this.loading = false;
+
+          if (!resp?.faturamento) {
+            this.error = true;
+            this.msgError = 'Resposta inválida da API';
+            this.print.toast(this.msgError);
+            return;
+          }
+
+          if (resp.faturamento.status === 'P') {
+            clearInterval(this.intervalConsultaPix);
+
+            const atendimentoId =
+              this.optionsConsulta?.informacoesConsulta?.atendimentoId;
+
+            this.atendimentoService
+              .confirmarPagamento(atendimentoId)
+              .subscribe(
+                () => {
+                  this.router.navigate([
+                    '/payment-confirmed'
+                  ]);
+                },
+                (erro) => {
+                  this.error = true;
+                  this.msgError =
+                    'Erro ao finalizar atendimento';
+
+                  this.print.toast(this.msgError);
+                  console.error(
+                    'Erro confirmar atendimento:',
+                    erro
+                  );
+                }
+              );
+          } else {
+            this.msgError =
+              'Pagamento ainda não confirmado';
+          }
+        },
+        (erro) => {
+          this.loading = false;
+          this.error = true;
+          this.msgError =
+            'Erro ao consultar pagamento';
+
+          this.print.toast(this.msgError);
+          console.error(
+            'Erro confirmarPagamento:',
+            erro
+          );
+        }
+      );
   }
 }

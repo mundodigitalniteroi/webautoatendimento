@@ -10,7 +10,9 @@ import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
   styleUrls: ['./protocol.component.scss'],
 })
 export class ProtocolComponent implements OnInit {
-  loading;
+  loading: boolean = false;
+  msgError: string;
+  error: boolean = false;
   protocolo = 'SG001';
 
   constructor(
@@ -26,14 +28,43 @@ export class ProtocolComponent implements OnInit {
     this.gerarNovoProtocolo();
   }
 
-  gerarNovoProtocolo() {
-    this.loading = true;
-    this.atendimento.gerarProtocoloAtendimento().subscribe((resp: any) => {
-      this.protocolo = resp.data.protocolo;
-      this.imprimir(resp.data.protocolo);
-      this.loading = false;
-    });
-  }
+gerarNovoProtocolo() {
+  this.loading = true;
+  this.error = false;
+  this.msgError = '';
+
+  this.atendimento
+    .gerarProtocoloAtendimento()
+    .subscribe(
+      (resp: any) => {
+        this.loading = false;
+
+        if (!resp?.data?.protocolo) {
+          this.error = true;
+          this.msgError =
+            'Não foi possível gerar o protocolo';
+
+          this.print.toast(this.msgError);
+          return;
+        }
+
+        this.protocolo = resp.data.protocolo;
+        this.imprimir(this.protocolo);
+      },
+      (erro) => {
+        this.loading = false;
+        this.error = true;
+        this.msgError =
+          'Erro ao gerar novo protocolo';
+
+        this.print.toast(this.msgError);
+        console.error(
+          'Erro gerarNovoProtocolo:',
+          erro
+        );
+      }
+    );
+}
 
   imprimir(protocolo) {
     this.print.printProtocolo(protocolo);

@@ -14,6 +14,9 @@ import { ConsultaState } from 'src/app/state/consulta/consulta.state';
   styleUrls: ['./payment-confirmed.page.scss'],
 })
 export class PaymentConfirmedPage implements OnInit, OnDestroy {
+  loading: boolean = false;
+  msgError: string;
+  error: boolean = false;
   optionsConsulta;
   identificadorProcesso;
   imprimindo = false;
@@ -54,19 +57,43 @@ export class PaymentConfirmedPage implements OnInit, OnDestroy {
       this.imprimindo = false;
     }
   }
-  imprimirGuia() {
-    this.imprimindo = true;
-    this.service.guiaLiberacao(this.identificadorProcesso).subscribe(
-      (dados: any) => {
-        this.print.printGuiaLiberacao(dados);
-        this.imprimindo = false;
-      },
-      () => {
-        this.print.toast('Não foi possível imprimir a Guia de Liberação');
-        this.imprimindo = false;
-      }
-    );
+imprimirGuia() {
+  this.imprimindo = true;
+  this.error = false;
+  this.msgError = '';
+
+  if (!this.identificadorProcesso) {
+    this.imprimindo = false;
+    this.error = true;
+    this.msgError = 'Processo não identificado';
+    this.print.toast(this.msgError);
+    return;
   }
+
+  this.service.guiaLiberacao(this.identificadorProcesso).subscribe(
+    (dados: any) => {
+      this.imprimindo = false;
+
+      if (!dados) {
+        this.error = true;
+        this.msgError = 'Guia não encontrada';
+        this.print.toast(this.msgError);
+        return;
+      }
+
+      this.print.printGuiaLiberacao(dados);
+    },
+    (erro) => {
+      this.imprimindo = false;
+      this.error = true;
+      this.msgError = 'Não foi possível imprimir a Guia de Liberação';
+
+      this.print.toast(this.msgError);
+      console.error('Erro imprimirGuia:', erro);
+    }
+  );
+}
+
   irParaHome() {
     this.store.dispatch(new StateClear(AuthState));
     this.router.navigate(['/home']);
