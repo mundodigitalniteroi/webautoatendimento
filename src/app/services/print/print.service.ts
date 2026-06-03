@@ -37,9 +37,15 @@ export class PrintService {
     return this.btSerial.list();
   }
 
-  connectToBluetoothPrinter(macAddress) {
+async connectToBluetoothPrinter(macAddress: string) {
+  try {
+    await this.btSerial.isEnabled();
     return this.btSerial.connect(macAddress);
+  } catch (error) {
+    await this.toast('Bluetooth não habilitado');
+    return null;
   }
+}
 
   disconnectBluetoothPrinter() {
     return this.btSerial.disconnect();
@@ -81,9 +87,9 @@ export class PrintService {
     });
   }
 
-  printData(data: any) {
-    this.storage.get('printer').then((p) => {
-      this.connectToBluetoothPrinter(p.printer).subscribe(
+  async printData(data: any) {
+    this.storage.get('printer').then(async (p) => {
+      await this.connectToBluetoothPrinter(p.printer).then(
         async (_) => {
           try {
             // Divide os dados em chunks menores (4096 bytes cada)
@@ -114,6 +120,8 @@ export class PrintService {
           this.toast('Erro ao conectar a impressora');
         }
       );
+    }).catch((err) => {
+      this.toast('Nenhuma impressora configurada!');
     });
   }
 
@@ -221,6 +229,13 @@ export class PrintService {
 
   async printGuiaLiberacao(dados: any) {
     const printer = await this.storage.get('printer');
+
+    if(!printer) {
+      this.toast('Nenhuma impressora configurada');
+      return;
+    }
+
+
     const encoder = new EscPosEncoder();
 
     encoder
@@ -316,9 +331,10 @@ export class PrintService {
       .newline()
       .newline();
 
-    if (printer && printer.usarGuilhotina) {
+     if (printer && printer.usarGuilhotina) {
       encoder.cut('partial');
-    }
+     }
+
     this.printData(encoder.encode());
   }
 

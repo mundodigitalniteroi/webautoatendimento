@@ -50,7 +50,7 @@ export class ConsultaDebitoService {
     if (payload.length == 7) {
       return this.http.get(this.apiDebitourl + `/atendimento/consulta?placa=${payload}`, {
         headers: this.headers,
-      });
+      }); 
     } else {
       return this.http.get(this.apiDebitourl + `/atendimento/consulta?protocolo=${payload}`, {
         headers: this.headers,
