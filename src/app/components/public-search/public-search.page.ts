@@ -63,6 +63,7 @@ export class PublicSearchPage implements OnInit {
         } else {
           this.msgError = 'Houve um erro na busca do veículo, por favor tente novamente';
         }
+        this.toast(this.msgError);
       }
     );
   }

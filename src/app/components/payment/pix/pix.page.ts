@@ -6,13 +6,15 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 import { PrintService } from 'src/app/services/print/print.service';
-
+import { ToastController, ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-pix',
   templateUrl: './pix.page.html',
   styleUrls: ['./pix.page.scss'],
 })
 export class PixPage implements OnInit {
+  toastController: ToastController;
+  modalController: ModalController;
   loading: boolean = false;
   msgError: string;
   error: boolean = false;
@@ -58,6 +60,15 @@ export class PixPage implements OnInit {
     const segundosRestantes = segundos % 60;
 
     return `${String(minutos).padStart(2, '0')}:${String(segundosRestantes).padStart(2, '0')}`;
+  }
+
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
   }
 
   confirmarPagamento() {

@@ -5,6 +5,7 @@ import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { SetInformations } from 'src/app/state/consulta/consulta.action';
 import { ConsultaState } from 'src/app/state/consulta/consulta.state';
+import { ToastController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-process-information',
@@ -15,6 +16,8 @@ export class ProcessInformationPage implements OnInit {
   options;
   optionsConsulta;
   informations;
+  toastController: ToastController;
+  modalController: ModalController;
   informacoesConsulta;
   valorTotal = 0;
   error = false;
@@ -47,7 +50,17 @@ export class ProcessInformationPage implements OnInit {
         } else {
           this.msgError = 'Houve um erro na busca do veículo, por favor tente novamente';
         }
+        this.toast(this.msgError);
       }
     );
+  }
+
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
   }
 }

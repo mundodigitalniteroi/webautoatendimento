@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
 import { SetTipoAtendimento } from 'src/app/state/atendimento/atendimento.action';
-
+import { ModalController, ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-how-liberation',
   templateUrl: './how-liberation.page.html',
   styleUrls: ['./how-liberation.page.scss'],
 })
 export class HowLiberationPage implements OnInit {
+  toastController: ToastController;
+  modalController: ModalController;
   selection: boolean = false;
   optionSelected;
   tiposAtendimentos = [];
@@ -61,7 +63,9 @@ getTipoAtendimento() {
         'Houve um erro ao buscar os tipos de atendimento. Tente novamente.';
 
       console.error('Erro getTipoAtendimento:', erro);
+      this.toast(this.msgError);
     }
+
   );
 }
 
@@ -73,5 +77,14 @@ getTipoAtendimento() {
     this.store.dispatch(new SetTipoAtendimento(payload));
 
     this.router.navigate(['/identity']);
+  }
+
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
   }
 }

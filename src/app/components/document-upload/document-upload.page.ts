@@ -70,6 +70,7 @@ export class DocumentUploadPage implements OnInit, OnDestroy {
             this.msgError =
               'Houve um erro ao buscar os tipos de documentos, por favor tente novamente';
           }
+          this.toast(this.msgError);
         }
       );
   }
@@ -145,6 +146,7 @@ uploadFoto(fotoModel, doc) {
         this.msgError =
           'Houve um erro ao enviar a foto, por favor tente novamente';
       }
+      this.toast(this.msgError);
     }
   );
 }

@@ -11,6 +11,7 @@ import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import { CnhValidator } from 'src/app/directives/cnh/cnh.directive';
 import { CelularValidator } from 'src/app/directives/celular/celular.directive';
 import { DataValidator } from 'src/app/directives/data/data.directive';
+import { ModalController, ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 
 @Component({
@@ -19,6 +20,8 @@ import * as moment from 'moment';
   styleUrls: ['./identity.component.scss'],
 })
 export class IdentityComponent implements OnInit, OnDestroy {
+  toastController: ToastController;
+  modalController: ModalController;
   loading: boolean = false;
   msgError: string;
   error: boolean = false;
@@ -132,6 +135,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
           if (!item?.data || item.data.length === 0) {
             this.error = true;
             this.msgError = 'Nenhum tipo de pessoa encontrado';
+            this.toast(this.msgError);
             return;
           }
 
@@ -154,6 +158,7 @@ export class IdentityComponent implements OnInit, OnDestroy {
             'Houve um erro ao buscar os tipos de pessoa. Tente novamente.';
 
           console.error('Erro getTipoPessoas:', erro);
+          this.toast(this.msgError);
         }
       )
     );
@@ -207,5 +212,14 @@ export class IdentityComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.forEach((item) => item.unsubscribe());
+  }
+
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
   }
 }

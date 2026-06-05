@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { App } from '@capacitor/app';
 import { SignalRService } from 'src/app/services/signalr/signalr.service';
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, ModalController } from '@ionic/angular';
 import { SetParcelaSelecionada } from 'src/app/state/consulta/consulta.action';
 
 interface Parcela {
@@ -26,6 +26,8 @@ interface Parcela {
 })
 
 export class PaymentCardPage implements OnInit {
+  toastController: ToastController;
+  modalController: ModalController;
   loading: boolean = false;
   msgError: string;
   error: boolean = false;
@@ -78,6 +80,7 @@ export class PaymentCardPage implements OnInit {
       this.loading = false;
       this.error = true;
       this.msgError = 'Dados para consulta de parcelamento não encontrados';
+      this.toast(this.msgError);
       return;
     }
 
@@ -90,6 +93,7 @@ export class PaymentCardPage implements OnInit {
           if (!parcelas) {
             this.error = true;
             this.msgError = 'Nenhum parcelamento encontrado';
+            this.toast(this.msgError);
             return;
           }
 
@@ -102,6 +106,7 @@ export class PaymentCardPage implements OnInit {
             'Houve um erro ao consultar o parcelamento. Tente novamente.';
 
           console.error('Erro consultarParcelamento:', erro);
+          this.toast(this.msgError);
         }
       );
 
@@ -164,7 +169,14 @@ export class PaymentCardPage implements OnInit {
     }
   }
 
-
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
+  }
 
 
   cardSelected(type) {

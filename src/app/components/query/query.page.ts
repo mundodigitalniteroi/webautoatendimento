@@ -47,6 +47,7 @@ export class QueryPage implements OnInit {
         if (!deb.data) {
           this.error = true;
           this.msgError = 'Veículo não encontrado neste pátio ou protocolo inexistente';
+          this.toast(this.msgError);
           return false;
         }
 
@@ -59,6 +60,7 @@ export class QueryPage implements OnInit {
         } else {
           this.error = true;
           this.msgError = 'Pagamento do Atendimento ainda não foi liberado!';
+          this.toast(this.msgError);
         }
       },
       (erro) => {
@@ -69,6 +71,7 @@ export class QueryPage implements OnInit {
         } else {
           this.msgError = 'Houve um erro na busca do veículo, por favor tente novamente';
         }
+        this.toast(this.msgError);
       }
     );
   }
