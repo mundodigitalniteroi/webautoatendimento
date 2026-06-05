@@ -46,14 +46,18 @@ export class PrintService {
   async connectToBluetoothPrinter(macAddress: string) {
     try {
       // Verifica se o bluetooth está ligado
-      await this.btSerial.isEnabled();
-
+      const isEnabled = await this.btSerial.isEnabled();
+      if (!isEnabled) {
+        await this.toast('Bluetooth desligado.');
+        return;
+      }
+      
       // busca se tem alguma impressora pareada
       const devices = await this.searchBluetoothPrinter();
 
       if (!devices || devices.length === 0) {
         await this.toast('Nenhum dispositivo Bluetooth pareado encontrado.');
-        return null;
+        return;
       }
 
       // verifica se a impressora configurada existe na lista
@@ -63,13 +67,13 @@ export class PrintService {
 
       if (!printer) {
         await this.toast('Impressora não encontrada entre os dispositivos pareados.');
-        return null;
+        return;
       }
 
       return this.btSerial.connect(macAddress);
     } catch (error) {
       await this.toast('Bluetooth desligado.');
-      return null;
+      return;
     }
   }
 
