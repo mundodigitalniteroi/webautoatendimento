@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import EscPosEncoder from '@mineminemine/esc-pos-encoder-ionic';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment-timezone';
@@ -26,6 +26,7 @@ export class PrintService {
   constructor(
     public btSerial: BluetoothSerial,
     private toastController: ToastController,
+    private alertController: AlertController,
     private storage: Storage,
     private diagnostic: Diagnostic,
     private store: Store
@@ -48,10 +49,10 @@ export class PrintService {
       // Verifica se o bluetooth está ligado
       const isEnabled = await this.btSerial.isEnabled();
       if (!isEnabled) {
-        await this.toast('Bluetooth desligado.');
+        await this.showBluetoothDisabledAlert();
         return;
       }
-      
+
       // busca se tem alguma impressora pareada
       const devices = await this.searchBluetoothPrinter();
 
@@ -72,7 +73,7 @@ export class PrintService {
 
       return this.btSerial.connect(macAddress);
     } catch (error) {
-      await this.toast('Bluetooth desligado.');
+      await this.showBluetoothDisabledAlert();
       return;
     }
   }
@@ -379,6 +380,29 @@ export class PrintService {
     } catch (err) {
       this.toast('Erro ao imprimir guia de autorização');
     }
+  }
+
+  async showBluetoothDisabledAlert() {
+    const alert = await this.alertController.create({
+      header: 'Bluetooth desligado',
+      message:
+        'Para imprimir a guia de liberação é necessário ativar o Bluetooth.',
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Abrir Configurações',
+          handler: () => {
+            this.diagnostic.switchToBluetoothSettings();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async toast(message: string) {
