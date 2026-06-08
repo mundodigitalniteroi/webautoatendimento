@@ -71,7 +71,18 @@ export class PrintService {
         return;
       }
 
-      return this.btSerial.connect(macAddress);
+      return new Promise((resolve, reject) => {
+        this.btSerial.connect(macAddress).subscribe(
+          (success) => {
+            console.log('Bluetooth conectado');
+            resolve(true);
+          },
+          (error) => {
+            console.error('Erro conexão bluetooth', error);
+            reject(error);
+          }
+        );
+      });
     } catch (error) {
       await this.showBluetoothDisabledAlert();
       return;
@@ -278,7 +289,7 @@ export class PrintService {
 
     const encoder = new EscPosEncoder();
     try {
-
+      
       encoder
         .initialize()
         .align('left')
