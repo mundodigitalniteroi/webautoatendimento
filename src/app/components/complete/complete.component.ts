@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { PrintService } from 'src/app/services/print/print.service';
 import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-complete',
@@ -9,6 +10,7 @@ import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
   styleUrls: ['./complete.component.scss'],
 })
 export class CompleteComponent implements OnInit {
+  toastController: ToastController;
   options;
 
   constructor(private store: Store, private print: PrintService) {
@@ -21,11 +23,20 @@ export class CompleteComponent implements OnInit {
     this.imprimir();
   }
 
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
+    });
+  }
+
   imprimir() {
     const protocolo = this.options?.protocolo;
 
     if (!protocolo) {
-      this.print.toast('Protocolo não encontrado');
+      this.toast('Protocolo não encontrado');
       return;
     }
 
@@ -33,7 +44,7 @@ export class CompleteComponent implements OnInit {
       this.print.printProtocolo(protocolo);
     } catch (erro) {
       console.error('Erro ao imprimir:', erro);
-      this.print.toast('Erro ao imprimir protocolo');
+      this.toast('Erro ao imprimir protocolo');
     }
   }
 }

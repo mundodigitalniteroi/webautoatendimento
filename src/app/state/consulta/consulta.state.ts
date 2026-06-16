@@ -63,7 +63,7 @@ export class ConsultaState {
     const state = ctx.getState;
     ctx.patchState({
       ...state,
-      informacaoPixEstatico: payload.payload,
+      pixDinamico: payload.payload.pixDinamico,
     });
   }
 

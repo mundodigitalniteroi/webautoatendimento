@@ -15,13 +15,14 @@ import { Bandeira, CartaoRequest } from 'src/app/interfaces/pagamento.interface'
 import { DiariasReboqueRequest } from 'src/app/interfaces/atendimento.interface';
 import { AtendimentoState } from 'src/app/state/atendimento/atendimento.state';
 import { PrintService } from 'src/app/services/print/print.service';
-
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-payment-wait',
   templateUrl: './payment-wait.component.html',
   styleUrls: ['./payment-wait.component.scss'],
 })
 export class PaymentWaitComponent implements OnInit, OnDestroy {
+  toastController: ToastController;
   parcelaSelecionada: PlanoParcelamento;
   transactionId: string;
   urlReturnPayment = environment.urlApiAtendimento;
@@ -50,6 +51,15 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
           queryParams: { paymentError: true }
         });
       }
+    });
+  }
+
+  toast(msg: string) {
+    this.toastController.create({
+      message: msg,
+      duration: 2000,
+    }).then((toast) => {
+      toast.present();
     });
   }
 
@@ -170,26 +180,26 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
                           ]);
                         },
                         () => {
-                          this.print.toast(
+                          this.toast(
                             'Erro ao confirmar pagamento'
                           );
                         }
                       );
                   } else {
-                    this.print.toast(
+                    this.toast(
                       'Pagamento ainda não confirmado. Tente novamente.'
                     );
                   }
                 },
                 () => {
-                  this.print.toast(
+                  this.toast(
                     'Erro ao confirmar pagamento no cartão'
                   );
                 }
               );
           },
           () => {
-            this.print.toast(
+            this.toast(
               'Erro ao alterar forma de pagamento'
             );
           }
@@ -197,7 +207,7 @@ export class PaymentWaitComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error(error);
 
-      this.print.toast(
+      this.toast(
         'Erro ao consultar transação do pagamento'
       );
     }

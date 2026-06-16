@@ -5,7 +5,6 @@ import { AtendimentoService } from 'src/app/services/atendimento/atendimento.ser
 import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
 import { AuthState } from 'src/app/state/auth/auth.state';
 import { ConsultaState } from 'src/app/state/consulta/consulta.state';
-import { PrintService } from 'src/app/services/print/print.service';
 import { ToastController, ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-pix',
@@ -31,12 +30,18 @@ export class PixPage implements OnInit {
     private consultaDebitoService: ConsultaDebitoService,
     private router: Router,
     private atendimentoService: AtendimentoService,
-    private print: PrintService,
   ) {
-    this.print = print;
     this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
     this.options = this.store.selectSnapshot(AuthState.all);
-    this.valorTotal = this.optionsConsulta?.informacaoPixEstatico?.valorOriginal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    this.valorTotal =
+      this.optionsConsulta?.pixDinamico?.valorOriginal?.toLocaleString(
+        'pt-BR',
+        {
+          style: 'currency',
+          currency: 'BRL',
+        }
+      );
 
     this.interval = setInterval(() => {
       this.tempo = this.formatarTempo(this.segundos);
@@ -85,7 +90,7 @@ export class PixPage implements OnInit {
       this.loading = false;
       this.error = true;
       this.msgError = 'Dados do pagamento não encontrados';
-      this.print.toast(this.msgError);
+      this.toast(this.msgError);
       return;
     }
 
@@ -101,7 +106,7 @@ export class PixPage implements OnInit {
           if (!resp?.faturamento) {
             this.error = true;
             this.msgError = 'Resposta inválida da API';
-            this.print.toast(this.msgError);
+            this.toast(this.msgError);
             return;
           }
 
@@ -124,7 +129,7 @@ export class PixPage implements OnInit {
                   this.msgError =
                     'Erro ao finalizar atendimento';
 
-                  this.print.toast(this.msgError);
+                  this.toast(this.msgError);
                   console.error(
                     'Erro confirmar atendimento:',
                     erro
@@ -142,7 +147,7 @@ export class PixPage implements OnInit {
           this.msgError =
             'Erro ao consultar pagamento';
 
-          this.print.toast(this.msgError);
+          this.toast(this.msgError);
           console.error(
             'Erro confirmarPagamento:',
             erro
