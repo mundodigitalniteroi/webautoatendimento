@@ -1,0 +1,22 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { TermAcceptionPageRoutingModule } from './term-acception-routing.module';
+
+import { TermAcceptionPage } from './term-acception.page';
+import { ToolbarModule } from '../toolbar/toolbar.module';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TermAcceptionPageRoutingModule,
+    ToolbarModule,
+  ],
+  declarations: [TermAcceptionPage],
+})
+export class TermAcceptionPageModule {}

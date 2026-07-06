@@ -4,8 +4,7 @@ import { ProcessInformationPage } from './process-information.page';
 import { ProcessInformationRoutingModule } from './process-information-routing.module';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
-
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [ProcessInformationPage],
@@ -13,7 +12,8 @@ import { IonicModule } from '@ionic/angular';
     CommonModule,
     IonicModule,
     FormsModule,
-    ProcessInformationRoutingModule
-  ]
+    ProcessInformationRoutingModule,
+    ToolbarModule,
+  ],
 })
-export class ProcessInformationModule { }
+export class ProcessInformationModule {}

@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true">
+  <ion-grid
+    class="ion-text-center ion-justify-content-center ion-align-items-center"
+    *ngIf="protocolo"
+  >
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-img src="../../../assets/protocolo.png"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h5>
+          <b>Protocolo do Atendimento</b>
+        </h5>
+        <p class="protocolo">{{ protocolo }}</p>
+        <p class="text">
+          Retire seu protocolo na impressora e aguarde ser chamado pelo painel.
+        </p>
+        <ion-button [routerLink]="['/home']">Voltar ao início</ion-button>
+        <ion-button fill="outline" (click)="imprimir(protocolo)"
+          >Imprimir Protocolo Novamente</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

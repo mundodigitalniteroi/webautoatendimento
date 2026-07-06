@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PublicSearchPage } from './public-search.page';
 import { PublicSearchRoutingModule } from './public-search-routing.module';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [PublicSearchPage],
@@ -13,7 +13,10 @@ import { IonicModule } from '@ionic/angular';
     CommonModule,
     IonicModule,
     FormsModule,
-    PublicSearchRoutingModule
-  ]
+    PublicSearchRoutingModule,
+    ReactiveFormsModule,
+    ToolbarModule,
+  ],
+  providers: [ConsultaDebitoService],
 })
-export class PublicSearchModule { }
+export class PublicSearchModule {}

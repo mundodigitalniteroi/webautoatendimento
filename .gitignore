@@ -26,6 +26,8 @@ npm-debug.log*
 /coverage
 /dist
 /node_modules
+/websocket-teste-api/node_modules
 /platforms
 /plugins
 /www
+.angular

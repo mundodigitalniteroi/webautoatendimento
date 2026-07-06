@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { ConsultaDebitoService } from 'src/app/services/consulta-debito/consulta-debito.service';
+import { AuthState } from 'src/app/state/auth/auth.state';
+import { SetBoleto, SetPixEstatico, SetTipoPagamento } from 'src/app/state/consulta/consulta.action';
+import { ConsultaState } from 'src/app/state/consulta/consulta.state';
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
-  styleUrls: ['./payment.page.scss']
+  styleUrls: ['./payment.page.scss'],
 })
 export class PaymentPage implements OnInit {
   line = false;
@@ -13,21 +18,65 @@ export class PaymentPage implements OnInit {
   checkMulta = false;
   checkLicen = false;
   checkComp = false;
-  constructor(private router: Router,) { }
+  optionsConsulta;
+  options;
+  constructor(private router: Router, private store: Store, private consultaDebitoService: ConsultaDebitoService) {}
 
   ngOnInit(): void {
+    this.optionsConsulta = this.store.selectSnapshot(ConsultaState.all);
+    this.options = this.store.selectSnapshot(AuthState.all);
   }
 
-  takePhoto(){
+  takePhoto() {
     this.checkCrlv = true;
     this.checkIpva = true;
     this.checkMulta = true;
     this.checkLicen = true;
     this.checkComp = true;
   }
-  goPayment(type){
-    if(type == 'card'){this.router.navigate(['/payment-card'])}; 
-    if(type == 'pix'){this.router.navigate(['/pix'])}; 
-    if(type == 'ticket'){this.router.navigate(['/ticket'])}; 
+  goPayment(type) {
+    const indentifadorFaturamento = this.optionsConsulta.informacoesConsulta.veiculo.identificadorFaturamento;
+    const identificadorUsuario = this.options.usuarioDPId;
+    if (type == 'card') {
+      this.store.dispatch(new SetTipoPagamento('cartao'));
+      this.router.navigate(['/payment-card']);
+    }
+    if (type == 'pix') {
+      this.store.dispatch(new SetTipoPagamento('pix'));
+      this.consultaDebitoService.alterarFormaPagamento(indentifadorFaturamento, identificadorUsuario,17).subscribe(
+        () => {
+          this.consultaDebitoService.gerarPixDinamico(indentifadorFaturamento, identificadorUsuario).subscribe((resp: any) => {
+            this.store.dispatch(new SetPixEstatico(resp));
+            this.router.navigate(['/pix']);
+          });
+        },
+        (e) => {
+          if (e.error) {
+            if (e.error.avisosImpeditivos.includes('Forma de Pagamento já selecionada')) {
+              this.consultaDebitoService.consultarPixDinamico(indentifadorFaturamento, identificadorUsuario).subscribe((resp: any) => {
+                if (resp.identificadorPixDinamicoTipoStatusGeracao == 2) {
+                  this.router.navigate(['/payment-confirmed']);
+                } else {
+                  this.store.dispatch(new SetPixEstatico(resp));
+                  this.router.navigate(['/pix']);
+                }
+              });
+            }
+
+            if (e.error.avisosImpeditivos.includes('Esse Faturamento já foi pago')) {
+              this.router.navigate(['/payment-confirmed']);
+            }
+          }
+        }
+      );
+    }
+    if (type == 'ticket') {
+      this.consultaDebitoService.alterarBoleto(indentifadorFaturamento, identificadorUsuario).subscribe(() => {
+        this.consultaDebitoService.gerarBoleto(indentifadorFaturamento, identificadorUsuario).subscribe((resp: any) => {
+          this.store.dispatch(new SetBoleto(resp.listagem));
+          this.router.navigate(['/ticket']);
+        });
+      });
+    }
   }
 }

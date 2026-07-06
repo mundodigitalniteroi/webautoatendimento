@@ -5,9 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DocumentUploadRoutingModule } from './document-upload-routing.module';
 import { DocumentUploadPage } from './document-upload.page';
-
-
-
+import { CameraService } from 'src/app/services/camera/camera.service';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [DocumentUploadPage],
@@ -15,7 +14,9 @@ import { DocumentUploadPage } from './document-upload.page';
     CommonModule,
     IonicModule,
     FormsModule,
-    DocumentUploadRoutingModule
-  ]
+    DocumentUploadRoutingModule,
+    ToolbarModule,
+  ],
+  providers: [CameraService],
 })
-export class DocumentUploadModule { }
+export class DocumentUploadModule {}

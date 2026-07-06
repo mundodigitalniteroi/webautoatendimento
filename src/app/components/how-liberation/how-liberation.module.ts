@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HowLiberationRoutingModule } from './how-liberation-routing.module';
 import { HowLiberationPage } from './how-liberation.page';
-
-
+import { AtendimentoService } from 'src/app/services/atendimento/atendimento.service';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [HowLiberationPage],
@@ -14,7 +14,9 @@ import { HowLiberationPage } from './how-liberation.page';
     CommonModule,
     IonicModule,
     FormsModule,
-    HowLiberationRoutingModule
-  ]
+    HowLiberationRoutingModule,
+    ToolbarModule,
+  ],
+  providers: [AtendimentoService],
 })
-export class HowLiberationModule { }
+export class HowLiberationModule {}

@@ -1,16 +1,29 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
+// export const environment = {
+//   production: false,
+//   urlApiAtendimento: 'https://localhost:7228',
+//   urlApiDP: 'https://localhost:7093',
+//   urlApiWebziPay:'https://localhost:5001',
+//   urlApiSumup: 'https://api.sumup.com',
+//   urlReturnPayment: 'https://localhost:7233/api/webhook/check-transaction',
+//   merchantCode: 'MDEUZAGC',
+//   clientId: 'cc_classic_kWwcKzywkLEZcOM9yEOpSrExMnnQl',
+//   clientSecret: 'cc_sk_classic_DcA8vQSX6ByHRLjBgsgPTDwkaF4YdaeWOm4Zvh0XG99N6Jp5IF',
+//   afilliateKey: 'sup_afk_Ra3JUSxHPT7JQ2xcQpZaB4dp9BTElg93',
+//   redirectUri: 'sumupmobile://callback',
+//   apiKey: 'sup_pk_MOJxNHpvau9JivVO73JnrA5siGwmlmxNk',
+//   versao: '1.0.0',
+// };
 export const environment = {
-  production: false
+  production: true,
+  urlApiAtendimento: 'https://linkpatios.com.br/adminatendimentoapi',
+  urlApiDP: 'https://linkpatios.com.br/autoatendimentoapi',
+  // urlApiAtendimento: 'https://api.atendimento.gestordepatios.app.br',
+  // urlApiDP: 'https://api.autoatendimento.webzi.com.br',
+  urlApiSumup: 'https://api.sumup.com',
+  urlApiWebziPay:'https://api.webzi.com.br',
+  merchantCode: 'MXHHSFK3',
+  clientId: 'cc_classic_Kkmv1mybdQfj6PKrLjTVzEjV1TV69',
+  clientSecret: 'cc_sk_classic_Nf329UVAb4pbl5YtH3QKEsuy5uvP8BvHDvgLG6Csq42nJzxPQl',
+  redirectUri: 'sumupmobile://callback',
+  versao: '1.2.2',
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

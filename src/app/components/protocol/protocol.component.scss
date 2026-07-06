@@ -1,0 +1,52 @@
+$font-family: Inter;
+* {
+  font-family: $font-family;
+}
+ion-content {
+  --background: #fff;
+}
+
+ion-grid {
+  color: #4b4b4b;
+}
+
+.steps {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  .step-1 {
+    width: 90%;
+  }
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+ion-button {
+  width: 100%;
+  height: 80px;
+  --border-radius: 10px;
+  font-size: 1.6rem;
+  font-family: $font-family;
+}
+.col-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.protocolo {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.text {
+  font-size: 1.5rem;
+  color: #858585;
+  padding: 0 80px;
+}
